@@ -1,11 +1,11 @@
 # 源代码
 src/
 *.ts
-
-# 配置文件
 tsconfig.json
-.gitignore
+
+# Git
 .git/
+.gitignore
 
 # 开发文件
 node_modules/
@@ -15,18 +15,12 @@ node_modules/
 
 # 测试文件
 test/
+temp/
 *.test.js
 *.spec.js
 
-# 文档源文件
+# 文档源文件（但保留模板）
 docs/
-*.md
-!README.md
-
-# 示例和模板的源文件
-examples/
-templates/*.md
-memory/
 
 # IDE配置
 .vscode/
@@ -36,5 +30,12 @@ memory/
 
 # 构建缓存
 .cache/
-temp/
 tmp/
+
+# 不要排除的文件（显式包含）
+!templates/
+!templates/**/*
+!memory/
+!memory/**/*
+!scripts/
+!scripts/**/*

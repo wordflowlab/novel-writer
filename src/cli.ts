@@ -9,6 +9,80 @@ import { execSync } from 'child_process';
 
 const program = new Command();
 
+// 辅助函数：处理命令模板生成 Markdown 格式
+function generateMarkdownCommand(template: string, scriptPath: string): string {
+  // 替换 {SCRIPT} 为实际脚本路径
+  let content = template.replace(/{SCRIPT}/g, scriptPath);
+
+  // 移除 scripts 部分，但保留 description 和主体内容
+  const lines = content.split('\n');
+  const result: string[] = [];
+  let inFrontmatter = false;
+  let inScripts = false;
+  let frontmatterCount = 0;
+
+  for (const line of lines) {
+    // 处理 frontmatter
+    if (line === '---') {
+      frontmatterCount++;
+      if (frontmatterCount === 1) {
+        inFrontmatter = true;
+        result.push(line);
+        continue;
+      } else if (frontmatterCount === 2) {
+        inFrontmatter = false;
+        inScripts = false;
+        result.push(line);
+        continue;
+      }
+    }
+
+    // 在 frontmatter 中
+    if (inFrontmatter) {
+      if (line.trim() === 'scripts:') {
+        inScripts = true;
+        continue;
+      }
+      // 如果在 scripts 部分，跳过缩进的行
+      if (inScripts) {
+        if (line.startsWith('  ') || line.startsWith('\t')) {
+          continue; // 跳过 scripts 下的条目
+        } else if (line.trim() !== '') {
+          // 非空行且不缩进，说明 scripts 部分结束
+          inScripts = false;
+          result.push(line);
+        }
+      } else {
+        result.push(line);
+      }
+    } else {
+      // frontmatter 之外，保留所有内容
+      result.push(line);
+    }
+  }
+
+  return result.join('\n');
+}
+
+// 辅助函数：生成 TOML 格式命令
+function generateTomlCommand(template: string, scriptPath: string): string {
+  // 提取 description
+  const descMatch = template.match(/description:\s*(.+)/);
+  const description = descMatch ? descMatch[1].trim() : '命令说明';
+
+  // 移除 YAML frontmatter
+  const content = template.replace(/^---[\s\S]*?---\n/, '');
+
+  // 替换 {SCRIPT}
+  const processedContent = content.replace(/{SCRIPT}/g, scriptPath);
+
+  return `description = "${description}"
+
+prompt = """
+${processedContent}
+"""`;
+}
+
 // 显示欢迎横幅
 function displayBanner(): void {
   const banner = `
@@ -18,7 +92,7 @@ function displayBanner(): void {
 ╚═══════════════════════════════════════╝
 `;
   console.log(chalk.cyan(banner));
-  console.log(chalk.gray('  版本: 0.3.0 | 基于 Spec Kit 架构\n'));
+  console.log(chalk.gray('  版本: 0.3.3 | 基于 Spec Kit 架构\n'));
 }
 
 displayBanner();
@@ -26,7 +100,7 @@ displayBanner();
 program
   .name('novel')
   .description(chalk.cyan('Novel Writer - AI 驱动的中文小说创作工具初始化'))
-  .version('0.3.0', '-v, --version', '显示版本号')
+  .version('0.3.3', '-v, --version', '显示版本号')
   .helpOption('-h, --help', '显示帮助信息');
 
 // init 命令 - 初始化小说项目（类似 specify init）
@@ -34,7 +108,8 @@ program
   .command('init')
   .argument('[name]', '小说项目名称')
   .option('--here', '在当前目录初始化')
-  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini', 'claude')
+  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf', 'claude')
+  .option('--all', '为所有支持的 AI 助手生成配置')
   .option('--no-git', '跳过 Git 初始化')
   .description('初始化一个新的小说项目')
   .action(async (name, options) => {
@@ -59,14 +134,41 @@ program
         await fs.ensureDir(projectPath);
       }
 
-      // 创建项目结构
-      const dirs = [
+      // 创建基础项目结构
+      const baseDirs = [
         '.specify',
         'stories',
         'memory'
       ];
 
-      for (const dir of dirs) {
+      for (const dir of baseDirs) {
+        await fs.ensureDir(path.join(projectPath, dir));
+      }
+
+      // 根据 AI 类型创建特定目录
+      const aiDirs: string[] = [];
+      if (options.all) {
+        // 创建所有 AI 目录
+        aiDirs.push('.claude/commands', '.cursor/commands', '.gemini/commands', '.windsurf/workflows');
+      } else {
+        // 根据选择的 AI 创建目录
+        switch(options.ai) {
+          case 'claude':
+            aiDirs.push('.claude/commands');
+            break;
+          case 'cursor':
+            aiDirs.push('.cursor/commands');
+            break;
+          case 'gemini':
+            aiDirs.push('.gemini/commands');
+            break;
+          case 'windsurf':
+            aiDirs.push('.windsurf/workflows');
+            break;
+        }
+      }
+
+      for (const dir of aiDirs) {
         await fs.ensureDir(path.join(projectPath, dir));
       }
 
@@ -76,7 +178,7 @@ program
         type: 'novel',
         ai: options.ai,
         created: new Date().toISOString(),
-        version: '0.3.0'
+        version: '0.3.3'
       };
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
@@ -86,7 +188,7 @@ program
       const templatesDir = path.join(packageRoot, 'templates', 'commands');
       const scriptsDir = path.join(packageRoot, 'scripts');
 
-      // 读取所有命令模板并合并到 spec.md
+      // 读取所有命令模板
       let specContent = `# Novel Writer Spec - AI 小说创作命令规范
 
 本文件定义了 Novel Writer 支持的所有斜杠命令。
@@ -96,6 +198,8 @@ program
 
       if (await fs.pathExists(templatesDir)) {
         const commandFiles = await fs.readdir(templatesDir);
+
+        // 生成合并的 spec.md
         for (const file of commandFiles.sort()) {
           if (file.endsWith('.md')) {
             const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
@@ -103,20 +207,74 @@ program
             specContent += `## /${commandName}\n\n${content}\n\n`;
           }
         }
-      }
+        await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
 
-      await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
+        // 为每个 AI 助手生成特定格式的命令文件
+        for (const file of commandFiles) {
+          if (file.endsWith('.md')) {
+            const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
+            const commandName = path.basename(file, '.md');
+
+            // 提取脚本路径
+            const shMatch = content.match(/sh:\s*(.+)/);
+            const scriptPath = shMatch ? shMatch[1].trim() : `scripts/bash/${commandName}.sh`;
+
+            // 为 Claude 生成命令文件
+            if (aiDirs.some(dir => dir.includes('.claude'))) {
+              const claudePath = path.join(projectPath, '.claude', 'commands', file);
+              const claudeContent = generateMarkdownCommand(content, scriptPath);
+              await fs.writeFile(claudePath, claudeContent);
+            }
+
+            // 为 Cursor 生成命令文件
+            if (aiDirs.some(dir => dir.includes('.cursor'))) {
+              const cursorPath = path.join(projectPath, '.cursor', 'commands', file);
+              const cursorContent = generateMarkdownCommand(content, scriptPath);
+              await fs.writeFile(cursorPath, cursorContent);
+            }
+
+            // 为 Windsurf 生成命令文件
+            if (aiDirs.some(dir => dir.includes('.windsurf'))) {
+              const windsurfPath = path.join(projectPath, '.windsurf', 'workflows', file);
+              const windsurfContent = generateMarkdownCommand(content, scriptPath);
+              await fs.writeFile(windsurfPath, windsurfContent);
+            }
+
+            // 为 Gemini 生成 TOML 格式
+            if (aiDirs.some(dir => dir.includes('.gemini'))) {
+              const geminiPath = path.join(projectPath, '.gemini', 'commands', `${commandName}.toml`);
+              const geminiContent = generateTomlCommand(content, scriptPath);
+              await fs.writeFile(geminiPath, geminiContent);
+            }
+          }
+        }
+      } else {
+        await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
+      }
 
       // 复制脚本文件到用户项目
       if (await fs.pathExists(scriptsDir)) {
         const userScriptsDir = path.join(projectPath, 'scripts');
         await fs.copy(scriptsDir, userScriptsDir);
+
+        // 设置 bash 脚本执行权限
+        const bashDir = path.join(userScriptsDir, 'bash');
+        if (await fs.pathExists(bashDir)) {
+          const bashFiles = await fs.readdir(bashDir);
+          for (const file of bashFiles) {
+            if (file.endsWith('.sh')) {
+              const filePath = path.join(bashDir, file);
+              await fs.chmod(filePath, 0o755);
+            }
+          }
+        }
       }
 
       // 复制模板文件
-      if (await fs.pathExists(templatesDir)) {
+      const fullTemplatesDir = path.join(packageRoot, 'templates');
+      if (await fs.pathExists(fullTemplatesDir)) {
         const userTemplatesDir = path.join(projectPath, 'templates');
-        await fs.copy(path.join(packageRoot, 'templates'), userTemplatesDir);
+        await fs.copy(fullTemplatesDir, userTemplatesDir);
       }
 
       // Git 初始化
@@ -159,7 +317,18 @@ node_modules/
         console.log(`  1. ${chalk.white(`cd ${name}`)} - 进入项目目录`);
       }
 
-      console.log(`  2. ${chalk.white(`在 ${options.ai === 'claude' ? 'Claude' : options.ai === 'cursor' ? 'Cursor' : 'Gemini'} 中打开项目`)}`);
+      const aiName = {
+        'claude': 'Claude Code',
+        'cursor': 'Cursor',
+        'gemini': 'Gemini',
+        'windsurf': 'Windsurf'
+      }[options.ai] || 'AI 助手';
+
+      if (options.all) {
+        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目（Claude Code、Cursor、Gemini、Windsurf）')}`);
+      } else {
+        console.log(`  2. ${chalk.white(`在 ${aiName} 中打开项目`)}`);
+      }
       console.log(`  3. 使用以下斜杠命令开始创作:`);
       console.log(`     ${chalk.cyan('/style')} - 设定创作风格`);
       console.log(`     ${chalk.cyan('/story')} - 创建故事大纲`);
