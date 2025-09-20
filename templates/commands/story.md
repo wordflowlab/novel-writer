@@ -5,6 +5,8 @@ scripts:
   ps: .specify/scripts/powershell/create-new-story.ps1 -Json "{ARGS}"
 ---
 
+**重要**：生成日期时，请先运行 `date '+%Y-%m-%d'` 获取当前系统日期，不要手动生成或猜测日期。
+
 根据提供的故事描述创建完整的故事大纲：
 
 1. 运行脚本 `{SCRIPT}` 并解析 JSON 输出，获取 STORY_NAME 和 STORY_FILE

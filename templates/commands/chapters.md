@@ -5,6 +5,8 @@ scripts:
   ps: .specify/scripts/powershell/generate-tasks.ps1
 ---
 
+**重要**：生成日期时，请先运行 `date '+%Y-%m-%d'` 获取当前系统日期，不要手动生成或猜测日期。
+
 基于章节规划生成可执行的写作任务：
 
 1. 运行脚本 `{SCRIPT}` 检查前置条件

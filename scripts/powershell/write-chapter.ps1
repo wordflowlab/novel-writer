@@ -16,27 +16,62 @@ function Get-LatestStory {
     return $null
 }
 
+# 从 outline.md 解析卷册信息
+function Parse-VolumeInfo {
+    param(
+        [string]$OutlineFile,
+        [int]$ChapterNum
+    )
+
+    if (Test-Path $OutlineFile) {
+        $content = Get-Content $OutlineFile -Raw
+        $volumeNum = 1
+
+        # 匹配卷册和章节范围
+        $pattern = '###\s+第.*?卷.*?\n[\s\S]*?章节范围.*?第(\d+)-(\d+)章'
+        $matches = [regex]::Matches($content, $pattern)
+
+        foreach ($match in $matches) {
+            $startCh = [int]$match.Groups[1].Value
+            $endCh = [int]$match.Groups[2].Value
+
+            if ($ChapterNum -ge $startCh -and $ChapterNum -le $endCh) {
+                return "volume-$volumeNum"
+            }
+            $volumeNum++
+        }
+    }
+
+    # 默认规则：每60章一卷
+    $volume = [math]::Floor(($ChapterNum - 1) / 60) + 1
+    return "volume-$volume"
+}
+
 # 确定章节所属卷册
 function Get-Volume {
     param([int]$ChapterNum)
 
-    if ($ChapterNum -le 60) {
-        return "volume-1"
-    } elseif ($ChapterNum -le 120) {
-        return "volume-2"
-    } elseif ($ChapterNum -le 180) {
-        return "volume-3"
-    } else {
-        return "volume-4"
-    }
+    $outlineFile = "$storyDir/outline.md"
+    return Parse-VolumeInfo -OutlineFile $outlineFile -ChapterNum $ChapterNum
 }
 
 # 获取下一个待写章节
 function Get-NextChapter {
     param([string]$ChaptersDir)
 
+    # 从 outline.md 获取总章节数
+    $maxChapters = 500  # 默认最大值
+    $outlineFile = "$storyDir/outline.md"
+
+    if (Test-Path $outlineFile) {
+        $content = Get-Content $outlineFile -Raw
+        if ($content -match '总章节数.*?(\d+)章') {
+            $maxChapters = [int]$matches[1]
+        }
+    }
+
     # 遍历所有可能的章节查找第一个未写的
-    for ($i = 1; $i -le 240; $i++) {
+    for ($i = 1; $i -le $maxChapters; $i++) {
         $volume = Get-Volume -ChapterNum $i
         $chapterNumFormatted = "{0:D3}" -f $i
         $chapterFile = "$ChaptersDir/$volume/chapter-$chapterNumFormatted.md"
@@ -45,7 +80,7 @@ function Get-NextChapter {
             return $i
         }
     }
-    return 241  # 所有章节都已写完
+    return $maxChapters + 1  # 所有章节都已写完
 }
 
 $storyDir = Get-LatestStory

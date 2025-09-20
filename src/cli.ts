@@ -43,7 +43,7 @@ function displayBanner(): void {
 ╚═══════════════════════════════════════╝
 `;
   console.log(chalk.cyan(banner));
-  console.log(chalk.gray('  版本: 0.3.6 | 基于 Spec Kit 架构\n'));
+  console.log(chalk.gray('  版本: 0.3.7 | 基于 Spec Kit 架构\n'));
 }
 
 displayBanner();
@@ -51,7 +51,7 @@ displayBanner();
 program
   .name('novel')
   .description(chalk.cyan('Novel Writer - AI 驱动的中文小说创作工具初始化'))
-  .version('0.3.6', '-v, --version', '显示版本号')
+  .version('0.3.7', '-v, --version', '显示版本号')
   .helpOption('-h, --help', '显示帮助信息');
 
 // init 命令 - 初始化小说项目（类似 specify init）
@@ -133,7 +133,7 @@ program
         type: 'novel',
         ai: options.ai,
         created: new Date().toISOString(),
-        version: '0.3.6'
+        version: '0.3.7'
       };
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });

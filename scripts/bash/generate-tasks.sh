@@ -26,17 +26,40 @@ if [ ! -f "$STORY_DIR/outline.md" ]; then
     exit 1
 fi
 
-# 创建任务文件
+# 获取当前日期
+CURRENT_DATE=$(date '+%Y-%m-%d')
+CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+# 创建任务文件，预先填充基础信息
 TASKS_FILE="$STORY_DIR/tasks.md"
-touch "$TASKS_FILE"
+cat > "$TASKS_FILE" << EOF
+# 写作任务清单
+
+## 任务概览
+- **创建日期**：${CURRENT_DATE}
+- **最后更新**：${CURRENT_DATE}
+- **任务状态**：待生成
+
+---
+EOF
 
 # 创建进度追踪文件
 PROGRESS_FILE="$STORY_DIR/progress.json"
 if [ ! -f "$PROGRESS_FILE" ]; then
-    echo '{"total_chapters":0,"completed":0,"in_progress":0,"word_count":0}' > "$PROGRESS_FILE"
+    cat > "$PROGRESS_FILE" << EOF
+{
+  "created_at": "${CURRENT_DATETIME}",
+  "updated_at": "${CURRENT_DATETIME}",
+  "total_chapters": 0,
+  "completed": 0,
+  "in_progress": 0,
+  "word_count": 0
+}
+EOF
 fi
 
 # 输出结果
 echo "TASKS_FILE: $TASKS_FILE"
 echo "PROGRESS_FILE: $PROGRESS_FILE"
+echo "CURRENT_DATE: $CURRENT_DATE"
 echo "STATUS: ready"
