@@ -1,6 +1,6 @@
 {
   "name": "novel-writer-cn",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "AI 驱动的中文小说创作工具 - 基于结构化工作流的智能写作助手",
   "keywords": [
     "novel",
@@ -47,10 +47,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/novel-writer/novel-writer"
+    "url": "https://github.com/wordflowlab/novel-writer"
   },
-  "homepage": "https://github.com/novel-writer/novel-writer#readme",
+  "homepage": "https://github.com/wordflowlab/novel-writer#readme",
   "bugs": {
-    "url": "https://github.com/novel-writer/novel-writer/issues"
+    "url": "https://github.com/wordflowlab/novel-writer/issues"
   }
 }

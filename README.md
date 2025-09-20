@@ -1,277 +1,177 @@
 # Novel Writer - AI 驱动的中文小说创作工具
 
-[![npm version](https://badge.fury.io/js/%40novel%2Fwriter.svg)](https://badge.fury.io/js/%40novel%2Fwriter)
+[![npm version](https://badge.fury.io/js/novel-writer-cn.svg)](https://www.npmjs.com/package/novel-writer-cn)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> 🚀 基于结构化工作流和 AI 技术的智能小说创作助手
+> 🚀 基于 Spec Kit 架构的 AI 智能小说创作助手
 
 ## ✨ 特性
 
-- 📚 **结构化创作流程** - 从构思到成稿的完整工作流
-- 🤖 **AI 智能辅助** - 支持 Claude、Gemini、通义千问等 AI 助手
-- 🎯 **中文优化** - 专为中文小说创作设计
-- 📝 **丰富的模板** - 提供多种类型小说的创作模板
-- 🔄 **版本管理** - 集成 Git 进行草稿版本控制
-- 📊 **进度追踪** - 实时跟踪创作进度和字数统计
+- 📚 **AI 斜杠命令** - 在 Claude、Cursor、Gemini 等 AI 助手中直接使用
+- 🎯 **结构化创作** - 从风格设定到章节写作的完整工作流
+- 🤖 **智能辅助** - AI 理解上下文，提供针对性创作建议
+- 📝 **中文优化** - 专为中文小说创作设计的命令和模板
+- 🔄 **跨平台支持** - Windows PowerShell 和 Unix/Linux Bash 脚本
 
 ## 🚀 快速开始
 
 ### 安装
 
 ```bash
-# 使用 npm 安装
-npm install -g @novel/writer
-
-# 或使用 yarn
-yarn global add @novel/writer
-
-# 或使用 pnpm
-pnpm add -g @novel/writer
+npm install -g novel-writer-cn
 ```
 
-### 创建第一本小说
+### 初始化项目
 
 ```bash
-# 1. 初始化小说项目
-novel init "我的第一本小说" --ai claude --genre 科幻
+# 创建新的小说项目
+novel init my-novel
 
-# 2. 进入项目目录
-cd 我的第一本小说
-
-# 3. 设定创作风格
-novel style
-
-# 4. 创建故事大纲
-novel story
-
-# 5. 规划章节结构
-novel outline
-
-# 6. 开始写作第一章
-novel write --chapter 1
+# 或在当前目录初始化
+novel init --here
 ```
 
-## 📖 命令详解
+### 在 AI 助手中使用斜杠命令
 
-### `novel init <name>`
-初始化一个新的小说项目
+初始化后，在 Claude、Cursor 或其他 AI 助手中使用以下斜杠命令：
 
-**参数：**
-- `name` - 小说项目名称
+1. **`/style`** - 设定创作风格和准则
+2. **`/story`** - 创建故事大纲、角色和世界观
+3. **`/outline`** - 规划详细的章节结构
+4. **`/chapters`** - 生成具体的写作任务
+5. **`/write`** - AI 辅助写作章节内容
 
-**选项：**
-- `--ai <type>` - 选择 AI 助手 (claude/gemini/qwen)
-- `--genre <type>` - 小说类型 (科幻/奇幻/现实/历史/言情/悬疑)
+## 📖 斜杠命令详解
 
-**示例：**
-```bash
-novel init "星际漫游" --ai claude --genre 科幻
+### `/style` - 设定创作风格
+
+设定你的创作风格，包括：
+- 叙事视角（第一人称/第三人称）
+- 文字风格（简洁明快/华丽优美）
+- 创作原则
+- 质量标准
+
+### `/story` - 创建故事大纲
+
+创建完整的故事设定：
+- 故事概述和核心冲突
+- 主要角色设定
+- 世界观和背景
+- 情节大纲（起承转合）
+
+示例：
+```
+/story 一个关于穿越者在修仙世界的冒险故事
 ```
 
-### `novel style`
-设定个人写作风格和创作准则
+### `/outline` - 章节规划
 
-**选项：**
-- `--template <name>` - 使用预设模板 (网文/文学/轻小说)
+制定详细的章节结构：
+- 总体结构和章节数
+- 卷/部划分
+- 每章主要事件
+- 节奏控制和高潮分布
 
-**示例：**
-```bash
-novel style --template 网文
-```
+### `/chapters` - 任务分解
 
-### `novel story [description]`
-创建故事大纲、角色设定和世界观
+将章节规划分解为可执行的任务：
+- 章节写作任务
+- 角色完善任务
+- 世界观补充
+- 修订任务
 
-**参数：**
-- `description` - 故事的简要描述（可选）
+### `/write` - 章节写作
 
-**选项：**
-- `--interactive` - 交互式创建
-
-**示例：**
-```bash
-novel story "一个关于时间旅行者拯救世界的故事"
-```
-
-### `novel outline`
-制定详细的章节结构和情节安排
-
-**选项：**
-- `--chapters <number>` - 预计章节数（默认 30）
-- `--words-per-chapter <number>` - 每章字数（默认 3000）
-
-**示例：**
-```bash
-novel outline --chapters 50 --words-per-chapter 4000
-```
-
-### `novel tasks`
-将章节分解为具体的写作任务
-
-**选项：**
-- `--priority` - 按优先级排序任务
-
-**示例：**
-```bash
-novel tasks --priority
-```
-
-### `novel write`
-AI 辅助执行实际内容创作
-
-**选项：**
-- `--chapter <number>` - 指定章节编号
-- `--mode <type>` - 创作模式 (draft/refine)
-
-**示例：**
-```bash
-novel write --chapter 1 --mode draft
-```
+AI 辅助创作具体章节内容：
+- 根据大纲创作
+- 保持风格一致
+- 角色性格连贯
+- 情节逻辑清晰
 
 ## 📁 项目结构
 
-创建的小说项目包含以下目录结构：
-
 ```
-我的小说/
-├── .novel/           # 配置文件目录
-│   ├── config.json   # 项目配置
-│   ├── style.json    # 风格设置
-│   └── story.json    # 故事数据
-├── chapters/         # 章节内容
-├── characters/       # 角色设定
-├── world/           # 世界观设定
-├── outlines/        # 章节大纲
-├── drafts/          # 草稿
-└── notes/           # 创作笔记
+my-novel/
+├── .specify/          # Spec Kit 配置
+│   └── spec.md        # 命令规范文档
+├── memory/            # 创作记忆
+│   └── writing-constitution.md
+├── stories/           # 故事内容
+│   └── 001-故事名/
+│       ├── story.md   # 故事大纲
+│       ├── outline.md # 章节规划
+│       ├── tasks.md   # 任务列表
+│       └── chapters/  # 章节内容
+└── scripts/           # 支持脚本
+    ├── bash/          # Unix/Linux/Mac
+    └── powershell/    # Windows
 ```
 
-## 🎨 创作模板
+## 🤖 支持的 AI 助手
 
-### 预设风格模板
-
-- **网文风格** - 爽点密集、节奏明快、代入感强
-- **文学风格** - 深度思考、人性探索、艺术表达
-- **轻小说风格** - 轻松愉快、角色可爱、日常温馨
-
-### 小说类型模板
-
-支持多种小说类型：
-- 科幻、奇幻、现实、历史
-- 言情、悬疑、武侠、仙侠
-
-## 🤝 AI 助手集成
-
-### 支持的 AI 助手
-
-- **Claude** - Anthropic 的 AI 助手
+- **Claude** (推荐) - Anthropic 的 AI 助手
+- **Cursor** - AI 代码编辑器
 - **Gemini** - Google 的 AI 助手
-- **通义千问** - 阿里云的 AI 助手
+- 其他支持斜杠命令的 AI 工具
 
-### 配置 AI 助手
+## 🛠️ CLI 命令
 
-在项目根目录创建 `.env` 文件：
+### `novel init [name]`
 
-```env
-# Claude API
-CLAUDE_API_KEY=your_claude_api_key
+初始化小说项目
 
-# Gemini API
-GEMINI_API_KEY=your_gemini_api_key
+**选项：**
+- `--here` - 在当前目录初始化
+- `--ai <type>` - 选择 AI 助手类型 (claude/cursor/gemini)
 
-# 通义千问 API
-QWEN_API_KEY=your_qwen_api_key
-```
+### `novel check`
 
-## 📊 功能特色
+检查项目配置和状态
 
-### 智能创作辅助
-- 自动生成故事大纲
-- 角色性格分析
-- 情节逻辑检查
-- 文风一致性维护
+## 📚 工作流程
 
-### 进度管理
-- 字数统计
-- 更新计划
-- 任务追踪
-- 里程碑设置
+1. **初始化项目**
+   ```bash
+   novel init my-novel
+   cd my-novel
+   ```
 
-### 版本控制
-- Git 集成
-- 草稿管理
-- 修订历史
-- 多版本对比
+2. **设定创作风格**
+   在 AI 助手中使用 `/style` 命令设定你的创作风格
 
-## 🛠️ 开发
+3. **创建故事大纲**
+   使用 `/story` 命令，提供故事描述，AI 会帮助创建完整大纲
 
-### 本地开发
+4. **规划章节**
+   使用 `/outline` 命令制定详细的章节结构
 
-```bash
-# 克隆仓库
-git clone https://github.com/novel-writer/novel-writer.git
+5. **生成任务**
+   使用 `/chapters` 命令将规划分解为具体任务
 
-# 安装依赖
-cd novel-writer
-npm install
+6. **开始写作**
+   使用 `/write` 命令，AI 会根据大纲协助创作
 
-# 开发模式
-npm run dev
+## 🎯 最佳实践
 
-# 构建
-npm run build
-```
+- **保持一致性**：始终参考 `memory/writing-constitution.md` 中的风格设定
+- **循序渐进**：按照工作流程顺序使用命令
+- **版本管理**：使用 Git 管理你的创作版本
+- **定期备份**：重要内容及时备份
 
-### 项目结构
-
-```
-novel-writer/
-├── src/
-│   ├── cli.ts          # CLI 入口
-│   ├── commands/       # 命令实现
-│   ├── templates/      # 模板引擎
-│   └── utils/          # 工具函数
-├── templates/          # 创作模板
-└── package.json        # 项目配置
-```
-
-## 📚 文档
-
-- [使用指南](https://github.com/novel-writer/novel-writer/wiki/使用指南)
-- [API 文档](https://github.com/novel-writer/novel-writer/wiki/API文档)
-- [贡献指南](https://github.com/novel-writer/novel-writer/blob/main/CONTRIBUTING.md)
-
-## 🤔 常见问题
-
-### Q: 支持哪些操作系统？
-A: 支持 Windows、macOS 和 Linux。
-
-### Q: 需要付费吗？
-A: Novel Writer 本身免费开源，但使用 AI 助手可能需要相应的 API 密钥。
-
-### Q: 可以离线使用吗？
-A: 基础功能可以离线使用，但 AI 辅助功能需要网络连接。
-
-### Q: 如何备份我的小说？
-A: 项目集成了 Git，可以使用 Git 命令进行版本管理和备份。
-
-## 🙏 致谢
-
-本项目参考了 [Spec Kit](https://github.com/github/spec-kit) 的架构设计，特此感谢！
-
-## 📄 许可证
-
-MIT License - 详见 [LICENSE](LICENSE) 文件
-
-## 👥 贡献
+## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
 
-## 📮 联系我们
+项目地址：[https://github.com/wordflowlab/novel-writer](https://github.com/wordflowlab/novel-writer)
 
-- GitHub: [https://github.com/novel-writer/novel-writer](https://github.com/novel-writer/novel-writer)
-- Email: support@novelwriter.io
+## 📄 许可证
+
+MIT License
+
+## 🙏 致谢
+
+本项目基于 [Spec Kit](https://github.com/sublayerapp/spec-kit) 架构设计，特此感谢！
 
 ---
 
-**Novel Writer** - 让创作更简单，让故事更精彩！ ✨📚
+**Novel Writer** - 让 AI 成为你的创作伙伴！ ✨📚
