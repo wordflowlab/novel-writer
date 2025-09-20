@@ -1,15 +1,15 @@
 ---
 description: 创建故事大纲，包括主题、角色、世界观等核心设定
 scripts:
-  sh: scripts/bash/create-new-story.sh --json "{ARGS}"
-  ps: scripts/powershell/create-new-story.ps1 -Json "{ARGS}"
+  sh: .specify/scripts/bash/create-new-story.sh --json "{ARGS}"
+  ps: .specify/scripts/powershell/create-new-story.ps1 -Json "{ARGS}"
 ---
 
 根据提供的故事描述创建完整的故事大纲：
 
 1. 运行脚本 `{SCRIPT}` 并解析 JSON 输出，获取 STORY_NAME 和 STORY_FILE
    **重要**：脚本只运行一次，JSON 输出会显示在终端
-2. 加载 `templates/story-template.md` 理解所需章节
+2. 加载 `.specify/templates/story-template.md` 理解所需章节
 3. 使用模板结构将故事大纲写入 STORY_FILE，包含：
    - **故事概述**：一句话描述、核心冲突、主题思想
    - **角色设定**：主角和重要配角的详细设定

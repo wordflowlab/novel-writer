@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # 设定创作风格和准则
 
-$MEMORY_DIR = "memory"
+$MEMORY_DIR = ".specify/memory"
 
 # 创建内存目录
 if (!(Test-Path $MEMORY_DIR)) {

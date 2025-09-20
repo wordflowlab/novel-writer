@@ -1,8 +1,8 @@
 ---
 description: 将章节规划分解为具体的写作任务
 scripts:
-  sh: scripts/bash/generate-tasks.sh
-  ps: scripts/powershell/generate-tasks.ps1
+  sh: .specify/scripts/bash/generate-tasks.sh
+  ps: .specify/scripts/powershell/generate-tasks.ps1
 ---
 
 基于章节规划生成可执行的写作任务：

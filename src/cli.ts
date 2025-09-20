@@ -92,7 +92,7 @@ function displayBanner(): void {
 ╚═══════════════════════════════════════╝
 `;
   console.log(chalk.cyan(banner));
-  console.log(chalk.gray('  版本: 0.3.3 | 基于 Spec Kit 架构\n'));
+  console.log(chalk.gray('  版本: 0.3.4 | 基于 Spec Kit 架构\n'));
 }
 
 displayBanner();
@@ -100,7 +100,7 @@ displayBanner();
 program
   .name('novel')
   .description(chalk.cyan('Novel Writer - AI 驱动的中文小说创作工具初始化'))
-  .version('0.3.3', '-v, --version', '显示版本号')
+  .version('0.3.4', '-v, --version', '显示版本号')
   .helpOption('-h, --help', '显示帮助信息');
 
 // init 命令 - 初始化小说项目（类似 specify init）
@@ -137,8 +137,12 @@ program
       // 创建基础项目结构
       const baseDirs = [
         '.specify',
-        'stories',
-        'memory'
+        '.specify/memory',
+        '.specify/scripts',
+        '.specify/scripts/bash',
+        '.specify/scripts/powershell',
+        '.specify/templates',
+        'stories'
       ];
 
       for (const dir of baseDirs) {
@@ -178,7 +182,7 @@ program
         type: 'novel',
         ai: options.ai,
         created: new Date().toISOString(),
-        version: '0.3.3'
+        version: '0.3.4'
       };
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
@@ -217,7 +221,7 @@ program
 
             // 提取脚本路径
             const shMatch = content.match(/sh:\s*(.+)/);
-            const scriptPath = shMatch ? shMatch[1].trim() : `scripts/bash/${commandName}.sh`;
+            const scriptPath = shMatch ? shMatch[1].trim() : `.specify/scripts/bash/${commandName}.sh`;
 
             // 为 Claude 生成命令文件
             if (aiDirs.some(dir => dir.includes('.claude'))) {
@@ -252,9 +256,9 @@ program
         await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
       }
 
-      // 复制脚本文件到用户项目
+      // 复制脚本文件到用户项目的 .specify/scripts 目录
       if (await fs.pathExists(scriptsDir)) {
-        const userScriptsDir = path.join(projectPath, 'scripts');
+        const userScriptsDir = path.join(projectPath, '.specify', 'scripts');
         await fs.copy(scriptsDir, userScriptsDir);
 
         // 设置 bash 脚本执行权限
@@ -270,11 +274,18 @@ program
         }
       }
 
-      // 复制模板文件
+      // 复制模板文件到 .specify/templates 目录
       const fullTemplatesDir = path.join(packageRoot, 'templates');
       if (await fs.pathExists(fullTemplatesDir)) {
-        const userTemplatesDir = path.join(projectPath, 'templates');
+        const userTemplatesDir = path.join(projectPath, '.specify', 'templates');
         await fs.copy(fullTemplatesDir, userTemplatesDir);
+      }
+
+      // 复制 memory 文件到 .specify/memory 目录
+      const memoryDir = path.join(packageRoot, 'memory');
+      if (await fs.pathExists(memoryDir)) {
+        const userMemoryDir = path.join(projectPath, '.specify', 'memory');
+        await fs.copy(memoryDir, userMemoryDir);
       }
 
       // Git 初始化

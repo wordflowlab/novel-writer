@@ -1,15 +1,15 @@
 ---
 description: 执行具体的章节写作，AI 辅助创作内容
 scripts:
-  sh: scripts/bash/write-chapter.sh
-  ps: scripts/powershell/write-chapter.ps1
+  sh: .specify/scripts/bash/write-chapter.sh
+  ps: .specify/scripts/powershell/write-chapter.ps1
 ---
 
 执行章节写作任务：
 
 1. 运行脚本 `{SCRIPT}` 确定要写作的章节
 2. 加载相关文件：
-   - 创作风格：`memory/writing-constitution.md`
+   - 创作风格：`.specify/memory/writing-constitution.md`
    - 故事大纲：`stories/*/story.md`
    - 章节规划：`stories/*/outline.md`
    - 前文内容：`stories/*/chapters/` (如有)

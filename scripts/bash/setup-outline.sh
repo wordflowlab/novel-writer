@@ -17,7 +17,8 @@ fi
 
 # 创建大纲文件
 OUTLINE_FILE="$STORY_DIR/outline.md"
-TEMPLATE="$PROJECT_ROOT/templates/outline-template.md"
+PROJECT_ROOT=$(get_project_root)
+TEMPLATE="$PROJECT_ROOT/.specify/templates/outline-template.md"
 
 ensure_file "$OUTLINE_FILE" "$TEMPLATE"
 

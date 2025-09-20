@@ -47,7 +47,7 @@ mkdir -p "$STORY_DIR/world"
 mkdir -p "$STORY_DIR/notes"
 
 # 复制模板文件
-TEMPLATE="$PROJECT_ROOT/templates/story-template.md"
+TEMPLATE="$PROJECT_ROOT/.specify/templates/story-template.md"
 STORY_FILE="$STORY_DIR/story.md"
 ensure_file "$STORY_FILE" "$TEMPLATE"
 

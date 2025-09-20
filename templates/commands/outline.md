@@ -1,15 +1,15 @@
 ---
 description: 规划详细的章节结构和情节安排
 scripts:
-  sh: scripts/bash/setup-outline.sh
-  ps: scripts/powershell/setup-outline.ps1
+  sh: .specify/scripts/bash/setup-outline.sh
+  ps: .specify/scripts/powershell/setup-outline.ps1
 ---
 
 基于已创建的故事大纲，制定详细的章节规划：
 
 1. 运行脚本 `{SCRIPT}` 初始化章节规划文件
 2. 加载故事大纲 `stories/*/story.md` 理解故事内容
-3. 加载 `templates/outline-template.md` 理解规划格式
+3. 加载 `.specify/templates/outline-template.md` 理解规划格式
 4. 创建章节规划，包含：
    - **总体结构**：总章节数、每章字数、更新计划
    - **卷/部划分**：如有多卷，划分各卷主题
