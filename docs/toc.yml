@@ -1,0 +1,27 @@
+# 主页
+- name: 主页
+  href: index.md
+
+# 快速开始
+- name: 快速开始
+  items:
+    - name: 安装指南
+      href: installation.md
+    - name: 快速入门
+      href: quickstart.md
+
+# 创作指南
+- name: 创作指南
+  items:
+    - name: 创作流程
+      href: workflow.md
+
+# 项目信息
+- name: 项目信息
+  items:
+    - name: README
+      href: ../README.md
+    - name: 贡献指南
+      href: ../CONTRIBUTING.md
+    - name: 许可证
+      href: ../LICENSE

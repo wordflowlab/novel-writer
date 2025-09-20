@@ -6,7 +6,6 @@ import path from 'path';
 import fs from 'fs-extra';
 import ora from 'ora';
 import { execSync } from 'child_process';
-import inquirer from 'inquirer';
 
 const program = new Command();
 
@@ -19,7 +18,7 @@ function displayBanner(): void {
 ╚═══════════════════════════════════════╝
 `;
   console.log(chalk.cyan(banner));
-  console.log(chalk.gray('  版本: 0.2.0 | 基于 Spec Kit 架构\n'));
+  console.log(chalk.gray('  版本: 0.3.0 | 基于 Spec Kit 架构\n'));
 }
 
 displayBanner();
@@ -27,7 +26,7 @@ displayBanner();
 program
   .name('novel')
   .description(chalk.cyan('Novel Writer - AI 驱动的中文小说创作工具初始化'))
-  .version('0.2.0', '-v, --version', '显示版本号')
+  .version('0.3.0', '-v, --version', '显示版本号')
   .helpOption('-h, --help', '显示帮助信息');
 
 // init 命令 - 初始化小说项目（类似 specify init）
@@ -77,7 +76,7 @@ program
         type: 'novel',
         ai: options.ai,
         created: new Date().toISOString(),
-        version: '0.2.0'
+        version: '0.3.0'
       };
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
@@ -95,20 +94,30 @@ program
 
 `;
 
-      const commandFiles = await fs.readdir(templatesDir);
-      for (const file of commandFiles.sort()) {
-        if (file.endsWith('.md')) {
-          const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
-          const commandName = path.basename(file, '.md');
-          specContent += `## /${commandName}\n\n${content}\n\n`;
+      if (await fs.pathExists(templatesDir)) {
+        const commandFiles = await fs.readdir(templatesDir);
+        for (const file of commandFiles.sort()) {
+          if (file.endsWith('.md')) {
+            const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
+            const commandName = path.basename(file, '.md');
+            specContent += `## /${commandName}\n\n${content}\n\n`;
+          }
         }
       }
 
       await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
 
       // 复制脚本文件到用户项目
-      const userScriptsDir = path.join(projectPath, 'scripts');
-      await fs.copy(scriptsDir, userScriptsDir);
+      if (await fs.pathExists(scriptsDir)) {
+        const userScriptsDir = path.join(projectPath, 'scripts');
+        await fs.copy(scriptsDir, userScriptsDir);
+      }
+
+      // 复制模板文件
+      if (await fs.pathExists(templatesDir)) {
+        const userTemplatesDir = path.join(projectPath, 'templates');
+        await fs.copy(path.join(packageRoot, 'templates'), userTemplatesDir);
+      }
 
       // Git 初始化
       if (options.git !== false) {
