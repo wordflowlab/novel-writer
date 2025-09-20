@@ -31,10 +31,21 @@ STORIES_DIR="$PROJECT_ROOT/stories"
 # 创建带编号的故事目录
 STORY_NUM=$(create_numbered_dir "$STORIES_DIR" "story")
 
-# 生成故事目录名
+# 生成故事目录名（参考 spec-kit 的方式）
 STORY_NAME=$(echo "$STORY_DESCRIPTION" | tr '[:upper:]' '[:lower:]' | \
-    sed 's/[^a-z0-9\u4e00-\u9fa5]/-/g' | sed 's/-\+/-/g' | \
-    sed 's/^-//' | sed 's/-$//' | head -c 20)
+    sed 's/[^a-z0-9]/-/g' | sed 's/-\+/-/g' | \
+    sed 's/^-//' | sed 's/-$//')
+
+# 提取前3个有意义的词
+if [ -n "$STORY_NAME" ]; then
+    WORDS=$(echo "$STORY_NAME" | tr '-' '\n' | grep -v '^$' | head -3 | tr '\n' '-' | sed 's/-$//')
+    STORY_NAME="$WORDS"
+fi
+
+# 如果处理后为空（比如纯中文描述），使用默认名称
+if [ -z "$STORY_NAME" ]; then
+    STORY_NAME="story"
+fi
 
 STORY_DIR_NAME="${STORY_NUM}-${STORY_NAME}"
 STORY_DIR="$STORIES_DIR/$STORY_DIR_NAME"

@@ -44,10 +44,24 @@ function Get-NextNumber {
     return $maxNum + 1
 }
 
-# 创建编号目录
+# 创建编号目录（参考 spec-kit 方式）
 $storyNum = Get-NextNumber -Dir $STORIES_DIR -Prefix "story"
 $storyNumFormatted = "{0:D3}" -f $storyNum
-$safeName = $storyData.name -replace '[^\w\-]', '_'
+
+# 生成安全的目录名（只保留英文单词）
+$safeName = $storyData.name.ToLower() -replace '[^a-z0-9]', '-' -replace '-+', '-' -replace '^-|-$', ''
+
+# 提取前3个词
+if ($safeName) {
+    $words = $safeName -split '-' | Where-Object { $_ -ne '' } | Select-Object -First 3
+    $safeName = $words -join '-'
+}
+
+# 如果为空（比如纯中文），使用默认名称
+if (-not $safeName) {
+    $safeName = "story"
+}
+
 $storyDirName = "$storyNumFormatted-$safeName"
 $storyPath = "$STORIES_DIR/$storyDirName"
 

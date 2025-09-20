@@ -16,20 +16,36 @@ function Get-LatestStory {
     return $null
 }
 
+# 确定章节所属卷册
+function Get-Volume {
+    param([int]$ChapterNum)
+
+    if ($ChapterNum -le 60) {
+        return "volume-1"
+    } elseif ($ChapterNum -le 120) {
+        return "volume-2"
+    } elseif ($ChapterNum -le 180) {
+        return "volume-3"
+    } else {
+        return "volume-4"
+    }
+}
+
 # 获取下一个待写章节
 function Get-NextChapter {
     param([string]$ChaptersDir)
 
-    $maxNum = 0
-    if (Test-Path $ChaptersDir) {
-        Get-ChildItem -Path $ChaptersDir -Filter "*.md" | ForEach-Object {
-            if ($_.BaseName -match "chapter-(\d+)") {
-                $num = [int]$Matches[1]
-                if ($num -gt $maxNum) { $maxNum = $num }
-            }
+    # 遍历所有可能的章节查找第一个未写的
+    for ($i = 1; $i -le 240; $i++) {
+        $volume = Get-Volume -ChapterNum $i
+        $chapterNumFormatted = "{0:D3}" -f $i
+        $chapterFile = "$ChaptersDir/$volume/chapter-$chapterNumFormatted.md"
+
+        if (!(Test-Path $chapterFile)) {
+            return $i
         }
     }
-    return $maxNum + 1
+    return 241  # 所有章节都已写完
 }
 
 $storyDir = Get-LatestStory
@@ -52,11 +68,20 @@ if (!(Test-Path $outlineFile)) {
 }
 
 $nextChapter = Get-NextChapter -ChaptersDir $chaptersDir
-$chapterFile = "$chaptersDir/chapter-$nextChapter.md"
+$volume = Get-Volume -ChapterNum $nextChapter
+$chapterNumFormatted = "{0:D3}" -f $nextChapter
+$volumeDir = "$chaptersDir/$volume"
+
+# 创建卷册目录（如果不存在）
+if (!(Test-Path $volumeDir)) {
+    New-Item -ItemType Directory -Path $volumeDir | Out-Null
+}
+
+$chapterFile = "$volumeDir/chapter-$chapterNumFormatted.md"
 
 Write-Host "故事目录: $storyDir"
 Write-Host "章节文件: $chapterFile"
-Write-Host "当前章节: 第 $nextChapter 章"
+Write-Host "当前章节: 第 $nextChapter 章 ($volume)"
 Write-Host ""
 Write-Host "相关文件："
 if (Test-Path $styleFile) {
