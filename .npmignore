@@ -1,0 +1,40 @@
+# 源代码
+src/
+*.ts
+
+# 配置文件
+tsconfig.json
+.gitignore
+.git/
+
+# 开发文件
+node_modules/
+*.log
+*.tmp
+.DS_Store
+
+# 测试文件
+test/
+*.test.js
+*.spec.js
+
+# 文档源文件
+docs/
+*.md
+!README.md
+
+# 示例和模板的源文件
+examples/
+templates/*.md
+memory/
+
+# IDE配置
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 构建缓存
+.cache/
+temp/
+tmp/

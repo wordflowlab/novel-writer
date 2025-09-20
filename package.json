@@ -1,0 +1,56 @@
+{
+  "name": "@novel/writer",
+  "version": "0.1.0",
+  "description": "AI 驱动的中文小说创作工具 - 基于结构化工作流的智能写作助手",
+  "keywords": [
+    "novel",
+    "writer",
+    "chinese",
+    "ai",
+    "creative-writing",
+    "小说",
+    "创作",
+    "写作"
+  ],
+  "author": "Novel Writer Team",
+  "license": "MIT",
+  "main": "dist/cli.js",
+  "bin": {
+    "novel": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@commander-js/extra-typings": "^12.0.0",
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "ora": "^8.0.1",
+    "fs-extra": "^11.2.0",
+    "dotenv": "^16.3.1",
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/novel-writer/novel-writer"
+  },
+  "homepage": "https://github.com/novel-writer/novel-writer#readme",
+  "bugs": {
+    "url": "https://github.com/novel-writer/novel-writer/issues"
+  }
+}
