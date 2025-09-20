@@ -11,57 +11,8 @@ const program = new Command();
 
 // 辅助函数：处理命令模板生成 Markdown 格式
 function generateMarkdownCommand(template: string, scriptPath: string): string {
-  // 替换 {SCRIPT} 为实际脚本路径
-  let content = template.replace(/{SCRIPT}/g, scriptPath);
-
-  // 移除 scripts 部分，但保留 description 和主体内容
-  const lines = content.split('\n');
-  const result: string[] = [];
-  let inFrontmatter = false;
-  let inScripts = false;
-  let frontmatterCount = 0;
-
-  for (const line of lines) {
-    // 处理 frontmatter
-    if (line === '---') {
-      frontmatterCount++;
-      if (frontmatterCount === 1) {
-        inFrontmatter = true;
-        result.push(line);
-        continue;
-      } else if (frontmatterCount === 2) {
-        inFrontmatter = false;
-        inScripts = false;
-        result.push(line);
-        continue;
-      }
-    }
-
-    // 在 frontmatter 中
-    if (inFrontmatter) {
-      if (line.trim() === 'scripts:') {
-        inScripts = true;
-        continue;
-      }
-      // 如果在 scripts 部分，跳过缩进的行
-      if (inScripts) {
-        if (line.startsWith('  ') || line.startsWith('\t')) {
-          continue; // 跳过 scripts 下的条目
-        } else if (line.trim() !== '') {
-          // 非空行且不缩进，说明 scripts 部分结束
-          inScripts = false;
-          result.push(line);
-        }
-      } else {
-        result.push(line);
-      }
-    } else {
-      // frontmatter 之外，保留所有内容
-      result.push(line);
-    }
-  }
-
-  return result.join('\n');
+  // 直接替换 {SCRIPT} 并返回完整内容，保留所有 frontmatter 包括 scripts 部分
+  return template.replace(/{SCRIPT}/g, scriptPath);
 }
 
 // 辅助函数：生成 TOML 格式命令
@@ -92,7 +43,7 @@ function displayBanner(): void {
 ╚═══════════════════════════════════════╝
 `;
   console.log(chalk.cyan(banner));
-  console.log(chalk.gray('  版本: 0.3.4 | 基于 Spec Kit 架构\n'));
+  console.log(chalk.gray('  版本: 0.3.5 | 基于 Spec Kit 架构\n'));
 }
 
 displayBanner();
@@ -100,7 +51,7 @@ displayBanner();
 program
   .name('novel')
   .description(chalk.cyan('Novel Writer - AI 驱动的中文小说创作工具初始化'))
-  .version('0.3.4', '-v, --version', '显示版本号')
+  .version('0.3.5', '-v, --version', '显示版本号')
   .helpOption('-h, --help', '显示帮助信息');
 
 // init 命令 - 初始化小说项目（类似 specify init）
@@ -182,7 +133,7 @@ program
         type: 'novel',
         ai: options.ai,
         created: new Date().toISOString(),
-        version: '0.3.4'
+        version: '0.3.5'
       };
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
