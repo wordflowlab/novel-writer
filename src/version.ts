@@ -27,10 +27,10 @@ export function getVersion(): string {
     }
 
     // 如果找不到 package.json，返回默认版本
-    return '0.4.1';
+    return '0.4.2';
   } catch (error) {
     // 发生错误时返回默认版本
-    return '0.4.1';
+    return '0.4.2';
   }
 }
 
