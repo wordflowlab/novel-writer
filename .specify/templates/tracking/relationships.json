@@ -1,0 +1,70 @@
+{
+  "novel": "[小说名称]",
+  "lastUpdated": "",
+
+  "characters": {
+    "[主角名]": {
+      "relationships": {
+        "allies": [],
+        "enemies": [],
+        "romantic": [],
+        "family": [],
+        "mentors": [],
+        "neutral": [],
+        "unknown": []
+      },
+      "dynamicRelations": [
+        {
+          "character": "[角色名]",
+          "initial": "陌生人",
+          "current": "朋友",
+          "trajectory": "positive",
+          "keyEvents": []
+        }
+      ]
+    }
+  },
+
+  "factions": {
+    "[派系名]": {
+      "description": "",
+      "leader": "",
+      "members": [],
+      "goals": [],
+      "alliedWith": [],
+      "opposedTo": [],
+      "status": "active"
+    }
+  },
+
+  "relationshipMatrix": {
+    "说明": "角色间关系的快速查询矩阵",
+    "matrix": {}
+  },
+
+  "conflicts": {
+    "personal": [],
+    "factional": [],
+    "ideological": []
+  },
+
+  "history": [
+    {
+      "chapter": 1,
+      "changes": [
+        {
+          "type": "new",
+          "characters": ["A", "B"],
+          "relation": "初次相遇",
+          "impact": "low"
+        }
+      ]
+    }
+  ],
+
+  "predictions": {
+    "说明": "基于当前关系预测的发展",
+    "likely": [],
+    "possible": []
+  }
+}

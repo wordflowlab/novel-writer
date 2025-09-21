@@ -11,7 +11,8 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(npm:*)"
+      "Bash(npm:*)",
+      "Bash(./bin/novel.js recommend:*)"
     ],
     "deny": [],
     "ask": []
