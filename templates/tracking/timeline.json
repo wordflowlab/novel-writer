@@ -1,0 +1,49 @@
+{
+  "novel": "[小说名称]",
+  "lastUpdated": "",
+
+  "storyTime": {
+    "start": "[故事开始时间]",
+    "current": "[当前故事时间]",
+    "end": "[预计结束时间]",
+    "format": "说明：可以是年代、季节、具体日期等"
+  },
+
+  "events": [
+    {
+      "chapter": 1,
+      "date": "[故事内时间]",
+      "event": "[事件描述]",
+      "duration": "[持续时间]",
+      "participants": []
+    }
+  ],
+
+  "parallelEvents": {
+    "说明": "同时发生的事件，按时间点分组",
+    "timepoints": {}
+  },
+
+  "historicalContext": {
+    "说明": "历史背景事件（历史小说适用）",
+    "events": []
+  },
+
+  "timeLogic": {
+    "travelTimes": {
+      "说明": "地点间的旅行时间",
+      "routes": {}
+    },
+    "constraints": [
+      {
+        "description": "时间限制说明",
+        "rule": ""
+      }
+    ]
+  },
+
+  "anomalies": {
+    "说明": "时间逻辑问题记录",
+    "issues": []
+  }
+}

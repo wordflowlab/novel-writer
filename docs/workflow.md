@@ -1,19 +1,35 @@
 # 创作流程指南
 
-本指南详细介绍使用 Novel Writer 进行小说创作的完整流程，从构思到成稿的每个环节。
+本指南详细介绍使用 Novel Writer 进行小说创作的完整流程。Novel Writer 参考 Spec-Kit 的方法论，将规格驱动开发（SDD）理念应用于创作领域。
+
+## 核心理念
+
+### 规格驱动创作（Spec-Driven Writing）
+
+参考 Spec-Kit 的 SDD 方法论，Novel Writer 采用分层递进的创作模式：
+
+1. **规格定义**：先定义作品的整体规格（风格、主题、结构）
+2. **计划制定**：将规格细化为可执行的创作计划
+3. **任务分解**：将计划分解为具体的写作任务
+4. **迭代实现**：逐步实现每个任务，持续迭代改进
 
 ## 创作流程概览
 
 ```mermaid
 graph TD
-    A[故事构思] --> B[风格设定]
-    B --> C[故事大纲]
-    C --> D[章节规划]
-    D --> E[任务分解]
-    E --> F[章节写作]
-    F --> G[修改润色]
-    G --> H[发布更新]
-    H --> F
+    A[/style - 风格规格] --> B[/story - 故事规划]
+    B --> C[/outline - 章节大纲]
+    C --> D[/characters - 人物任务]
+    D --> E[/write - 章节实现]
+    E --> F[修改迭代]
+    F --> G[发布部署]
+    G --> E
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#bfb,stroke:#333,stroke-width:2px
+    style D fill:#fbf,stroke:#333,stroke-width:2px
+    style E fill:#ffb,stroke:#333,stroke-width:2px
 ```
 
 ## 阶段一：准备工作
@@ -43,19 +59,26 @@ cd 我的小说
 
 ### 1.3 项目结构理解
 
+参考 Spec-Kit 的组织方式，Novel Writer 采用清晰的分层结构：
+
 ```
 我的小说/
-├── .specify/          # 配置和命令规范
+├── templates/         # 命令模板（参考spec-kit）
+│   └── commands/      # 各种创作命令
 ├── memory/            # 创作记忆（风格、设定）
-├── stories/           # 故事内容
+│   ├── constitution.md # 创作宪法
+│   └── style.md       # 风格规范
+├── specs/             # 生成的作品（参考spec-kit）
 │   └── 001-故事名/
-│       ├── story.md   # 大纲
-│       ├── outline.md # 章节规划
+│       ├── spec.md    # 故事规格
+│       ├── plan.md    # 创作计划
 │       ├── tasks.md   # 任务列表
 │       ├── chapters/  # 章节内容
 │       ├── characters/# 角色设定
 │       └── worldbuilding/ # 世界观
 └── scripts/           # 辅助脚本
+    ├── bash/          # Bash 脚本
+    └── powershell/    # PowerShell 脚本
 ```
 
 ## 阶段二：创作规划

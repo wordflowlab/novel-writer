@@ -1,0 +1,78 @@
+{
+  "novel": "[小说名称]",
+  "lastUpdated": "",
+
+  "protagonist": {
+    "name": "[主角名]",
+    "currentStatus": {
+      "alive": true,
+      "health": "良好",
+      "mentalState": "正常",
+      "location": "[当前位置]",
+      "chapter": 1,
+      "age": null,
+      "position": "[身份/职位]",
+      "possessions": [],
+      "skills": [],
+      "knowledge": []
+    },
+    "development": {
+      "arc": "[成长弧线描述]",
+      "milestones": [],
+      "currentPhase": "起点",
+      "nextGoal": ""
+    },
+    "relationships": {
+      "summary": "见relationships.json详细信息",
+      "key": {}
+    }
+  },
+
+  "supportingCharacters": {
+    "[配角名]": {
+      "role": "[角色功能]",
+      "importance": "high|medium|low",
+      "status": {
+        "alive": true,
+        "lastSeen": {
+          "chapter": null,
+          "location": ""
+        },
+        "currentLocation": "unknown",
+        "occupation": ""
+      },
+      "arc": {
+        "planned": "",
+        "current": ""
+      },
+      "secrets": [],
+      "motivations": []
+    }
+  },
+
+  "characterGroups": {
+    "active": [],
+    "inactive": [],
+    "deceased": []
+  },
+
+  "appearanceTracking": [
+    {
+      "chapter": 1,
+      "appearances": [
+        {
+          "character": "[角色名]",
+          "role": "主要|次要|背景",
+          "significance": ""
+        }
+      ]
+    }
+  ],
+
+  "consistency": {
+    "physicalTraits": {},
+    "personalityTraits": {},
+    "speechPatterns": {},
+    "warnings": []
+  }
+}

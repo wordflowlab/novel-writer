@@ -6,6 +6,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import ora from 'ora';
 import { execSync } from 'child_process';
+import { getVersion, getVersionInfo } from './version';
 
 const program = new Command();
 
@@ -43,7 +44,7 @@ function displayBanner(): void {
 ╚═══════════════════════════════════════╝
 `;
   console.log(chalk.cyan(banner));
-  console.log(chalk.gray('  版本: 0.3.7 | 基于 Spec Kit 架构\n'));
+  console.log(chalk.gray(`  ${getVersionInfo()}\n`));
 }
 
 displayBanner();
@@ -51,7 +52,7 @@ displayBanner();
 program
   .name('novel')
   .description(chalk.cyan('Novel Writer - AI 驱动的中文小说创作工具初始化'))
-  .version('0.3.7', '-v, --version', '显示版本号')
+  .version(getVersion(), '-v, --version', '显示版本号')
   .helpOption('-h, --help', '显示帮助信息');
 
 // init 命令 - 初始化小说项目（类似 specify init）
@@ -93,7 +94,10 @@ program
         '.specify/scripts/bash',
         '.specify/scripts/powershell',
         '.specify/templates',
-        'stories'
+        'stories',
+        'spec',
+        'spec/tracking',
+        'spec/knowledge'
       ];
 
       for (const dir of baseDirs) {
@@ -133,7 +137,7 @@ program
         type: 'novel',
         ai: options.ai,
         created: new Date().toISOString(),
-        version: '0.3.7'
+        version: getVersion()
       };
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
@@ -147,7 +151,7 @@ program
       let specContent = `# Novel Writer Spec - AI 小说创作命令规范
 
 本文件定义了 Novel Writer 支持的所有斜杠命令。
-在 Claude、Cursor 或其他 AI 助手中使用这些命令进行小说创作。
+在 Claude Code、Cursor 或其他 AI 助手中使用这些命令进行小说创作。
 
 `;
 
@@ -237,6 +241,32 @@ program
       if (await fs.pathExists(memoryDir)) {
         const userMemoryDir = path.join(projectPath, '.specify', 'memory');
         await fs.copy(memoryDir, userMemoryDir);
+      }
+
+      // 复制追踪文件模板到 spec/tracking 目录
+      const trackingTemplatesDir = path.join(packageRoot, 'templates', 'tracking');
+      if (await fs.pathExists(trackingTemplatesDir)) {
+        const userTrackingDir = path.join(projectPath, 'spec', 'tracking');
+        await fs.copy(trackingTemplatesDir, userTrackingDir);
+      }
+
+      // 复制知识库模板到 spec/knowledge 目录
+      const knowledgeTemplatesDir = path.join(packageRoot, 'templates', 'knowledge');
+      if (await fs.pathExists(knowledgeTemplatesDir)) {
+        const userKnowledgeDir = path.join(projectPath, 'spec', 'knowledge');
+        await fs.copy(knowledgeTemplatesDir, userKnowledgeDir);
+
+        // 更新模板中的日期
+        const knowledgeFiles = await fs.readdir(userKnowledgeDir);
+        const currentDate = new Date().toISOString().split('T')[0];
+        for (const file of knowledgeFiles) {
+          if (file.endsWith('.md')) {
+            const filePath = path.join(userKnowledgeDir, file);
+            let content = await fs.readFile(filePath, 'utf-8');
+            content = content.replace(/\[日期\]/g, currentDate);
+            await fs.writeFile(filePath, content);
+          }
+        }
       }
 
       // Git 初始化
@@ -350,7 +380,7 @@ program.on('--help', () => {
   console.log(chalk.yellow('使用示例:'));
   console.log('');
   console.log('  $ novel init my-story');
-  console.log('  $ novel init my-story --ai cursor');
+  console.log('  $ novel init my-story --ai Claude');
   console.log('  $ novel init --here');
   console.log('  $ novel check');
   console.log('');

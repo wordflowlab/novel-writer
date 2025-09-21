@@ -1,0 +1,62 @@
+{
+  "novel": "[小说名称]",
+  "lastUpdated": "",
+  "currentState": {
+    "chapter": 1,
+    "volume": 1,
+    "mainPlotStage": "开端",
+    "location": "[当前地点]",
+    "timepoint": "[故事时间]"
+  },
+
+  "plotlines": {
+    "main": {
+      "name": "[主线名称]",
+      "description": "[主线描述]",
+      "status": "active",
+      "currentNode": "[当前节点]",
+      "completedNodes": [],
+      "upcomingNodes": [],
+      "plannedClimax": {
+        "chapter": null,
+        "description": ""
+      }
+    },
+    "subplots": []
+  },
+
+  "foreshadowing": [
+    {
+      "id": "foreshadow-001",
+      "content": "[伏笔内容]",
+      "planted": {
+        "chapter": null,
+        "description": ""
+      },
+      "hints": [],
+      "plannedReveal": {
+        "chapter": null,
+        "description": ""
+      },
+      "status": "active",
+      "importance": "high"
+    }
+  ],
+
+  "conflicts": {
+    "active": [],
+    "resolved": [],
+    "upcoming": []
+  },
+
+  "checkpoints": {
+    "volumeEnd": [],
+    "majorEvents": []
+  },
+
+  "notes": {
+    "plotHoles": [],
+    "inconsistencies": [],
+    "reminders": []
+  }
+}
