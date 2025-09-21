@@ -8,7 +8,10 @@
       "Bash(for:*)",
       "Bash(wc:*)",
       "Bash(done)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npm:*)"
     ],
     "deny": [],
     "ask": []
