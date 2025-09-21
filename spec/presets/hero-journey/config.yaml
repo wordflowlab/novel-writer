@@ -1,0 +1,261 @@
+# 英雄之旅预设配置
+name: 英雄之旅
+nameEn: Hero's Journey
+version: "1.0"
+author: Novel Writer Team
+description: |
+  由约瑟夫·坎贝尔提出的经典故事模型，描述英雄在冒险过程中经历的12个阶段。
+  特别适合奇幻、科幻和冒险类故事，强调角色的成长和转变。
+
+# 12个阶段定义
+stages:
+  - id: ordinary_world
+    name: 平凡世界
+    nameEn: Ordinary World
+    percentage: 10
+    description: 展示英雄的日常生活和环境
+    keyQuestions:
+      - 英雄的日常生活是怎样的？
+      - 什么让英雄感到不满或不安？
+      - 英雄的性格特点和缺陷是什么？
+    writingTips:
+      - 建立读者对主角的认同感
+      - 暗示即将到来的变化
+      - 展示需要被打破的平衡
+
+  - id: call_to_adventure
+    name: 冒险召唤
+    nameEn: Call to Adventure
+    percentage: 5
+    description: 打破平静，英雄面临挑战或机遇
+    keyQuestions:
+      - 什么事件打破了平静？
+      - 英雄面临什么选择？
+      - 这个召唤对英雄意味着什么？
+    writingTips:
+      - 召唤要足够重要
+      - 可以是外部事件或内心觉醒
+      - 设置明确的利害关系
+
+  - id: refusal_of_call
+    name: 拒绝召唤
+    nameEn: Refusal of the Call
+    percentage: 5
+    description: 英雄因恐惧或责任而犹豫
+    keyQuestions:
+      - 英雄为什么犹豫？
+      - 什么恐惧阻碍着英雄？
+      - 拒绝会带来什么后果？
+    writingTips:
+      - 展示英雄的人性
+      - 增加紧张感
+      - 为后续发展制造压力
+
+  - id: meeting_mentor
+    name: 遇见导师
+    nameEn: Meeting the Mentor
+    percentage: 5
+    description: 获得指引、建议或魔法赠予
+    keyQuestions:
+      - 谁是导师角色？
+      - 导师提供什么帮助？
+      - 英雄学到了什么？
+    writingTips:
+      - 导师不一定是人
+      - 可以提供工具、知识或勇气
+      - 导师也可能有缺陷
+
+  - id: crossing_threshold
+    name: 跨越门槛
+    nameEn: Crossing the Threshold
+    percentage: 5
+    description: 英雄踏入未知世界，开始冒险
+    keyQuestions:
+      - 英雄如何跨出第一步？
+      - 第一个挑战是什么？
+      - 有什么守门人阻碍？
+    writingTips:
+      - 这是不可回头的转折点
+      - 标志着故事真正开始
+      - 可以是物理或心理的跨越
+
+  - id: tests_allies_enemies
+    name: 试炼、盟友与敌人
+    nameEn: Tests, Allies, and Enemies
+    percentage: 15
+    description: 英雄面临考验，分辨朋友和敌人
+    keyQuestions:
+      - 英雄面临哪些考验？
+      - 谁是盟友，谁是敌人？
+      - 英雄如何成长和适应？
+    writingTips:
+      - 逐步升级挑战难度
+      - 展示英雄的学习过程
+      - 建立关键关系
+
+  - id: approach_inmost_cave
+    name: 接近最深的洞穴
+    nameEn: Approach to the Inmost Cave
+    percentage: 10
+    description: 准备面对最大的恐惧或最危险的地方
+    keyQuestions:
+      - 最大的挑战是什么？
+      - 英雄如何准备？
+      - 内心的恐惧是什么？
+    writingTips:
+      - 建立紧张感
+      - 可能需要新的准备或计划
+      - 展示英雄的决心
+
+  - id: ordeal
+    name: 磨难
+    nameEn: Ordeal
+    percentage: 10
+    description: 面对最大的恐惧，经历"死亡"与"重生"
+    keyQuestions:
+      - 英雄面临什么生死考验？
+      - 最黑暗的时刻是什么？
+      - 英雄如何突破？
+    writingTips:
+      - 这是故事的核心危机
+      - 英雄必须面对内心恐惧
+      - 可以是象征性的死亡
+
+  - id: reward
+    name: 获得奖赏
+    nameEn: Reward (Seizing the Sword)
+    percentage: 10
+    description: 战胜恐惧后获得奖赏
+    keyQuestions:
+      - 英雄获得了什么？
+      - 这个奖赏的意义是什么？
+      - 英雄有什么改变？
+    writingTips:
+      - 奖赏可以是物质或精神的
+      - 标志着英雄的成长
+      - 但旅程还未结束
+
+  - id: road_back
+    name: 归途
+    nameEn: The Road Back
+    percentage: 10
+    description: 带着奖赏踏上回家的路
+    keyQuestions:
+      - 英雄为什么要回去？
+      - 面临什么新的挑战？
+      - 如何运用所学？
+    writingTips:
+      - 可能面临追击或新危机
+      - 展示英雄的改变
+      - 准备最终考验
+
+  - id: resurrection
+    name: 复活
+    nameEn: Resurrection
+    percentage: 10
+    description: 最终的考验，完成转变
+    keyQuestions:
+      - 最终的考验是什么？
+      - 英雄如何证明改变？
+      - 牺牲了什么？
+    writingTips:
+      - 这是高潮时刻
+      - 英雄必须独自面对
+      - 完成内在转变
+
+  - id: return_with_elixir
+    name: 带着灵药归来
+    nameEn: Return with the Elixir
+    percentage: 5
+    description: 英雄回归，带来改变世界的礼物
+    keyQuestions:
+      - 英雄带回了什么？
+      - 世界如何改变？
+      - 英雄的新身份是什么？
+    writingTips:
+      - 展示英雄的成长
+      - 解决开始时的问题
+      - 建立新的平衡
+
+# 角色原型
+archetypes:
+  - name: 英雄
+    description: 故事的主角，经历成长和转变
+    variations: [不情愿的英雄, 反英雄, 群体英雄]
+
+  - name: 导师
+    description: 提供智慧和指引
+    variations: [智慧老人, 神奇助手, 内心声音]
+
+  - name: 门槛守卫
+    description: 测试英雄的决心
+    variations: [官僚, 保镖, 内心恐惧]
+
+  - name: 使者
+    description: 带来召唤或变化
+    variations: [信使, 预言, 事件]
+
+  - name: 变形者
+    description: 带来不确定性和怀疑
+    variations: [两面人, 叛徒, 内心冲突]
+
+  - name: 阴影
+    description: 代表黑暗面和对立面
+    variations: [恶人, 内心阴影, 社会问题]
+
+  - name: 盟友
+    description: 帮助英雄的伙伴
+    variations: [伙伴, 团队, 支持者]
+
+  - name: 捣蛋鬼
+    description: 带来混乱和改变
+    variations: [小丑, 麻烦制造者, 催化剂]
+
+# 适用类型
+suitableFor:
+  genres:
+    - 奇幻冒险
+    - 科幻史诗
+    - 成长故事
+    - 神话传说
+    - 超级英雄
+
+  themes:
+    - 自我发现
+    - 成长与成熟
+    - 善恶对抗
+    - 命运与选择
+    - 牺牲与重生
+
+# 经典案例
+examples:
+  - title: 星球大战
+    description: 卢克·天行者的英雄之旅
+
+  - title: 哈利·波特
+    description: 从普通男孩到魔法英雄
+
+  - title: 指环王
+    description: 弗罗多的中土之旅
+
+  - title: 黑客帝国
+    description: 尼奥的觉醒之路
+
+# 变体模式
+variations:
+  - name: 女英雄之旅
+    description: 强调内在整合而非外在征服
+
+  - name: 反英雄之旅
+    description: 主角可能失败或堕落
+
+  - name: 集体英雄之旅
+    description: 群体共同完成旅程
+
+# 写作建议
+tips:
+  - 不必严格遵循所有12个阶段
+  - 可以调整顺序或合并某些阶段
+  - 重点是角色的内在转变
+  - 外在冒险反映内心旅程
+  - 每个阶段都应推进主题

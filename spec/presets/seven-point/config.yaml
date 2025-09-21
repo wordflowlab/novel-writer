@@ -1,0 +1,306 @@
+# 七点故事结构预设配置
+name: 七点结构
+nameEn: Seven-Point Story Structure
+version: "1.0"
+author: Novel Writer Team
+description: |
+  通过7个关键节点构建紧凑有力的故事结构。
+  特别适合悬疑、惊悚和商业小说，节奏明快，悬念感强。
+
+# 7个关键节点定义
+points:
+  - id: hook
+    number: 1
+    name: 钩子
+    nameEn: Hook
+    percentage: 5
+    description: 吸引读者，建立兴趣
+    placement: 开头
+    function: |
+      立即抓住读者注意力
+      建立故事基调
+      介绍主角和世界
+    keyElements:
+      - 引人入胜的开场
+      - 主角的初始状态
+      - 暗示即将到来的冲突
+    writingTips:
+      - 第一句话就要吸引人
+      - 快速建立共鸣
+      - 制造好奇心
+      - 不要过度解释
+
+  - id: plot_point_1
+    number: 2
+    name: 第一情节点
+    nameEn: First Plot Point
+    percentage: 25
+    description: 引入主要冲突，改变故事方向
+    placement: 第一幕结尾
+    function: |
+      打破现状
+      引入核心冲突
+      推动主角行动
+    keyElements:
+      - 改变一切的事件
+      - 主角被迫行动
+      - 确立故事目标
+    writingTips:
+      - 必须足够重大
+      - 不可逆转
+      - 明确利害关系
+
+  - id: pinch_point_1
+    number: 3
+    name: 第一收紧点
+    nameEn: First Pinch Point
+    percentage: 37.5
+    description: 展示对手力量，增加压力
+    placement: 第二幕前半
+    function: |
+      提醒威胁存在
+      展示对手强大
+      增加紧迫感
+    keyElements:
+      - 对手的展示
+      - 压力的增加
+      - 危险的提醒
+    writingTips:
+      - 不要让读者忘记威胁
+      - 展示而非告知
+      - 保持紧张感
+
+  - id: midpoint
+    number: 4
+    name: 中点
+    nameEn: Midpoint
+    percentage: 50
+    description: 重大转折，改变游戏规则
+    placement: 故事正中
+    function: |
+      改变故事动态
+      从反应到行动
+      揭示关键信息
+    keyElements:
+      - 重大发现或转变
+      - 主角态度转变
+      - 提升赌注
+    writingTips:
+      - 必须改变一切
+      - 可以是胜利或失败
+      - 推动下半场发展
+
+  - id: pinch_point_2
+    number: 5
+    name: 第二收紧点
+    nameEn: Second Pinch Point
+    percentage: 62.5
+    description: 危机加深，压力达到新高
+    placement: 第二幕后半
+    function: |
+      最后的提醒
+      展示真正危险
+      为高潮做准备
+    keyElements:
+      - 更大的威胁
+      - 时间压力
+      - 选择的迫切性
+    writingTips:
+      - 比第一收紧点更强
+      - 直接威胁主角
+      - 制造绝望感
+
+  - id: plot_point_2
+    number: 6
+    name: 第二情节点
+    nameEn: Second Plot Point
+    percentage: 75
+    description: 最后的转折，准备决战
+    placement: 第二幕结尾
+    function: |
+      最后的准备
+      获得关键能力
+      进入最终冲突
+    keyElements:
+      - 最后的线索/工具
+      - 主角的觉醒
+      - 决战的开始
+    writingTips:
+      - 主角准备就绪
+      - 所有线索汇合
+      - 不可避免的对决
+
+  - id: resolution
+    number: 7
+    name: 结局
+    nameEn: Resolution
+    percentage: 95-100
+    description: 冲突解决，故事收束
+    placement: 结尾
+    function: |
+      解决核心冲突
+      展示改变
+      满足读者期待
+    keyElements:
+      - 高潮对决
+      - 冲突解决
+      - 新的平衡
+    writingTips:
+      - 回应所有问题
+      - 展示成长
+      - 满足但不完美
+
+# 节点间的连接
+connections:
+  hook_to_pp1:
+    description: 建立到打破
+    tension: 逐渐上升
+    focus: 建立日常，暗示冲突
+
+  pp1_to_pinch1:
+    description: 行动与阻力
+    tension: 持续上升
+    focus: 主角努力，对手出现
+
+  pinch1_to_mid:
+    description: 压力到转变
+    tension: 达到中级高峰
+    focus: 从被动到主动
+
+  mid_to_pinch2:
+    description: 主动但受挫
+    tension: 再次上升
+    focus: 努力但遇到更大阻力
+
+  pinch2_to_pp2:
+    description: 危机到突破
+    tension: 接近顶峰
+    focus: 最黑暗到曙光
+
+  pp2_to_res:
+    description: 决战与解决
+    tension: 最高峰然后释放
+    focus: 最终对决和新平衡
+
+# 节奏控制
+pacing:
+  act1:
+    points: [hook, plot_point_1]
+    percentage: 25
+    pace: 中速建立
+
+  act2a:
+    points: [pinch_point_1, midpoint]
+    percentage: 25
+    pace: 加速上升
+
+  act2b:
+    points: [pinch_point_2, plot_point_2]
+    percentage: 25
+    pace: 持续紧张
+
+  act3:
+    points: [resolution]
+    percentage: 25
+    pace: 急速到舒缓
+
+# 张力曲线
+tensionCurve:
+  - point: hook
+    level: 30
+  - point: plot_point_1
+    level: 50
+  - point: pinch_point_1
+    level: 65
+  - point: midpoint
+    level: 75
+  - point: pinch_point_2
+    level: 85
+  - point: plot_point_2
+    level: 90
+  - point: resolution_climax
+    level: 100
+  - point: resolution_end
+    level: 20
+
+# 适用类型
+suitableFor:
+  genres:
+    - 悬疑推理
+    - 惊悚冒险
+    - 动作小说
+    - 商业小说
+    - 科幻小说
+
+  characteristics:
+    - 节奏明快
+    - 冲突明确
+    - 目标导向
+    - 商业性强
+
+  lengths:
+    - 中篇: 5-10万字
+    - 长篇: 10-30万字
+
+# 与其他结构的关系
+relationships:
+  threeAct: |
+    映射关系：
+    - Hook + PP1 = 第一幕
+    - Pinch1 + Mid + Pinch2 + PP2 = 第二幕
+    - Resolution = 第三幕
+
+  heroJourney: |
+    对应关系：
+    - Hook = 平凡世界
+    - PP1 = 冒险召唤
+    - Pinch1 = 试炼开始
+    - Midpoint = 接近洞穴/磨难
+    - Pinch2 = 磨难加深
+    - PP2 = 获得宝剑
+    - Resolution = 回归
+
+# 经典案例
+examples:
+  - title: 达芬奇密码
+    description: 完美的七点结构悬疑小说
+
+  - title: 饥饿游戏
+    description: 清晰的节点推进
+
+  - title: 谍影重重
+    description: 紧凑的动作惊悚
+
+# 优势与劣势
+pros:
+  - 结构清晰紧凑
+  - 节奏控制精准
+  - 商业吸引力强
+  - 易于规划
+  - 悬念感强
+
+cons:
+  - 可能过于公式化
+  - 不适合文学性作品
+  - 角色深度可能不足
+  - 不适合慢热故事
+
+# 写作建议
+tips:
+  - 每个节点都要推进故事
+  - 收紧点不要省略
+  - 中点必须足够有力
+  - 保持节奏的紧凑
+  - 每个点都要提升赌注
+  - 避免中间部分拖沓
+
+# 常见变体
+variations:
+  - name: 双线七点
+    description: 两条故事线各有七点
+
+  - name: 嵌套七点
+    description: 大故事中包含小七点
+
+  - name: 倒叙七点
+    description: 从结局开始倒推

@@ -1,0 +1,186 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-01-01T00:00:00Z",
+  "method": "three-act",
+  "currentProgress": {
+    "currentChapter": 1,
+    "totalChapters": 120,
+    "wordsWritten": 0,
+    "targetWords": 360000,
+    "completionRate": 0
+  },
+  "methodTracking": {
+    "three-act": {
+      "acts": [
+        {
+          "name": "第一幕：开端",
+          "status": "not_started",
+          "chapters": {
+            "planned": [1, 30],
+            "completed": []
+          },
+          "keyPoints": [
+            {
+              "name": "引入冲突",
+              "targetChapter": 5,
+              "status": "pending",
+              "notes": ""
+            },
+            {
+              "name": "触发事件",
+              "targetChapter": 10,
+              "status": "pending",
+              "notes": ""
+            },
+            {
+              "name": "跨越门槛",
+              "targetChapter": 25,
+              "status": "pending",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "name": "第二幕：发展",
+          "status": "not_started",
+          "chapters": {
+            "planned": [31, 90],
+            "completed": []
+          },
+          "keyPoints": [
+            {
+              "name": "初次考验",
+              "targetChapter": 40,
+              "status": "pending",
+              "notes": ""
+            },
+            {
+              "name": "中点转折",
+              "targetChapter": 60,
+              "status": "pending",
+              "notes": ""
+            },
+            {
+              "name": "至暗时刻",
+              "targetChapter": 80,
+              "status": "pending",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "name": "第三幕：高潮与结局",
+          "status": "not_started",
+          "chapters": {
+            "planned": [91, 120],
+            "completed": []
+          },
+          "keyPoints": [
+            {
+              "name": "最终准备",
+              "targetChapter": 95,
+              "status": "pending",
+              "notes": ""
+            },
+            {
+              "name": "最终对决",
+              "targetChapter": 110,
+              "status": "pending",
+              "notes": ""
+            },
+            {
+              "name": "新的平衡",
+              "targetChapter": 120,
+              "status": "pending",
+              "notes": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "plotThreads": [
+    {
+      "id": "main",
+      "name": "主线剧情",
+      "description": "",
+      "status": "active",
+      "chapters": {
+        "introduction": null,
+        "development": [],
+        "climax": null,
+        "resolution": null
+      }
+    }
+  ],
+  "foreshadowing": [
+    {
+      "id": "fs001",
+      "content": "",
+      "plantedChapter": null,
+      "revealChapter": null,
+      "hints": [],
+      "status": "planned",
+      "importance": "high"
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "conflict001",
+      "type": "main",
+      "description": "",
+      "parties": [],
+      "introductionChapter": null,
+      "escalationChapters": [],
+      "resolutionChapter": null,
+      "status": "planned"
+    }
+  ],
+  "pacing": {
+    "currentPace": "not_started",
+    "chapterPacing": {},
+    "tensionCurve": [],
+    "emotionalBeats": {
+      "tearPoints": [],
+      "laughPoints": [],
+      "shockPoints": [],
+      "heartPoints": []
+    }
+  },
+  "milestones": [
+    {
+      "name": "完成第一卷",
+      "targetChapter": 30,
+      "targetDate": null,
+      "completed": false,
+      "actualDate": null
+    },
+    {
+      "name": "完成第二卷",
+      "targetChapter": 60,
+      "targetDate": null,
+      "completed": false,
+      "actualDate": null
+    },
+    {
+      "name": "完成第三卷",
+      "targetChapter": 90,
+      "targetDate": null,
+      "completed": false,
+      "actualDate": null
+    },
+    {
+      "name": "完成全书",
+      "targetChapter": 120,
+      "targetDate": null,
+      "completed": false,
+      "actualDate": null
+    }
+  ],
+  "notes": {
+    "strengths": [],
+    "weaknesses": [],
+    "opportunities": [],
+    "threats": []
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "version": "0.4.0",
+  "project": {
+    "name": "Novel Writer",
+    "type": "novel",
+    "language": "zh-CN"
+  },
+  "method": {
+    "current": "three-act",
+    "available": [
+      "three-act",
+      "hero-journey",
+      "story-circle",
+      "seven-point",
+      "pixar-formula"
+    ],
+    "mixMode": false
+  },
+  "features": {
+    "tracking": {
+      "enabled": true,
+      "autoSave": true,
+      "files": [
+        "plot-tracker.json",
+        "timeline.json",
+        "relationships.json",
+        "world-setting.json"
+      ]
+    },
+    "ai": {
+      "defaultAssistant": "claude",
+      "temperature": 0.7,
+      "maxTokens": 4000
+    },
+    "templates": {
+      "customizable": true,
+      "inheritFromPreset": true
+    }
+  },
+  "preferences": {
+    "chapterLength": {
+      "min": 3000,
+      "max": 5000,
+      "target": 4000
+    },
+    "updateSchedule": "weekly",
+    "backupEnabled": true
+  }
+}

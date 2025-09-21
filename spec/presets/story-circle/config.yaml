@@ -1,0 +1,245 @@
+# 故事圈预设配置
+name: 故事圈
+nameEn: Story Circle
+version: "1.0"
+author: Novel Writer Team
+description: |
+  由丹·哈蒙（Dan Harmon）基于英雄之旅简化的8步循环结构。
+  强调角色的需求和内在变化，适合电视剧集和系列故事。
+
+# 8个环节定义
+steps:
+  - id: you
+    number: 1
+    name: 你（舒适区）
+    nameEn: You
+    description: 角色在熟悉的环境中
+    position: top
+    questions:
+      - 角色的日常状态是什么？
+      - 什么让角色感到安全和舒适？
+      - 这种舒适有什么问题？
+    writingTips:
+      - 建立角色的基准状态
+      - 展示日常但暗示不满
+      - 让读者理解和认同角色
+
+  - id: need
+    number: 2
+    name: 需要
+    nameEn: Need
+    description: 角色产生某种欲望或需求
+    position: top-right
+    questions:
+      - 角色想要什么？
+      - 为什么现在想要？
+      - 这个需求有多强烈？
+    writingTips:
+      - 需求必须明确且重要
+      - 可以是外在或内在需求
+      - 与角色的核心价值相关
+
+  - id: go
+    number: 3
+    name: 进入
+    nameEn: Go
+    description: 角色进入陌生的境地
+    position: right
+    questions:
+      - 角色如何离开舒适区？
+      - 新环境是什么样的？
+      - 第一个挑战是什么？
+    writingTips:
+      - 跨越明确的界限
+      - 新旧世界形成对比
+      - 立即感受到不同
+
+  - id: search
+    number: 4
+    name: 搜索
+    nameEn: Search
+    description: 角色寻找想要的东西
+    position: bottom-right
+    questions:
+      - 角色如何寻找目标？
+      - 遇到什么困难？
+      - 学到了什么？
+    writingTips:
+      - 展示角色的适应过程
+      - 逐步升级挑战
+      - 每次尝试都有收获
+
+  - id: find
+    number: 5
+    name: 找到
+    nameEn: Find
+    description: 角色获得所寻找的
+    position: bottom
+    questions:
+      - 找到了什么？
+      - 是否如预期？
+      - 感受如何？
+    writingTips:
+      - 可能不是预期的形式
+      - 往往伴随着意外发现
+      - 这不是故事的结束
+
+  - id: take
+    number: 6
+    name: 付出代价
+    nameEn: Take
+    description: 为获得付出代价
+    position: bottom-left
+    questions:
+      - 代价是什么？
+      - 失去了什么？
+      - 值得吗？
+    writingTips:
+      - 代价必须有分量
+      - 与获得形成平衡
+      - 引发角色反思
+
+  - id: return
+    number: 7
+    name: 回归
+    nameEn: Return
+    description: 角色返回熟悉的环境
+    position: left
+    questions:
+      - 如何回到起点？
+      - 带回了什么？
+      - 环境有何反应？
+    writingTips:
+      - 物理或心理的回归
+      - 展示角色的改变
+      - 熟悉中的陌生感
+
+  - id: change
+    number: 8
+    name: 改变
+    nameEn: Change
+    description: 角色已经不同
+    position: top-left
+    questions:
+      - 角色改变了什么？
+      - 如何看待过去的自己？
+      - 新的平衡是什么？
+    writingTips:
+      - 内在的根本改变
+      - 新的世界观或价值观
+      - 为下一个循环做准备
+
+# 循环特性
+circle:
+  continuous: true
+  description: 故事圈是循环的，第8步可以连接回第1步开始新的循环
+  variations:
+    - name: 正向循环
+      description: 角色成长和进步
+    - name: 负向循环
+      description: 角色堕落或退化
+    - name: 螺旋上升
+      description: 每次循环都在更高层次
+
+# 与其他方法的关系
+relationships:
+  heroJourney: |
+    故事圈是英雄之旅的简化版本：
+    - 步骤1-2 对应 平凡世界和召唤
+    - 步骤3-4 对应 跨越门槛和试炼
+    - 步骤5-6 对应 获得奖赏和磨难
+    - 步骤7-8 对应 回归和重生
+
+  threeAct: |
+    映射到三幕结构：
+    - 步骤1-2：第一幕
+    - 步骤3-5：第二幕上半
+    - 步骤6-7：第二幕下半
+    - 步骤8：第三幕
+
+# 节奏控制
+pacing:
+  distribution:
+    - step: 1
+      percentage: 10
+    - step: 2
+      percentage: 10
+    - step: 3
+      percentage: 15
+    - step: 4
+      percentage: 20
+    - step: 5
+      percentage: 15
+    - step: 6
+      percentage: 10
+    - step: 7
+      percentage: 10
+    - step: 8
+      percentage: 10
+
+# 适用类型
+suitableFor:
+  genres:
+    - 电视剧集
+    - 系列小说
+    - 角色成长故事
+    - 心理剧情
+    - 喜剧
+
+  formats:
+    - 单集故事（30-60分钟）
+    - 短篇小说（1-3万字）
+    - 中篇小说（3-10万字）
+
+  themes:
+    - 自我发现
+    - 个人成长
+    - 欲望与代价
+    - 改变与适应
+
+# 经典案例
+examples:
+  - title: 瑞克和莫蒂（单集）
+    description: 每集都遵循完整的故事圈
+
+  - title: 绝命毒师（角色弧）
+    description: 沃尔特的每个阶段转变
+
+  - title: 社区大学
+    description: 角色的成长循环
+
+# 优势与劣势
+pros:
+  - 简单易记（8个步骤）
+  - 强调角色内在变化
+  - 自然的循环结构
+  - 适合连续剧集
+
+cons:
+  - 对复杂情节支持有限
+  - 可能过于简化
+  - 不适合群像剧
+  - 循环可能变得重复
+
+# 写作建议
+tips:
+  - 每个步骤都要推进角色变化
+  - "需要"必须足够强烈
+  - "代价"要与"获得"相称
+  - "改变"必须是真实的
+  - 可以在大循环中嵌套小循环
+  - 适合写作练习和初稿
+
+# 变体应用
+variations:
+  - name: 双重循环
+    description: 两个角色同时经历不同循环
+
+  - name: 反向循环
+    description: 从改变开始，探索如何到达
+
+  - name: 破碎循环
+    description: 角色无法完成循环，卡在某个步骤
+
+  - name: 加速循环
+    description: 快速通过某些步骤，强调特定环节

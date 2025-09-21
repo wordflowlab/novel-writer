@@ -62,6 +62,7 @@ program
   .option('--here', '在当前目录初始化')
   .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf', 'claude')
   .option('--all', '为所有支持的 AI 助手生成配置')
+  .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar', 'three-act')
   .option('--no-git', '跳过 Git 初始化')
   .description('初始化一个新的小说项目')
   .action(async (name, options) => {
@@ -136,6 +137,7 @@ program
         name,
         type: 'novel',
         ai: options.ai,
+        method: options.method || 'three-act',
         created: new Date().toISOString(),
         version: getVersion()
       };
@@ -269,6 +271,23 @@ program
         }
       }
 
+      // 复制spec目录结构（包括预设）
+      const specDir = path.join(packageRoot, 'spec');
+      if (await fs.pathExists(specDir)) {
+        const userSpecDir = path.join(projectPath, 'spec');
+        // 复制整个spec目录，但不覆盖已存在的tracking和knowledge
+        const specSubDirs = await fs.readdir(specDir);
+        for (const subDir of specSubDirs) {
+          if (subDir === 'presets' || subDir === 'config.json') {
+            await fs.copy(
+              path.join(specDir, subDir),
+              path.join(userSpecDir, subDir),
+              { overwrite: false }
+            );
+          }
+        }
+      }
+
       // Git 初始化
       if (options.git !== false) {
         try {
@@ -374,15 +393,75 @@ program
     }
   });
 
+// method 命令 - 管理写作方法
+program
+  .command('method')
+  .argument('[action]', '操作: list | switch | info')
+  .argument('[method]', '方法名称（用于 switch 和 info）')
+  .description('管理写作方法论')
+  .action(async (action, method) => {
+    const methods: Record<string, string> = {
+      'three-act': '三幕结构 - 经典的故事结构',
+      'hero-journey': '英雄之旅 - 12阶段的成长之旅',
+      'story-circle': '故事圈 - 8环节的循环结构',
+      'seven-point': '七点结构 - 紧凑的情节结构',
+      'pixar': '皮克斯公式 - 简单有力的故事模板'
+    };
+
+    if (!action || action === 'list') {
+      console.log(chalk.cyan('可用的写作方法:\n'));
+      Object.entries(methods).forEach(([key, desc]) => {
+        console.log(`  ${chalk.yellow(key.padEnd(15))} - ${desc}`);
+      });
+      console.log('\n使用 "novel method info [方法名]" 查看详细信息');
+      console.log('使用 "novel method switch [方法名]" 切换方法');
+      return;
+    }
+
+    if (action === 'info') {
+      if (!method || !methods[method]) {
+        console.log(chalk.red('请提供有效的方法名称'));
+        return;
+      }
+
+      console.log(chalk.cyan(`\n${methods[method]}\n`));
+      console.log('查看 spec/knowledge/writing-methods-guide.md 了解更多信息');
+      return;
+    }
+
+    if (action === 'switch') {
+      if (!method || !methods[method]) {
+        console.log(chalk.red('请提供有效的方法名称'));
+        return;
+      }
+
+      const configPath = path.join(process.cwd(), '.specify', 'config.json');
+      if (await fs.pathExists(configPath)) {
+        const config = await fs.readJson(configPath);
+        config.method = method;
+        await fs.writeJson(configPath, config, { spaces: 2 });
+        console.log(chalk.green(`✓ 已切换到: ${methods[method]}`));
+        console.log(chalk.gray('提示: 新的故事将使用此方法的模板'));
+      } else {
+        console.log(chalk.red('错误: 请在小说项目目录中运行此命令'));
+      }
+      return;
+    }
+
+    console.log(chalk.red(`未知操作: ${action}`));
+  });
+
 // 自定义帮助信息
 program.on('--help', () => {
   console.log('');
   console.log(chalk.yellow('使用示例:'));
   console.log('');
   console.log('  $ novel init my-story');
-  console.log('  $ novel init my-story --ai Claude');
+  console.log('  $ novel init my-story --ai claude --method hero-journey');
   console.log('  $ novel init --here');
   console.log('  $ novel check');
+  console.log('  $ novel method list');
+  console.log('  $ novel method switch hero-journey');
   console.log('');
   console.log(chalk.gray('更多信息: https://github.com/wordflowlab/novel-writer'));
 });

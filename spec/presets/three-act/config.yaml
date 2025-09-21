@@ -1,0 +1,135 @@
+# 三幕结构预设配置
+name: 三幕结构
+nameEn: Three-Act Structure
+version: "1.0"
+author: Novel Writer Team
+description: |
+  经典的故事结构，将故事分为开端（Setup）、中间（Confrontation）和结局（Resolution）三个部分。
+  这是最广泛使用的故事结构，适用于各种类型的小说。
+
+# 结构定义
+structure:
+  acts:
+    - name: 第一幕：开端
+      percentage: 25
+      description: 介绍主角、设定和冲突
+      keyElements:
+        - 平常世界：展示主角的日常生活
+        - 引入冲突：打破平静的事件
+        - 触发事件：改变主角命运的关键事件
+        - 跨越门槛：主角决定踏上冒险
+
+    - name: 第二幕：发展
+      percentage: 50
+      description: 主角面对挑战，冲突升级
+      phases:
+        - name: 上升阶段
+          description: 主角适应新环境，结识盟友
+          keyElements:
+            - 新世界探索
+            - 盟友与敌人
+            - 初次考验
+            - 小胜利
+
+        - name: 中点转折
+          description: 重大发现或转变
+          keyElements:
+            - 重大发现
+            - 假性胜利/失败
+
+        - name: 下降阶段
+          description: 困境加深，危机出现
+          keyElements:
+            - 敌人反击
+            - 内在冲突
+            - 至暗时刻
+            - 顿悟时刻
+
+    - name: 第三幕：高潮与结局
+      percentage: 25
+      description: 冲突解决，建立新平衡
+      keyElements:
+        - 最终准备：集结力量
+        - 最终对决：与对手决战
+        - 高潮时刻：最紧张的冲突
+        - 结局收尾：新的平衡
+        - 尾声余韵：未来展望
+
+# 节奏控制
+pacing:
+  slowBurn:
+    chapters: [1, 5]
+    description: 世界观铺垫，角色介绍
+
+  rising:
+    chapters: [6, 15]
+    description: 冲突显现，剧情推进
+
+  firstClimax:
+    chapters: [16, 20]
+    description: 首个重大冲突
+
+  midpoint:
+    chapters: [30, 40]
+    description: 重大转折点
+
+  finalClimb:
+    chapters: [80, 100]
+    description: 最终准备和升级
+
+  climax:
+    chapters: [101, 115]
+    description: 终极对决
+
+  resolution:
+    chapters: [116, 120]
+    description: 收束与余韵
+
+# 适用类型
+suitableFor:
+  genres:
+    - 现实主义
+    - 科幻
+    - 奇幻
+    - 悬疑
+    - 爱情
+    - 历史
+
+  lengths:
+    - short: 3-5万字
+    - medium: 10-30万字
+    - long: 30万字以上
+
+# 优势与劣势
+pros:
+  - 结构清晰，易于理解
+  - 节奏感强，张弛有度
+  - 适用范围广泛
+  - 读者熟悉度高
+
+cons:
+  - 可能显得公式化
+  - 对于实验性作品限制较大
+  - 不适合某些非线性叙事
+
+# 写作建议
+tips:
+  - 第一幕要尽快建立冲突
+  - 第二幕避免中间拖沓
+  - 中点转折要够有力
+  - 第三幕节奏要紧凑
+  - 结局要满足但不能太完美
+
+# 相关资源
+resources:
+  - title: "Story: Substance, Structure, Style and the Principles of Screenwriting"
+    author: Robert McKee
+    type: book
+
+  - title: "Save the Cat"
+    author: Blake Snyder
+    type: book
+
+  - title: "The Writer's Journey"
+    author: Christopher Vogler
+    type: book

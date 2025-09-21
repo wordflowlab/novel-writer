@@ -1,0 +1,274 @@
+# 皮克斯公式预设配置
+name: 皮克斯公式
+nameEn: Pixar Story Formula
+version: "1.0"
+author: Novel Writer Team
+description: |
+  皮克斯动画工作室总结的简单有效的故事公式。
+  通过6个步骤快速构建引人入胜的故事，特别适合短篇故事和初学者。
+
+# 6步公式定义
+formula:
+  - id: once_upon_a_time
+    number: 1
+    name: 从前有一个
+    nameEn: Once upon a time
+    prompt: "Once upon a time there was ___"
+    prompt_zh: "从前有一个___"
+    description: 介绍主角和世界
+    percentage: 10
+    keyElements:
+      - 主角是谁
+      - 在什么地方
+      - 什么时代背景
+    writingTips:
+      - 快速建立认同感
+      - 简洁明了的介绍
+      - 展示独特性
+
+  - id: every_day
+    number: 2
+    name: 每天
+    nameEn: Every day
+    prompt: "Every day, ___"
+    prompt_zh: "每天，___"
+    description: 展示日常生活和常态
+    percentage: 15
+    keyElements:
+      - 日常活动
+      - 习惯模式
+      - 稳定状态
+    writingTips:
+      - 建立正常基准线
+      - 暗示潜在问题
+      - 为变化做铺垫
+
+  - id: one_day
+    number: 3
+    name: 直到有一天
+    nameEn: One day
+    prompt: "One day ___"
+    prompt_zh: "直到有一天___"
+    description: 打破常态的事件
+    percentage: 20
+    keyElements:
+      - 触发事件
+      - 意外发生
+      - 平衡被打破
+    writingTips:
+      - 事件要足够重要
+      - 制造强烈对比
+      - 引发连锁反应
+
+  - id: because_of_that
+    number: 4
+    name: 因为这个
+    nameEn: Because of that
+    prompt: "Because of that, ___"
+    prompt_zh: "因为这个，___"
+    description: 第一层后果和反应
+    percentage: 20
+    keyElements:
+      - 直接后果
+      - 主角反应
+      - 情况改变
+    writingTips:
+      - 展示因果关系
+      - 推进情节发展
+      - 增加复杂性
+
+  - id: because_of_that_2
+    number: 5
+    name: 因为那个
+    nameEn: Because of that (2)
+    prompt: "Because of that, ___"
+    prompt_zh: "因为那个，___"
+    description: 第二层后果，情况升级
+    percentage: 20
+    keyElements:
+      - 连锁反应
+      - 冲突升级
+      - 危机加深
+    writingTips:
+      - 提升紧张感
+      - 展示更大影响
+      - 推向高潮
+
+  - id: until_finally
+    number: 6
+    name: 最终
+    nameEn: Until finally
+    prompt: "Until finally ___"
+    prompt_zh: "最终，___"
+    description: 解决和新的平衡
+    percentage: 15
+    keyElements:
+      - 冲突解决
+      - 教训学到
+      - 新的状态
+    writingTips:
+      - 满意的结局
+      - 展示成长
+      - 情感共鸣
+
+# 扩展版本
+extended_version:
+  steps: 8
+  additional:
+    - id: ever_since_then
+      number: 7
+      name: 从那以后
+      nameEn: Ever since then
+      prompt: "Ever since then ___"
+      description: 展示持久改变
+
+    - id: moral
+      number: 8
+      name: 故事的寓意
+      nameEn: The moral is
+      prompt: "The moral of the story is ___"
+      description: 主题升华
+
+# 变体应用
+variations:
+  - name: 悲剧版本
+    description: |
+      将"最终"改为负面结果
+      展示失败的教训
+
+  - name: 循环版本
+    description: |
+      "最终"回到"每天"
+      但主角已经改变
+
+  - name: 开放版本
+    description: |
+      "最终"提出新问题
+      为续集留空间
+
+# 核心原则
+principles:
+  - name: 简洁性
+    description: 每个步骤一句话概括
+
+  - name: 因果性
+    description: 强调因果连锁
+
+  - name: 情感性
+    description: 触动情感共鸣
+
+  - name: 普适性
+    description: 适用各种故事类型
+
+# 适用场景
+suitableFor:
+  primary:
+    - 短篇小说
+    - 儿童故事
+    - 动画剧本
+    - 创意写作练习
+
+  secondary:
+    - 故事梗概
+    - 电梯游说
+    - 创意提案
+    - 快速原型
+
+  lengths:
+    - 微型小说: 1000-5000字
+    - 短篇: 5000-15000字
+    - 中短篇: 15000-30000字
+
+# 经典案例
+examples:
+  - title: 海底总动员
+    formula: |
+      从前有一条过度保护孩子的鱼。
+      每天，他都不让儿子离开珊瑚礁。
+      直到有一天，儿子被抓走了。
+      因为这个，他必须踏上寻子之旅。
+      因为那个，他学会了放手和信任。
+      最终，他救回儿子并成为更好的父亲。
+
+  - title: 瓦力
+    formula: |
+      从前有一个孤独的垃圾清理机器人。
+      每天，他都在废弃的地球上工作。
+      直到有一天，他遇见了夏娃。
+      因为这个，他跟随她去了太空。
+      因为那个，他参与了拯救人类的任务。
+      最终，他用爱改变了世界。
+
+# 写作指导
+guidelines:
+  step1_tips:
+    - 用最少的词建立主角
+    - 选择有特色的设定
+    - 立即产生兴趣
+
+  step2_tips:
+    - 展示稳定但不完美的状态
+    - 暗示需要改变
+    - 建立情感连接
+
+  step3_tips:
+    - 事件要出人意料
+    - 但又合情合理
+    - 彻底打破平衡
+
+  step4_5_tips:
+    - 保持因果逻辑
+    - 逐步升级stakes
+    - 展示主角成长
+
+  step6_tips:
+    - 解决要满意
+    - 改变要明显
+    - 留下思考空间
+
+# 与其他方法的关系
+relationships:
+  threeAct: |
+    步骤1-2 = 第一幕
+    步骤3-5 = 第二幕
+    步骤6 = 第三幕
+
+  storyCircle: |
+    简化版的故事圈
+    聚焦因果链条
+
+# 优势与局限
+pros:
+  - 极其简单易学
+  - 快速生成故事
+  - 适合初学者
+  - 强调因果关系
+  - 情感导向
+
+cons:
+  - 深度有限
+  - 不适合复杂故事
+  - 可能过于简化
+  - 缺乏细节空间
+
+# 进阶技巧
+advanced:
+  - name: 双线并行
+    description: 两个角色各有一条皮克斯线
+
+  - name: 嵌套使用
+    description: 大故事中的每章用小皮克斯
+
+  - name: 反转公式
+    description: 故意违背预期制造惊喜
+
+# 练习建议
+exercises:
+  - name: 一分钟故事
+    description: 用6句话讲完整故事
+
+  - name: 日常改编
+    description: 把日常事件改编成皮克斯公式
+
+  - name: 经典重述
+    description: 用公式重述经典故事
