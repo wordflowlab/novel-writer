@@ -1,0 +1,54 @@
+name: novel-book-analysis
+version: 1.0.0
+description: 小说拆解分析插件 - 基于文档的深度写作技法分析
+type: workflow
+commands:
+  - id: book-analyze
+    file: commands/book-analyze.md
+    description: 开始拆书分析 - 需要提供TXT/MD文件
+  - id: book-skeleton
+    file: commands/book-skeleton.md
+    description: 分析故事骨架结构
+  - id: book-rhythm
+    file: commands/book-rhythm.md
+    description: 分析情节节奏和钩子
+  - id: book-characters
+    file: commands/book-characters.md
+    description: 深度分析人物塑造
+  - id: book-style
+    file: commands/book-style.md
+    description: 拆解文笔技法
+  - id: book-formula
+    file: commands/book-formula.md
+    description: 提取爆文公式
+experts:
+  - id: book-analyst
+    file: experts/book-analyst.md
+    title: 拆书分析专家
+    description: 系统化拆解小说写作技法
+dependencies:
+  core: ">=0.5.0"
+installation:
+  message: |
+    ✅ 拆书分析插件安装成功！
+
+    使用说明：
+    1. 准备小说文件（TXT/MD格式）
+    2. 使用 /book-analyze 加载文件
+    3. 选择具体分析命令执行深度拆解
+
+    可用命令（均以 /book- 开头）：
+    - /book-analyze    - 加载并初步分析
+    - /book-skeleton   - 故事结构分析
+    - /book-rhythm     - 节奏钩子分析
+    - /book-characters - 人物塑造分析
+    - /book-style     - 文笔技法分析
+    - /book-formula   - 爆文公式提取
+
+    专家模式：
+    - 使用 /expert book-analyst 激活拆书专家
+
+    ⚠️ 重要提醒：
+    - 请确保提供 TXT 或 MD 格式的小说文件
+    - 文件过大时会自动分段处理
+    - 分析结果会保存到项目目录
