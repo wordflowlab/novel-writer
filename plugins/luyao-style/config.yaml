@@ -1,0 +1,62 @@
+name: luyao-style
+version: 1.0.0
+description: 路遥风格创作插件 - 现实主义文学与平凡世界的深情书写
+type: style
+author: Novel Writer Community
+commands:
+  - id: luyao-style
+    file: commands/luyao-style.md
+    description: 激活路遥风格创作模式
+  - id: luyao-write
+    file: commands/luyao-write.md
+    description: 使用路遥风格创作现实主义作品
+  - id: luyao-character
+    file: commands/luyao-character.md
+    description: 塑造平凡而伟大的人物
+  - id: luyao-detail
+    file: commands/luyao-detail.md
+    description: 生成真实的生活细节描写
+  - id: luyao-dialogue
+    file: commands/luyao-dialogue.md
+    description: 创作地道的乡土对话
+experts:
+  - id: luyao-master
+    file: experts/luyao-master.md
+    title: 路遥风格大师
+    description: 深得现实主义文学精髓的创作专家
+dependencies:
+  core: ">=0.5.0"
+features:
+  - realism-narrative     # 现实主义叙事
+  - life-details         # 生活细节描写
+  - dialect-system       # 方言词汇系统
+  - era-background       # 时代背景融入
+  - emotional-control    # 情感节奏控制
+  - ordinary-heroes      # 平凡人物塑造
+installation:
+  message: |
+    ✅ 路遥风格插件安装成功！
+
+    使用说明：
+    1. 使用 /luyao-style 激活路遥风格模式
+    2. 使用 /luyao-write 创作现实主义作品
+    3. 使用 /luyao-character 塑造平凡人物
+    4. 使用 /luyao-detail 描写生活细节
+    5. 使用 /luyao-dialogue 创作乡土对话
+
+    专家模式：
+    - 使用 /expert luyao-master 激活路遥风格大师
+
+    核心特征：
+    - 朴实厚重的现实主义笔触
+    - 改革开放前后的时代背景
+    - 平凡人物的不平凡故事
+    - 真实细腻的生活细节
+    - 内敛深沉的情感表达
+    - 苦难中的希望与诗意
+
+    ⚠️ 提示：
+    - 本插件专为现实主义、乡土文学创作优化
+    - 默认输出3000字以上章节
+    - 自动融入时代背景和生活细节
+    - 建议结合真实生活体验创作

@@ -1,0 +1,64 @@
+{
+  "tracker_version": "1.0.0",
+  "foreshadow_list": [],
+  "foreshadow_template": {
+    "id": "F{year}{number}",
+    "type": "object|dialogue|event|character",
+    "chapter": "number",
+    "position": "paragraph_number",
+    "content": "description",
+    "details": "detailed_description",
+    "potential_directions": [],
+    "suggested_resolution_timing": {
+      "immediate": "1-3 chapters",
+      "short": "5-10 chapters",
+      "medium": "15-30 chapters",
+      "long": "40+ chapters"
+    },
+    "related_foreshadows": [],
+    "status": "planned|planted|activated|resolved",
+    "priority": "high|medium|low",
+    "resolution_chapter": null,
+    "resolution_description": null
+  },
+  "status_definitions": {
+    "planned": "计划埋设但尚未写入",
+    "planted": "已经埋设在文本中",
+    "activated": "已经被后续情节触发",
+    "resolved": "已经完成回收揭示"
+  },
+  "type_definitions": {
+    "object": {
+      "description": "物件伏笔",
+      "examples": ["信物", "密函", "令牌", "武器", "饰品", "书籍", "地图"],
+      "usage": "通过物件承载信息、象征意义或触发机关"
+    },
+    "dialogue": {
+      "description": "对话伏笔",
+      "examples": ["预言", "暗示", "双关语", "谎言", "承诺", "警告"],
+      "usage": "通过人物言语埋设线索或误导"
+    },
+    "event": {
+      "description": "事件伏笔",
+      "examples": ["巧合", "异象", "失踪", "相遇", "梦境", "意外"],
+      "usage": "通过看似无关的事件预示未来"
+    },
+    "character": {
+      "description": "人物伏笔",
+      "examples": ["神秘身份", "隐藏关系", "失踪人物", "背景人物", "假死"],
+      "usage": "通过人物设定埋设悬念"
+    }
+  },
+  "network_connections": {
+    "main_chain": [],
+    "sub_chains": [],
+    "standalone": []
+  },
+  "statistics": {
+    "total_foreshadows": 0,
+    "planted": 0,
+    "activated": 0,
+    "resolved": 0,
+    "average_resolution_span": 0
+  }
+}
