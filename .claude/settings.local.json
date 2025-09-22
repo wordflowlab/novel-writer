@@ -17,7 +17,9 @@
       "Bash(novel:*)",
       "Read(//Users/coso/.npm-global/bin/**)",
       "WebSearch",
-      "mcp__playwright__browser_navigate"
+      "mcp__playwright__browser_navigate",
+      "Bash(git rm:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []
