@@ -7,6 +7,7 @@ import fs from 'fs-extra';
 import ora from 'ora';
 import { execSync } from 'child_process';
 import { getVersion, getVersionInfo } from './version';
+import { PluginManager } from './plugins/manager';
 
 const program = new Command();
 
@@ -64,6 +65,8 @@ program
   .option('--all', '为所有支持的 AI 助手生成配置')
   .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar | snowflake', 'three-act')
   .option('--no-git', '跳过 Git 初始化')
+  .option('--with-experts', '包含专家模式')
+  .option('--plugins <names>', '预装插件，逗号分隔')
   .description('初始化一个新的小说项目')
   .action(async (name, options) => {
     const spinner = ora('正在初始化小说项目...').start();
@@ -288,6 +291,60 @@ program
         }
       }
 
+      // 如果指定了 --with-experts，复制专家文件和 expert 命令
+      if (options.withExperts) {
+        spinner.text = '安装专家模式...';
+
+        // 复制专家目录
+        const expertsSourceDir = path.join(packageRoot, 'experts');
+        if (await fs.pathExists(expertsSourceDir)) {
+          const userExpertsDir = path.join(projectPath, 'experts');
+          await fs.copy(expertsSourceDir, userExpertsDir);
+        }
+
+        // 复制 expert 命令到各个 AI 目录
+        const expertCommandSource = path.join(packageRoot, 'templates', 'commands', 'expert.md');
+        if (await fs.pathExists(expertCommandSource)) {
+          const expertContent = await fs.readFile(expertCommandSource, 'utf-8');
+
+          for (const aiDir of aiDirs) {
+            if (aiDir.includes('claude') || aiDir.includes('cursor')) {
+              const expertPath = path.join(projectPath, aiDir, 'expert.md');
+              await fs.writeFile(expertPath, expertContent);
+            }
+            // Windsurf 使用 workflows 目录
+            if (aiDir.includes('windsurf')) {
+              const expertPath = path.join(projectPath, aiDir, 'expert.md');
+              await fs.writeFile(expertPath, expertContent);
+            }
+            // Gemini 格式处理
+            if (aiDir.includes('gemini')) {
+              const expertPath = path.join(projectPath, aiDir, 'expert.toml');
+              const expertToml = generateTomlCommand(expertContent, '');
+              await fs.writeFile(expertPath, expertToml);
+            }
+          }
+        }
+      }
+
+      // 如果指定了 --plugins，安装插件
+      if (options.plugins) {
+        spinner.text = '安装插件...';
+
+        const pluginNames = options.plugins.split(',').map((p: string) => p.trim());
+        const pluginManager = new PluginManager(projectPath);
+
+        for (const pluginName of pluginNames) {
+          // 检查内置插件
+          const builtinPluginPath = path.join(packageRoot, 'plugins', pluginName);
+          if (await fs.pathExists(builtinPluginPath)) {
+            await pluginManager.installPlugin(pluginName, builtinPluginPath);
+          } else {
+            console.log(chalk.yellow(`\n警告: 插件 "${pluginName}" 未找到`));
+          }
+        }
+      }
+
       // Git 初始化
       if (options.git !== false) {
         try {
@@ -358,6 +415,24 @@ node_modules/
       console.log(`     ${chalk.cyan('/world-check')} - 验证世界观设定`);
       console.log(`     ${chalk.cyan('/track')}       - 综合追踪与智能分析`);
 
+      // 如果安装了专家模式，显示提示
+      if (options.withExperts) {
+        console.log('\n' + chalk.yellow('     🎓 专家模式:'));
+        console.log(`     ${chalk.cyan('/expert')}       - 列出可用专家`);
+        console.log(`     ${chalk.cyan('/expert plot')} - 剧情结构专家`);
+        console.log(`     ${chalk.cyan('/expert character')} - 人物塑造专家`);
+      }
+
+      // 如果安装了插件，显示插件命令
+      if (options.plugins) {
+        const installedPlugins = options.plugins.split(',').map((p: string) => p.trim());
+        if (installedPlugins.includes('translate')) {
+          console.log('\n' + chalk.yellow('     🌍 翻译插件:'));
+          console.log(`     ${chalk.cyan('/translate')}   - 中英文翻译`);
+          console.log(`     ${chalk.cyan('/polish')}      - 英文润色`);
+        }
+      }
+
       console.log('\n' + chalk.gray('推荐流程: method → story → outline → track-init → write'));
       console.log(chalk.dim('提示: 斜杠命令在 AI 助手内部使用，不是在终端中'));
 
@@ -402,6 +477,97 @@ program
       console.log('  • Gemini: https://gemini.google.com');
     } else {
       console.log('\n' + chalk.green('环境检查通过！'));
+    }
+  });
+
+// plugins 命令 - 插件管理
+program
+  .command('plugins')
+  .description('插件管理')
+  .action(() => {
+    // 显示插件子命令帮助
+    console.log(chalk.cyan('\n📦 插件管理命令:\n'));
+    console.log('  novel plugins list              - 列出已安装的插件');
+    console.log('  novel plugins add <name>        - 安装插件');
+    console.log('  novel plugins remove <name>     - 移除插件');
+    console.log('\n' + chalk.gray('可用插件:'));
+    console.log('  translate - 中英文翻译插件');
+  });
+
+program
+  .command('plugins:list')
+  .description('列出已安装的插件')
+  .action(async () => {
+    const projectPath = process.cwd();
+    const pluginManager = new PluginManager(projectPath);
+
+    try {
+      const plugins = await pluginManager.listPlugins();
+
+      if (plugins.length === 0) {
+        console.log(chalk.yellow('没有安装任何插件'));
+        console.log(chalk.gray('\n使用 "novel plugins add <name>" 安装插件'));
+        return;
+      }
+
+      console.log(chalk.cyan('\n已安装的插件:\n'));
+      for (const plugin of plugins) {
+        console.log(chalk.yellow(`  ${plugin.name}`) + ` (v${plugin.version})`);
+        console.log(chalk.gray(`    ${plugin.description}`));
+
+        if (plugin.commands && plugin.commands.length > 0) {
+          console.log(chalk.gray(`    命令: ${plugin.commands.map(c => `/${c.id}`).join(', ')}`));
+        }
+
+        if (plugin.experts && plugin.experts.length > 0) {
+          console.log(chalk.gray(`    专家: ${plugin.experts.map(e => e.title).join(', ')}`));
+        }
+      }
+    } catch (error) {
+      console.error(chalk.red('列出插件失败:'), error);
+    }
+  });
+
+program
+  .command('plugins:add <name>')
+  .description('安装插件')
+  .action(async (name) => {
+    const spinner = ora(`正在安装插件 ${name}...`).start();
+    const projectPath = process.cwd();
+    const pluginManager = new PluginManager(projectPath);
+
+    try {
+      // 获取 package root
+      const packageRoot = path.dirname(require.resolve('../package.json'));
+      const builtinPluginPath = path.join(packageRoot, 'plugins', name);
+
+      if (await fs.pathExists(builtinPluginPath)) {
+        await pluginManager.installPlugin(name, builtinPluginPath);
+        spinner.succeed(chalk.green(`插件 ${name} 安装成功！`));
+      } else {
+        spinner.fail(chalk.red(`插件 ${name} 未找到`));
+        console.log(chalk.gray('\n可用插件: translate'));
+      }
+    } catch (error) {
+      spinner.fail(chalk.red(`安装插件 ${name} 失败`));
+      console.error(error);
+    }
+  });
+
+program
+  .command('plugins:remove <name>')
+  .description('移除插件')
+  .action(async (name) => {
+    const spinner = ora(`正在移除插件 ${name}...`).start();
+    const projectPath = process.cwd();
+    const pluginManager = new PluginManager(projectPath);
+
+    try {
+      await pluginManager.removePlugin(name);
+      spinner.succeed(chalk.green(`插件 ${name} 移除成功！`));
+    } catch (error) {
+      spinner.fail(chalk.red(`移除插件 ${name} 失败`));
+      console.error(error);
     }
   });
 

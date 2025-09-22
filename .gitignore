@@ -34,4 +34,4 @@ coverage/
 *.temp
 .cache/
 temp/
-tmp/
+tmp/other/

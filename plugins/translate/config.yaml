@@ -1,0 +1,37 @@
+name: novel-translate
+version: 1.0.0
+description: 中文小说英译插件 - 支持小说内容翻译和本地化润色
+type: feature
+commands:
+  - id: translate
+    file: commands/translate.md
+    description: 将中文小说翻译成英文
+  - id: translate-chapter
+    file: commands/translate-chapter.md
+    description: 批量翻译整个章节
+  - id: polish
+    file: commands/polish.md
+    description: 润色英文译文，使其更符合英语母语表达
+experts:
+  - id: translate
+    file: experts/translate.md
+    title: 翻译专家
+    description: 专业的中英文小说翻译顾问
+  - id: localize
+    file: experts/localize.md
+    title: 本地化专家
+    description: 文化适配和本地化润色专家
+dependencies:
+  core: ">=0.5.0"
+installation:
+  message: |
+    ✅ 翻译插件安装成功！
+
+    可用命令：
+    - /translate - 翻译选中的中文内容
+    - /translate-chapter - 批量翻译整个章节
+    - /polish - 润色英文译文
+
+    专家模式：
+    - 使用 /expert translate 激活翻译专家
+    - 使用 /expert localize 激活本地化专家
