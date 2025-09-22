@@ -12,7 +12,12 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(npm:*)",
-      "Bash(./bin/novel.js recommend:*)"
+      "Bash(./bin/novel.js recommend:*)",
+      "Read(//Users/coso/temp/novel-test/**)",
+      "Bash(novel:*)",
+      "Read(//Users/coso/.npm-global/bin/**)",
+      "WebSearch",
+      "mcp__playwright__browser_navigate"
     ],
     "deny": [],
     "ask": []

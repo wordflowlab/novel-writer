@@ -7,18 +7,16 @@ scripts:
 
 基于已创建的故事大纲，制定详细的章节规划：
 
-## 智能方法应用（新增）
+## 智能方法应用
 
 1. **读取项目配置**
-   ```javascript
-   import { aiInterface } from '../src/ai-interface';
-   const config = await aiInterface.getCurrentConfig();
-   const method = config.method || 'three-act';
-   ```
+   - 读取 `.specify/config.json` 文件
+   - 获取 `"method"` 字段的值
+   - 如果是 `"hybrid"`，查看是否有 `"hybridScheme"` 详细方案
 
 2. **根据方法选择模板**
-   - 如果是单一方法：加载 `spec/presets/[method]/outline.md`
-   - 如果是混合方法：读取 `config.hybridScheme` 并应用
+   - 根据配置的方法，应用对应的章节规划模板
+   - 模板参考：`spec/presets/[method]/outline.md`
 
 3. **智能章节分配**
    - 根据方法的节奏要求分配章节
@@ -37,15 +35,14 @@ scripts:
    - 故事圈：8个步骤的循环安排
    - 七点结构：7个关键节点的精确定位
    - 皮克斯公式：6步公式的因果链条
+   - 雪花十步：场景列表驱动的章节规划
 
 4. **混合方法的特殊处理**
-   ```javascript
-   if (config.method === 'hybrid' && config.hybridScheme) {
-     // 主线按主要方法安排
-     // 支线按次要方法规划
-     // 章节内部按微观方法组织
-   }
-   ```
+   - 如果配置中 `method` 为 `"hybrid"`
+   - 查看 `hybridScheme` 中的具体方案
+   - 主线按主要方法安排
+   - 支线按次要方法规划
+   - 章节内部按微观方法组织
 
 5. 创建章节规划，包含：
    - **总体结构**：总章节数、每章字数、更新计划
@@ -80,6 +77,11 @@ scripts:
 ### 皮克斯公式
 - 清晰的因果链条
 - 每个"因此"都要推进故事
+
+### 雪花十步
+- 基于第8步的场景列表规划
+- 每个场景明确POV角色和冲突
+- 四个25%的结构平衡
 
 规划原则：
 - 每章应有明确的目标和冲突

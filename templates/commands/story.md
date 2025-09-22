@@ -9,30 +9,22 @@ scripts:
 
 根据提供的故事描述创建完整的故事大纲：
 
-## 智能方法选择（新增）
+## 智能方法应用
 
-1. **了解故事特征**
-   - 通过对话了解故事类型、长度、读者等信息
-   - 如果信息不足，友好地询问更多细节
+1. **读取项目配置**
+   - 先读取 `.specify/config.json` 文件
+   - 获取 `"method"` 字段的值（如：three-act、hero-journey、story-circle 等）
+   - 如果没有设置，提示用户先使用 `/method` 命令选择写作方法
 
-2. **智能推荐方法**
-   ```javascript
-   import { aiInterface } from '../src/ai-interface';
-
-   const context = {
-     genre: '从描述中提取的类型',
-     description: '用户的故事描述',
-     estimatedLength: '预计长度',
-     targetAudience: '目标读者'
-   };
-
-   const selection = await aiInterface.guideMethodSelection(context);
-   ```
-
-3. **选择合适的模板**
-   - 根据推荐的方法，选择对应的模板
-   - 可从 `spec/presets/[method]/story.md` 加载特定方法的模板
-   - 如果用户已有偏好，尊重用户选择
+2. **选择对应的模板**
+   - 根据配置中的方法，使用对应的模板：
+     - `three-act` → 三幕结构模板
+     - `hero-journey` → 英雄之旅12阶段模板
+     - `story-circle` → 故事圈8步模板
+     - `seven-point` → 七点结构模板
+     - `pixar-formula` → 皮克斯6步公式
+     - `snowflake` → 雪花十步法模板
+   - 模板参考位置：`spec/presets/[method]/story.md`
 
 ## 创建故事大纲
 
@@ -45,6 +37,7 @@ scripts:
    - 故事圈：使用8步循环模板
    - 七点结构：使用7个关键节点模板
    - 皮克斯公式：使用6步公式模板
+   - 雪花十步：使用递进式十步构建模板
 
 3. 使用模板结构将故事大纲写入 STORY_FILE，包含：
    - **故事概述**：一句话描述、核心冲突、主题思想
@@ -52,12 +45,7 @@ scripts:
    - **世界观**：时代背景、地理环境、特殊规则
    - **情节大纲**：按选定方法组织
 
-4. **更新项目配置**
-   ```javascript
-   await aiInterface.updateProjectMethod(selection.method);
-   ```
-
-5. 报告完成，包含：
+4. 报告完成，包含：
    - 故事名称和文件路径
    - 使用的写作方法
    - 方法特点提醒

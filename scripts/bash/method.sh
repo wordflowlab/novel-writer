@@ -28,6 +28,7 @@ echo "- hero-journey: 英雄之旅"
 echo "- story-circle: 故事圈"
 echo "- seven-point: 七点结构"
 echo "- pixar-formula: 皮克斯公式"
+echo "- snowflake: 雪花十步法"
 echo ""
 echo "AI 接口已就绪，请通过对话了解用户需求"
 

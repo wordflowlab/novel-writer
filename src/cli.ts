@@ -62,7 +62,7 @@ program
   .option('--here', '在当前目录初始化')
   .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf', 'claude')
   .option('--all', '为所有支持的 AI 助手生成配置')
-  .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar', 'three-act')
+  .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar | snowflake', 'three-act')
   .option('--no-git', '跳过 Git 初始化')
   .description('初始化一个新的小说项目')
   .action(async (name, options) => {
@@ -341,13 +341,25 @@ node_modules/
         console.log(`  2. ${chalk.white(`在 ${aiName} 中打开项目`)}`);
       }
       console.log(`  3. 使用以下斜杠命令开始创作:`);
-      console.log(`     ${chalk.cyan('/style')} - 设定创作风格`);
-      console.log(`     ${chalk.cyan('/story')} - 创建故事大纲`);
-      console.log(`     ${chalk.cyan('/outline')} - 规划章节结构`);
-      console.log(`     ${chalk.cyan('/chapters')} - 分解写作任务`);
-      console.log(`     ${chalk.cyan('/write')} - 开始创作`);
 
-      console.log('\n' + chalk.dim('提示: 斜杠命令在 AI 助手内部使用，不是在终端中'));
+      console.log('\n' + chalk.yellow('     📝 核心创作流程:'));
+      console.log(`     ${chalk.cyan('/method')}      - 智能选择写作方法（推荐先执行）`);
+      console.log(`     ${chalk.cyan('/style')}       - 设定创作风格和准则`);
+      console.log(`     ${chalk.cyan('/story')}       - 创建故事大纲`);
+      console.log(`     ${chalk.cyan('/outline')}     - 规划章节结构`);
+      console.log(`     ${chalk.cyan('/track-init')} - 初始化追踪系统`);
+      console.log(`     ${chalk.cyan('/chapters')}    - 分解写作任务`);
+      console.log(`     ${chalk.cyan('/write')}       - 开始章节创作`);
+
+      console.log('\n' + chalk.yellow('     📊 追踪管理命令:'));
+      console.log(`     ${chalk.cyan('/plot-check')}  - 检查情节一致性`);
+      console.log(`     ${chalk.cyan('/timeline')}    - 管理故事时间线`);
+      console.log(`     ${chalk.cyan('/relations')}   - 追踪角色关系`);
+      console.log(`     ${chalk.cyan('/world-check')} - 验证世界观设定`);
+      console.log(`     ${chalk.cyan('/track')}       - 综合追踪与智能分析`);
+
+      console.log('\n' + chalk.gray('推荐流程: method → story → outline → track-init → write'));
+      console.log(chalk.dim('提示: 斜杠命令在 AI 助手内部使用，不是在终端中'));
 
     } catch (error) {
       spinner.fail(chalk.red('项目初始化失败'));
@@ -404,8 +416,10 @@ program
     console.log(chalk.yellow('  故事圈') + ' - 8环节的循环结构，适合角色驱动');
     console.log(chalk.yellow('  七点结构') + ' - 紧凑的情节结构，适合悬疑惊悚');
     console.log(chalk.yellow('  皮克斯公式') + ' - 简单有力的故事模板，适合短篇');
-    console.log('\n' + chalk.gray('提示：在 AI 助手中使用 /method 命令获取智能推荐'));
-    console.log(chalk.gray('详细指南：查看 docs/advanced-features.md'));
+    console.log(chalk.yellow('  雪花十步') + ' - 系统化的递进式规划，适合细致构建');
+    console.log('\n' + chalk.gray('提示：在 AI 助手中使用 /method 命令进行智能选择'));
+    console.log(chalk.gray('AI 会通过对话了解你的需求，推荐最适合的方法'));
+    console.log(chalk.gray('追踪系统会在写作过程中自动更新，保持数据同步'));
   });
 
 // 自定义帮助信息
@@ -418,11 +432,19 @@ program.on('--help', () => {
   console.log('  $ novel check                    # 检查环境');
   console.log('  $ novel info                     # 查看写作方法');
   console.log('');
-  console.log(chalk.cyan('在 AI 助手中使用斜杠命令:'));
-  console.log('  /method   - 智能选择写作方法');
-  console.log('  /story    - 创建故事大纲');
-  console.log('  /outline  - 规划章节结构');
-  console.log('  /write    - 开始写作');
+  console.log(chalk.cyan('核心创作命令:'));
+  console.log('  /method      - 智能选择写作方法（推荐先执行）');
+  console.log('  /style       - 设定创作风格和准则');
+  console.log('  /story       - 创建故事大纲（使用选定方法）');
+  console.log('  /outline     - 规划章节结构（基于方法模板）');
+  console.log('  /track-init  - 初始化追踪系统');
+  console.log('  /write       - AI 辅助章节创作（自动更新追踪）');
+  console.log('');
+  console.log(chalk.cyan('追踪管理命令:'));
+  console.log('  /plot-check  - 智能检查情节发展一致性');
+  console.log('  /timeline    - 管理和验证时间线');
+  console.log('  /relations   - 追踪角色关系变化');
+  console.log('  /track       - 综合追踪与智能分析');
   console.log('');
   console.log(chalk.gray('更多信息: https://github.com/wordflowlab/novel-writer'));
 });
