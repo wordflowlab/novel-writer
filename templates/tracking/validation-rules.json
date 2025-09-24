@@ -1,0 +1,128 @@
+{
+  "version": "1.0",
+  "description": "小说内容验证规则，用于检查角色一致性和内容质量",
+
+  "characters": {
+    "protagonist": {
+      "name": "[主角名]",
+      "aliases": ["[昵称]", "[别名]"],
+      "forbidden": ["主角", "男主", "女主", "[常见错误名]"],
+      "traits": ["[核心身份]", "[关键特征]"],
+      "note": "请根据实际故事设定填写具体内容"
+    },
+    "supporting": {
+      "[配角1名称]": {
+        "aliases": ["[昵称]"],
+        "addresses_to": {
+          "protagonist": ["[对主角的称呼]"]
+        }
+      },
+      "[配角2名称]": {
+        "aliases": ["[昵称]"],
+        "addresses_to": {
+          "protagonist": ["[对主角的称呼]"]
+        }
+      }
+    }
+  },
+
+  "relationships": {
+    "fixed_addresses": {
+      "description": "固定的人物间称呼关系",
+      "rules": {
+        "[角色A]→[角色B]": ["[固定称呼1]", "[固定称呼2]"],
+        "[角色C]→[角色D]": ["[固定称呼]"]
+      }
+    },
+    "forbidden_addresses": {
+      "description": "禁止使用的称呼",
+      "rules": {
+        "[下级]→[上级]": ["[不恰当的称呼]"],
+        "[陌生人]→[主角]": ["[过于亲密的称呼]"]
+      }
+    }
+  },
+
+  "validation_tasks": {
+    "character_consistency": {
+      "enabled": true,
+      "checks": [
+        "name_consistency",
+        "trait_consistency",
+        "behavior_consistency"
+      ]
+    },
+    "relationship_validation": {
+      "enabled": true,
+      "checks": [
+        "address_accuracy",
+        "relationship_development",
+        "interaction_logic"
+      ]
+    },
+    "world_rules": {
+      "enabled": true,
+      "checks": [
+        "power_system",
+        "geography",
+        "timeline"
+      ]
+    }
+  },
+
+  "auto_fix": {
+    "character_names": {
+      "enabled": true,
+      "confidence_threshold": 0.9,
+      "description": "自动修正明显的角色名称错误"
+    },
+    "addresses": {
+      "enabled": true,
+      "confidence_threshold": 0.85,
+      "description": "自动修正固定称呼错误"
+    },
+    "simple_typos": {
+      "enabled": true,
+      "description": "修正简单的拼写错误"
+    },
+    "complex_issues": {
+      "enabled": false,
+      "description": "复杂问题仅提供建议，不自动修复"
+    }
+  },
+
+  "common_errors": {
+    "character_substitution": [
+      {"wrong": "李明", "correct": "[正确主角名]", "context": "常见的主角名错误"},
+      {"wrong": "张华", "correct": "[正确主角名]", "context": "另一个常见错误"}
+    ],
+    "address_mistakes": [
+      {"wrong": "师兄", "correct": "公子", "context": "沈玉卿对主角的称呼"},
+      {"wrong": "兄弟", "correct": "贤侄", "context": "长辈对主角的称呼"}
+    ]
+  },
+
+  "validation_levels": {
+    "quick": {
+      "description": "快速验证（写作时使用）",
+      "checks": ["character_names", "basic_addresses"],
+      "time_estimate": "几秒钟"
+    },
+    "standard": {
+      "description": "标准验证（每日检查）",
+      "checks": ["character_consistency", "relationship_validation"],
+      "time_estimate": "1-2分钟"
+    },
+    "deep": {
+      "description": "深度验证（发布前使用）",
+      "checks": ["all"],
+      "time_estimate": "5-10分钟"
+    }
+  },
+
+  "usage_guide": {
+    "write_command": "在/write时自动加载quick级别验证",
+    "track_command": "使用/track --check执行standard级别验证",
+    "fix_command": "使用/track --fix自动修复simple级别问题"
+  }
+}
