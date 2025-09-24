@@ -183,9 +183,14 @@ program
             const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
             const commandName = path.basename(file, '.md');
 
-            // 提取脚本路径
+            // 提取脚本路径，特殊处理style命令
             const shMatch = content.match(/sh:\s*(.+)/);
-            const scriptPath = shMatch ? shMatch[1].trim() : `.specify/scripts/bash/${commandName}.sh`;
+            let scriptPath = shMatch ? shMatch[1].trim() : `.specify/scripts/bash/${commandName}.sh`;
+
+            // 如果是style命令，更新为新的style-manager.sh
+            if (commandName === 'style') {
+              scriptPath = '.specify/scripts/bash/style-manager.sh';
+            }
 
             // 为 Claude 生成命令文件
             if (aiDirs.some(dir => dir.includes('.claude'))) {

@@ -23,7 +23,9 @@
       "Bash(find:*)",
       "Read(//Users/coso/Documents/dev/ai/wordflowlab/other/**)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__get-library-docs"
+      "mcp__context7__get-library-docs",
+      "Bash(cat:*)",
+      "Bash(./scripts/bash/style-manager.sh:*)"
     ],
     "deny": [],
     "ask": []

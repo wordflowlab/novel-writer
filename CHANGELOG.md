@@ -1,5 +1,33 @@
 # 更新日志
 
+## [0.7.0] - 2025-01-24
+
+### 🎉 新功能
+- **外部AI建议整合功能**：支持整合来自Gemini、ChatGPT等AI工具的分析建议
+  - 扩展 `/style` 命令，新增 `refine` 模式
+  - 支持JSON和Markdown两种建议格式
+  - 自动分类处理建议（风格/角色/情节/世界观/对话）
+  - 建议历史追踪和版本管理
+  - 智能合并多源建议
+
+### 📚 新增文档
+- **PRD文档**：`docs/PRD-external-suggestion-integration.md` - 功能设计规范
+- **AI提示词模板**：`docs/ai-suggestion-prompt-template.md` - 标准化建议格式
+- **Gemini专用模板**：`docs/ai-suggestion-prompt-for-gemini.md` - 优化的提示词
+- **快速指南**：`docs/quick-guide-external-ai-integration.md` - 三步完成整合
+- **实例集**：`docs/suggestion-integration-examples.md` - 详细使用示例
+
+### 🔧 技术改进
+- 新增 `style-manager.sh` 脚本处理建议整合
+- 优化格式识别逻辑，支持管道输入
+- 改进Markdown解析处理
+- 增强错误处理机制
+
+### 📝 文件更新
+- 更新 `/style` 命令模板支持新功能
+- 新增 `improvement-log.md` 追踪建议历史
+- 扩展 `character-voices.md` 添加词汇替换表
+
 ## [0.6.2] - 2025-09-24
 
 ### 改进
