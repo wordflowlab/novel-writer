@@ -19,7 +19,9 @@
       "WebSearch",
       "mcp__playwright__browser_navigate",
       "Bash(git rm:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(find:*)",
+      "Read(//Users/coso/Documents/dev/ai/wordflowlab/other/**)"
     ],
     "deny": [],
     "ask": []
