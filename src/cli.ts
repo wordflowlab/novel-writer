@@ -6,8 +6,12 @@ import path from 'path';
 import fs from 'fs-extra';
 import ora from 'ora';
 import { execSync } from 'child_process';
-import { getVersion, getVersionInfo } from './version';
-import { PluginManager } from './plugins/manager';
+import { fileURLToPath } from 'url';
+import { getVersion, getVersionInfo } from './version.js';
+import { PluginManager } from './plugins/manager.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const program = new Command();
 

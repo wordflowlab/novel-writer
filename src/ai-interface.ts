@@ -4,9 +4,9 @@
  * 支持自然语言参数和引导式交互
  */
 
-import { MethodAdvisor } from './method-advisor';
-import { MethodConverter } from './method-converter';
-import { HybridMethodManager } from './hybrid-method';
+import { MethodAdvisor } from './method-advisor.js';
+import { MethodConverter } from './method-converter.js';
+import { HybridMethodManager } from './hybrid-method.js';
 import fs from 'fs-extra';
 import path from 'path';
 
