@@ -1,0 +1,74 @@
+name: stardust-dreams
+version: 1.1.0
+displayName: 星尘织梦工具市场
+description: 连接星尘织梦工具市场，使用高级 AI 创作模板
+author: 星尘织梦团队
+homepage: https://stardust-dreams.com
+type: feature
+
+commands:
+  - id: stardust-auth
+    name: 认证登录
+    description: 登录星尘织梦账号获取访问权限
+    file: commands/stardust-auth.md
+
+  - id: stardust-use
+    name: 使用模板
+    description: 通过会话ID使用付费模板生成内容
+    file: commands/stardust-use.md
+
+  - id: stardust-list
+    name: 查看模板
+    description: 列出当前可用的创作模板
+    file: commands/stardust-list.md
+
+  - id: stardust-session
+    name: 会话管理
+    description: 查看和管理活跃会话
+    file: commands/stardust-session.md
+
+experts:
+  - id: stardust-guide
+    name: 星尘向导
+    title: 星尘织梦使用向导
+    description: 帮助你充分利用星尘织梦工具市场的功能
+    file: experts/stardust-guide.md
+
+dependencies:
+  core: ">=0.7.0"
+
+api:
+  endpoint: https://api.stardust-dreams.com
+  version: v1
+
+security:
+  encryption: AES-256-GCM
+  tokenStorage: encrypted-local
+  sessionTimeout: 900  # 15分钟
+  memoryOnly: true    # Prompt仅在内存中，不持久化
+
+installation:
+  message: |
+    ✅ 星尘织梦工具市场插件安装成功！
+
+    🚀 快速开始：
+    1. 使用 /stardust-auth 登录账号
+    2. 在 Web 端 (https://stardust-dreams.com) 选择模板并填写表单
+    3. 获得 SessionID 后，使用 /stardust-use --session [ID] 生成内容
+
+    📚 可用命令：
+    - /stardust-auth     - 登录认证
+    - /stardust-use      - 使用模板（需要 SessionID）
+    - /stardust-list     - 查看可用模板
+    - /stardust-session  - 管理会话
+
+    💡 专家模式：
+    - 使用 /expert stardust-guide 获取详细指导
+
+    🔒 安全说明：
+    - 所有 Prompt 模板在服务端加密存储
+    - 客户端仅在内存中解密使用，不会保存到磁盘
+    - 需要有效订阅才能使用高级模板
+
+    📖 详细文档：https://docs.stardust-dreams.com
+    💬 技术支持：support@stardust-dreams.com
