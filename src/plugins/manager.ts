@@ -34,12 +34,22 @@ interface PluginConfig {
 
 export class PluginManager {
   private pluginsDir: string
-  private commandsDir: string
+  private commandsDirs: {
+    claude: string
+    cursor: string
+    gemini: string
+    windsurf: string
+  }
   private expertsDir: string
 
   constructor(projectRoot: string) {
     this.pluginsDir = path.join(projectRoot, 'plugins')
-    this.commandsDir = path.join(projectRoot, '.claude', 'commands')
+    this.commandsDirs = {
+      claude: path.join(projectRoot, '.claude', 'commands'),
+      cursor: path.join(projectRoot, '.cursor', 'commands'),
+      gemini: path.join(projectRoot, '.gemini', 'commands'),
+      windsurf: path.join(projectRoot, '.windsurf', 'workflows')
+    }
     this.expertsDir = path.join(projectRoot, 'experts')
   }
 
@@ -181,7 +191,24 @@ export class PluginManager {
   }
 
   /**
-   * 注入插件命令到.claude/commands目录
+   * 检测项目支持的 AI 类型
+   */
+  private async detectSupportedAIs(): Promise<{
+    claude: boolean
+    cursor: boolean
+    gemini: boolean
+    windsurf: boolean
+  }> {
+    return {
+      claude: await fs.pathExists(this.commandsDirs.claude),
+      cursor: await fs.pathExists(this.commandsDirs.cursor),
+      gemini: await fs.pathExists(this.commandsDirs.gemini),
+      windsurf: await fs.pathExists(this.commandsDirs.windsurf)
+    }
+  }
+
+  /**
+   * 注入插件命令到对应的 AI 目录
    */
   private async injectCommands(
     pluginName: string,
@@ -189,17 +216,64 @@ export class PluginManager {
   ): Promise<void> {
     if (!commands) return
 
-    await fs.ensureDir(this.commandsDir)
+    // 检测项目支持哪些 AI
+    const supportedAIs = await this.detectSupportedAIs()
 
     for (const cmd of commands) {
       try {
+        // 处理 Markdown 格式（Claude、Cursor、Windsurf）
         const sourcePath = path.join(this.pluginsDir, pluginName, cmd.file)
-        const destName = `plugin-${pluginName}-${cmd.id}.md`
-        const destPath = path.join(this.commandsDir, destName)
 
-        // 复制命令文件
-        await fs.copy(sourcePath, destPath)
-        logger.debug(`注入命令: /${cmd.id} -> ${destName}`)
+        if (supportedAIs.claude) {
+          const destPath = path.join(this.commandsDirs.claude, `plugin-${pluginName}-${cmd.id}.md`)
+          await fs.ensureDir(this.commandsDirs.claude)
+          await fs.copy(sourcePath, destPath)
+          logger.debug(`注入命令到 Claude: /${cmd.id}`)
+        }
+
+        if (supportedAIs.cursor) {
+          const destPath = path.join(this.commandsDirs.cursor, `plugin-${pluginName}-${cmd.id}.md`)
+          await fs.ensureDir(this.commandsDirs.cursor)
+          await fs.copy(sourcePath, destPath)
+          logger.debug(`注入命令到 Cursor: /${cmd.id}`)
+        }
+
+        if (supportedAIs.windsurf) {
+          const destPath = path.join(this.commandsDirs.windsurf, `plugin-${pluginName}-${cmd.id}.md`)
+          await fs.ensureDir(this.commandsDirs.windsurf)
+          await fs.copy(sourcePath, destPath)
+          logger.debug(`注入命令到 Windsurf: /${cmd.id}`)
+        }
+
+        // 处理 TOML 格式（Gemini）
+        if (supportedAIs.gemini) {
+          // 检查是否有预定义的 TOML 版本
+          const cmdId = path.basename(cmd.id, path.extname(cmd.id))
+          const tomlSourcePath = path.join(this.pluginsDir, pluginName, 'commands-gemini', `${cmdId}.toml`)
+
+          if (await fs.pathExists(tomlSourcePath)) {
+            const destPath = path.join(this.commandsDirs.gemini, `plugin-${pluginName}-${cmdId}.toml`)
+            await fs.ensureDir(this.commandsDirs.gemini)
+            await fs.copy(tomlSourcePath, destPath)
+            logger.debug(`注入命令到 Gemini: /${cmdId} (TOML)`)
+          } else {
+            // 如果没有预定义的 TOML，尝试从 Markdown 转换
+            try {
+              const mdContent = await fs.readFile(sourcePath, 'utf-8')
+              const tomlContent = this.convertMarkdownToToml(mdContent, cmd)
+              if (tomlContent) {
+                const destPath = path.join(this.commandsDirs.gemini, `plugin-${pluginName}-${cmdId}.toml`)
+                await fs.ensureDir(this.commandsDirs.gemini)
+                await fs.writeFile(destPath, tomlContent)
+                logger.debug(`自动转换并注入命令到 Gemini: /${cmdId}`)
+              } else {
+                logger.debug(`插件 ${pluginName} 命令 ${cmdId} 无法转换为 TOML`)
+              }
+            } catch (err) {
+              logger.debug(`插件 ${pluginName} 命令 ${cmdId} 转换失败: ${err}`)
+            }
+          }
+        }
       } catch (error) {
         logger.error(`注入命令 ${cmd.id} 失败:`, error)
       }
@@ -286,12 +360,29 @@ export class PluginManager {
       const pluginPath = path.join(this.pluginsDir, pluginName)
       await fs.remove(pluginPath)
 
-      // 删除注入的命令
-      const commandFiles = await fs.readdir(this.commandsDir)
-      for (const file of commandFiles) {
-        if (file.startsWith(`plugin-${pluginName}-`)) {
-          await fs.remove(path.join(this.commandsDir, file))
-          logger.debug(`移除命令文件: ${file}`)
+      // 删除注入的命令（从所有 AI 目录）
+      const supportedAIs = await this.detectSupportedAIs()
+
+      if (supportedAIs.claude && await fs.pathExists(this.commandsDirs.claude)) {
+        const commandFiles = await fs.readdir(this.commandsDirs.claude)
+        for (const file of commandFiles) {
+          if (file.startsWith(`plugin-${pluginName}-`)) {
+            await fs.remove(path.join(this.commandsDirs.claude, file))
+            logger.debug(`移除命令文件: ${file}`)
+          }
+        }
+      }
+
+      // 对其他 AI 目录做同样的清理
+      for (const [aiType, dir] of Object.entries(this.commandsDirs)) {
+        if (aiType !== 'claude' && await fs.pathExists(dir)) {
+          const commandFiles = await fs.readdir(dir)
+          for (const file of commandFiles) {
+            if (file.startsWith(`plugin-${pluginName}-`)) {
+              await fs.remove(path.join(dir, file))
+              logger.debug(`移除 ${aiType} 命令文件: ${file}`)
+            }
+          }
         }
       }
 
@@ -305,6 +396,41 @@ export class PluginManager {
       logger.success(`插件 ${pluginName} 移除成功`)
     } catch (error) {
       logger.error(`移除插件 ${pluginName} 失败:`, error)
+    }
+  }
+
+  /**
+   * 将 Markdown 命令转换为 TOML 格式
+   */
+  private convertMarkdownToToml(mdContent: string, cmd: any): string | null {
+    try {
+      // 提取 frontmatter
+      const frontmatterMatch = mdContent.match(/^---\n([\s\S]*?)\n---/)
+      let description = cmd.description || ''
+
+      if (frontmatterMatch) {
+        const yamlContent = frontmatterMatch[1]
+        const descMatch = yamlContent.match(/description:\s*(.+)/)
+        if (descMatch) {
+          description = descMatch[1].trim().replace(/^['"]|['"]$/g, '')
+        }
+      }
+
+      // 提取内容（去除 frontmatter）
+      const content = mdContent.replace(/^---\n[\s\S]*?\n---\n/, '')
+
+      // 构建 TOML 内容
+      const tomlContent = `description = "${description}"
+
+prompt = """
+${content}
+
+用户输入：{{args}}
+"""`
+
+      return tomlContent
+    } catch (error) {
+      return null
     }
   }
 

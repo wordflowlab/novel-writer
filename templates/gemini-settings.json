@@ -1,0 +1,46 @@
+{
+  "tools": {
+    "core": [
+      "read_file",
+      "write_file",
+      "edit_file",
+      "run_shell_command",
+      "glob_files"
+    ],
+    "allowed": [
+      "run_shell_command(npm)",
+      "run_shell_command(node)",
+      "run_shell_command(git status)",
+      "run_shell_command(git diff)",
+      "run_shell_command(git add)",
+      "run_shell_command(date)",
+      "run_shell_command(ls)",
+      "run_shell_command(cat)",
+      "run_shell_command(pwd)"
+    ],
+    "exclude": [
+      "run_shell_command(rm -rf)",
+      "run_shell_command(sudo)"
+    ]
+  },
+  "fileFiltering": {
+    "respectGitIgnore": true,
+    "enableRecursiveFileSearch": true,
+    "disableFuzzySearch": false
+  },
+  "ui": {
+    "theme": "dark"
+  },
+  "memory": {
+    "contextFile": ".gemini/GEMINI.md",
+    "autoLoadMemory": true
+  },
+  "mcpServers": {},
+  "extensions": {
+    "novelWriter": {
+      "enabled": true,
+      "description": "AI 驱动的中文小说创作工具",
+      "commands": ".gemini/commands"
+    }
+  }
+}

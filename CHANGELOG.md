@@ -1,5 +1,30 @@
 # 更新日志
 
+## [0.8.2] - 2025-09-25
+
+### 🎉 新功能
+- **Google Gemini CLI 支持**：完整的 Gemini CLI 斜杠命令集成
+  - 新增 13 个 TOML 格式的命令定义
+  - 支持命名空间命令（如 `/track:init`、`/plot:check`）
+  - 插件系统同时支持 Markdown 和 TOML 双格式
+  - 智能格式转换和降级机制
+
+### 📚 新增文档
+- **Gemini 开发指南**：`docs/gemini-command-guide.md` - 双格式命令开发说明
+- **Gemini 用户文档**：`templates/GEMINI.md` - Gemini CLI 使用指南
+- **Gemini 配置文件**：`templates/gemini-settings.json` - CLI 设置模板
+
+### 🔧 技术改进
+- 重构插件管理器支持多 AI 平台
+- CLI 初始化命令智能检测并生成对应格式
+- 增强命令注入机制，支持自动格式转换
+- 优化目录结构管理
+
+### 📝 兼容性
+- 完全向后兼容现有 Claude、Cursor、Windsurf 用户
+- 支持 `--ai gemini` 参数专门生成 Gemini 格式
+- 插件可选择性提供 TOML 格式支持
+
 ## [0.7.0] - 2025-01-24
 
 ### 🎉 新功能

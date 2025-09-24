@@ -215,9 +215,34 @@ program
 
             // 为 Gemini 生成 TOML 格式
             if (aiDirs.some(dir => dir.includes('.gemini'))) {
-              const geminiPath = path.join(projectPath, '.gemini', 'commands', `${commandName}.toml`);
-              const geminiContent = generateTomlCommand(content, scriptPath);
-              await fs.writeFile(geminiPath, geminiContent);
+              // 优先使用预定义的 TOML 文件
+              const geminiTemplateDir = path.join(packageRoot, 'templates', 'commands-gemini');
+              const tomlSourceFile = path.join(geminiTemplateDir, `${commandName}.toml`);
+
+              // 处理带有命名空间的命令（如 track-init → track/init.toml）
+              let actualTomlPath = tomlSourceFile;
+              let geminiDestPath = path.join(projectPath, '.gemini', 'commands', `${commandName}.toml`);
+
+              if (commandName === 'track-init') {
+                actualTomlPath = path.join(geminiTemplateDir, 'track', 'init.toml');
+                geminiDestPath = path.join(projectPath, '.gemini', 'commands', 'track-init.toml');
+              } else if (commandName === 'plot-check') {
+                actualTomlPath = path.join(geminiTemplateDir, 'plot', 'check.toml');
+                geminiDestPath = path.join(projectPath, '.gemini', 'commands', 'plot-check.toml');
+              } else if (commandName === 'world-check') {
+                actualTomlPath = path.join(geminiTemplateDir, 'world', 'check.toml');
+                geminiDestPath = path.join(projectPath, '.gemini', 'commands', 'world-check.toml');
+              }
+
+              if (await fs.pathExists(actualTomlPath)) {
+                // 使用预定义的 TOML 文件
+                await fs.ensureDir(path.dirname(geminiDestPath));
+                await fs.copy(actualTomlPath, geminiDestPath);
+              } else {
+                // 降级到自动转换
+                const geminiContent = generateTomlCommand(content, scriptPath);
+                await fs.writeFile(geminiDestPath, geminiContent);
+              }
             }
           }
         }
@@ -297,6 +322,25 @@ program
               { overwrite: false }
             );
           }
+        }
+      }
+
+      // 为 Gemini 复制额外的配置文件
+      if (aiDirs.some(dir => dir.includes('.gemini'))) {
+        // 复制 settings.json
+        const geminiSettingsSource = path.join(packageRoot, 'templates', 'gemini-settings.json');
+        const geminiSettingsDest = path.join(projectPath, '.gemini', 'settings.json');
+        if (await fs.pathExists(geminiSettingsSource)) {
+          await fs.copy(geminiSettingsSource, geminiSettingsDest);
+          console.log('  ✓ 已复制 Gemini settings.json');
+        }
+
+        // 复制 GEMINI.md
+        const geminiMdSource = path.join(packageRoot, 'templates', 'GEMINI.md');
+        const geminiMdDest = path.join(projectPath, '.gemini', 'GEMINI.md');
+        if (await fs.pathExists(geminiMdSource)) {
+          await fs.copy(geminiMdSource, geminiMdDest);
+          console.log('  ✓ 已复制 GEMINI.md');
         }
       }
 

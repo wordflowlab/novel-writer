@@ -7,7 +7,7 @@
 
 ## ✨ 特性
 
-- 📚 **AI 斜杠命令** - 在 Claude、Cursor、Gemini 等 AI 助手中直接使用
+- 📚 **AI 斜杠命令** - 在 Claude、Cursor、Gemini CLI、Windsurf 等 AI 助手中直接使用
 - 🎯 **结构化创作** - 从风格设定到章节写作的完整工作流
 - 🤖 **智能辅助** - AI 理解上下文，提供针对性创作建议
 - 📝 **中文优化** - 专为中文小说创作设计的命令和模板
@@ -15,7 +15,15 @@
 - 🎓 **专家模式** - 获取剧情、人物、世界观、文风等专业指导
 - 🔌 **插件系统** - 可扩展的功能模块，如翻译、营销等
 
-### 🆕 v0.5.0 AI 原生交互升级
+### 🆕 v0.8.2 Google Gemini CLI 支持
+
+- 🌐 **Gemini CLI 集成** - 完整支持 Google Gemini CLI 斜杠命令
+- 📝 **TOML 格式命令** - 13 个预定义的 TOML 格式命令
+- 🔄 **双格式支持** - Markdown（Claude/Cursor/Windsurf）和 TOML（Gemini）同时支持
+- 🔌 **插件兼容** - 插件可同时提供两种格式
+- 🎯 **智能转换** - 自动将 Markdown 命令转换为 TOML 格式
+
+### v0.5.0 AI 原生交互升级
 
 - 🤖 **智能方法选择** - AI 通过对话了解需求，推荐最适合的写作方法
 - 🎯 **6种写作方法** - 支持三幕结构、英雄之旅、故事圈、七点结构、皮克斯公式、雪花十步
@@ -51,13 +59,21 @@ novel init --here
 # 包含专家模式
 novel init my-novel --with-experts
 
+# 指定 AI 平台（Gemini CLI）
+novel init my-novel --ai gemini
+
+# 支持所有 AI 平台
+novel init my-novel --all
+
 # 预装插件
 novel init my-novel --plugins translate
 ```
 
 ### 在 AI 助手中使用斜杠命令
 
-初始化后，在 Claude、Cursor 或其他 AI 助手中使用以下斜杠命令：
+初始化后，在 Claude、Cursor、Gemini CLI、Windsurf 等 AI 助手中使用以下斜杠命令：
+
+> **Gemini CLI 用户**：命令使用 `:` 分隔符，如 `/track:init`、`/plot:check`
 
 #### 核心创作命令
 1. **`/method`** - 🆕 智能选择最适合的写作方法（v0.5.0）
