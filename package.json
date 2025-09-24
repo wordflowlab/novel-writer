@@ -1,6 +1,6 @@
 {
   "name": "novel-writer-cn",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "AI 驱动的中文小说创作工具 - 基于结构化工作流的智能写作助手",
   "keywords": [
     "novel",
@@ -33,6 +33,7 @@
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
     "inquirer": "^9.2.12",
+    "js-yaml": "^4.1.0",
     "ora": "^8.0.1"
   },
   "devDependencies": {
