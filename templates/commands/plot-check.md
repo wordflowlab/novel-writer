@@ -3,6 +3,7 @@ name: plot-check
 description: 检查情节发展的一致性和连贯性
 scripts:
   sh: .specify/scripts/bash/check-plot.sh
+  ps: .specify/scripts/powershell/check-plot.ps1
 ---
 
 # 检查情节发展

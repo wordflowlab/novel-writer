@@ -3,6 +3,7 @@ name: track
 description: 综合追踪小说创作进度和内容
 scripts:
   sh: .specify/scripts/bash/track-progress.sh
+  ps: .specify/scripts/powershell/track-progress.ps1
 ---
 
 # 综合进度追踪
