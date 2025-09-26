@@ -1,5 +1,27 @@
 # 更新日志
 
+## [0.8.4] - 2025-09-26
+
+### 🎉 新功能
+- Authentic Voice 真实人声插件（提升原创度与自然度）
+  - `/authentic-voice` 真实人声创作模式（取材卡 + 个体词库）
+  - `/authenticity-audit` 人味自查与行级改写建议
+  - 专家 `authentic-editor`：更细致的人声编辑
+- 离线文本自查脚本：`scripts/bash/text-audit.sh`
+  - 统计连接词/空话密度、句长均值/方差、连续长/短句、抽象词密度示例
+  - 支持项目级配置：`spec/knowledge/audit-config.json`
+
+### 📚 模板与文档
+- 新增写作准则模板：`templates/writing-constitution-template.md`
+- 新增人味自查配置模板：`templates/knowledge/audit-config.json`
+- README 增加“真实人声一键示例”和插件推荐使用说明
+
+### 🔧 流程改进
+- `/style` 初始化自动引用 `.specify/memory/personal-voice.md`：
+  - 追加“个人语料摘要（自动引用）”
+  - 同步“个人表达基线（自动同步）”固定专章（幂等更新）
+- CLI 帮助中展示 `authentic-voice` 可用插件项
+
 ## [0.8.3] - 2025-09-25
 
 ### 🎉 新功能

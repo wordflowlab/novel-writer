@@ -10,7 +10,7 @@ prompt = """
 ### 1. 读取时间线数据
 加载文件：
 - spec/tracking/timeline.json
-- stories/*/outline.md
+- 使用 glob_files 查找 "stories/**/outline.md" 并读取
 
 ### 2. 解析操作类型
 - add - 添加时间点
@@ -59,7 +59,7 @@ prompt = """
 ```
 
 **检查时序逻辑**
-执行脚本：!{.specify/scripts/bash/check-timeline.sh}
+使用 run_shell_command 执行：.specify/scripts/bash/check-timeline.sh
 
 分析问题：
 - 时间重叠

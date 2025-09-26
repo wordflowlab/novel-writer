@@ -544,7 +544,8 @@ program
     console.log('  novel plugins add <name>        - 安装插件');
     console.log('  novel plugins remove <name>     - 移除插件');
     console.log('\n' + chalk.gray('可用插件:'));
-    console.log('  translate - 中英文翻译插件');
+    console.log('  translate         - 中英文翻译插件');
+    console.log('  authentic-voice   - 真实人声写作插件');
   });
 
 program
@@ -599,7 +600,7 @@ program
         spinner.succeed(chalk.green(`插件 ${name} 安装成功！`));
       } else {
         spinner.fail(chalk.red(`插件 ${name} 未找到`));
-        console.log(chalk.gray('\n可用插件: translate'));
+        console.log(chalk.gray('\n可用插件: translate, authentic-voice'));
       }
     } catch (error) {
       spinner.fail(chalk.red(`安装插件 ${name} 失败`));

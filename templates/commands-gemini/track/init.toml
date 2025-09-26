@@ -14,7 +14,7 @@ mkdir -p spec/tracking
 ```
 
 ### 2. 初始化追踪文件
-执行脚本：!{.specify/scripts/bash/init-tracking.sh}
+使用 run_shell_command 执行：.specify/scripts/bash/init-tracking.sh
 
 ### 3. 创建角色状态文件
 使用 write_file 创建 spec/tracking/character-state.json：

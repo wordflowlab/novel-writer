@@ -22,6 +22,8 @@ scripts:
 4. 将创作准则写入 `.specify/memory/writing-constitution.md`
 5. 报告完成状态，准备进入下一阶段
 
+附加整合：若检测到 `.specify/memory/personal-voice.md`，在填充风格时参考其中的口头禅、句式与意象，保持个人表达一致性（不强制，避免过拟合）
+
 ### 模式2：整合外部建议 ⭐新功能
 `/style refine [建议内容]`
 

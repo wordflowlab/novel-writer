@@ -19,7 +19,7 @@ prompt = """
 ### 2. 获取章节信息
 读取章节目录：
 ```bash
-ls -la stories/*/chapters/
+使用 glob_files 查找 "stories/**/chapters/**/*.md"
 ```
 
 ### 3. 执行具体操作

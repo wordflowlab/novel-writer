@@ -8,13 +8,13 @@ prompt = """
 ## 执行步骤
 
 ### 1. 执行情节检查
-运行检查脚本：!{.specify/scripts/bash/check-plot.sh}
+使用 run_shell_command 执行检查脚本：.specify/scripts/bash/check-plot.sh
 
 ### 2. 读取相关文件
 加载检查所需文件：
-- stories/*/story.md - 故事大纲
-- stories/*/outline.md - 章节规划
-- stories/*/chapters/*.md - 已写章节
+- 使用 glob_files 查找 "stories/**/story.md" - 故事大纲
+- 使用 glob_files 查找 "stories/**/outline.md" - 章节规划
+- 使用 glob_files 查找 "stories/**/chapters/**/*.md" - 已写章节
 - spec/tracking/plot-tracker.json - 情节追踪
 
 ### 3. 执行多维度检查

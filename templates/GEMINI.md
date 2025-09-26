@@ -92,5 +92,43 @@ spec/             # 配置和知识库
 - 查看 `docs/` 目录获取详细文档
 - 访问项目仓库：https://github.com/wordflowlab/novel-writer
 
+## 已知问题与解决方案
+
+### 中文乱码问题
+Gemini CLI 可能偶尔输出个别中文乱码（显示为 � 或其他乱码），这是 Gemini 的已知编码问题。
+
+#### 预防措施
+1. **终端设置**
+   - Windows：使用 Windows Terminal 或 PowerShell（避免使用 cmd）
+   - Mac/Linux：确保终端支持 UTF-8
+
+2. **环境变量设置**
+   ```bash
+   # Windows PowerShell
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+   # Mac/Linux
+   export LANG=zh_CN.UTF-8
+   export LC_ALL=zh_CN.UTF-8
+   ```
+
+#### 出现乱码时的解决方法
+1. **重新生成**：重新运行相同的命令，通常第二次会正常
+2. **手动修复**：直接编辑生成的文件，将乱码字符替换为正确的中文
+3. **分段处理**：如果某一节出现乱码，只重新生成该节即可
+
+#### 常见乱码模式
+- `�` → 通常是"的"、"了"等常用字
+- `\u4e2d\u6587` → Unicode 转义，需转换回中文
+- 部分标点符号显示异常 → 手动替换为中文标点
+
+#### 临时解决方案
+如果乱码频繁出现，可以：
+1. 生成较短的段落（减少单次输出）
+2. 使用标准模式而非分节模式
+3. 生成后立即检查并修复
+
+注：Google 正在修复此问题，后续版本应会改善。
+
 ---
 *本项目由 Novel Writer 团队开发，专为 AI 驱动的中文小说创作设计。*

@@ -8,7 +8,7 @@ prompt = """
 ## 执行步骤
 
 ### 1. 检查当前状态
-执行脚本：!{.specify/scripts/bash/style-manager.sh status}
+使用 run_shell_command 执行：.specify/scripts/bash/style-manager.sh status
 
 读取现有配置：
 - .specify/memory/writing-constitution.md

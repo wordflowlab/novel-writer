@@ -67,6 +67,9 @@ novel init my-novel --all
 
 # 预装插件
 novel init my-novel --plugins translate
+
+# 推荐：预装真实人声插件，沉淀个人语料提升自然度
+novel init my-novel --plugins authentic-voice
 ```
 
 ### 在 AI 助手中使用斜杠命令
@@ -97,6 +100,33 @@ novel init my-novel --plugins translate
 15. **`/expert world`** - 世界观设计专家
 16. **`/expert style`** - 文风语言专家
 
+### 快速开始：真实人声一键示例
+
+```bash
+# 1）创建并预装真实人声插件
+novel init my-voicebook --plugins authentic-voice
+
+# 2）补充个人语料（强烈建议，越具体越好）
+#   编辑 .specify/memory/personal-voice.md，填入口头禅、固定句式、生活经历、行业/地域词汇、比喻意象等
+
+# 3）设定风格（会自动引用个人语料并生成“个人表达基线”专章）
+#   在 AI 助手中执行：
+# /style
+
+# 4）真实人声创作
+#   在 AI 助手中执行：
+# /authentic-voice --tone 自由 --pace 适中  标题：在雨棚下等车的那十分钟
+
+# 5）成稿人味自查（AI 内）
+# /authenticity-audit
+#   粘贴文本即可获得行级微调建议
+
+# 6）离线自查（无需 AI）
+scripts/bash/text-audit.sh draft.md
+# 若需要自定义规则，将 templates/knowledge/audit-config.json 复制到
+# 项目的 spec/knowledge/audit-config.json 并修改
+```
+
 ## 📖 斜杠命令详解
 
 ### `/method` - 智能写作方法选择 🆕
@@ -122,6 +152,10 @@ AI：[分析特征，推荐英雄之旅，解释原因，应用到项目]
 - 文字风格（简洁明快/华丽优美）
 - 创作原则
 - 质量标准
+
+提示：若存在 `.specify/memory/personal-voice.md`，/style 初始化会自动引用“个人语料摘要”，并在写作准则中生成“个人表达基线（自动同步）”专章，保证个体表达的一致性
+
+推荐：安装并使用 `/authentic-voice` 插件以更自然的个人声音进行创作；对成稿使用 `/authenticity-audit` 做人味自查
 
 ### `/story` - 创建故事大纲
 
@@ -237,7 +271,20 @@ my-novel/
 - **Claude** (推荐) - Anthropic 的 AI 助手
 - **Cursor** - AI 代码编辑器
 - **Gemini** - Google 的 AI 助手
-- 其他支持斜杠命令的 AI 工具
+ - 其他支持斜杠命令的 AI 工具
+
+## 🔌 推荐插件：Authentic Voice（真实人声）
+
+- 安装：`novel plugins add authentic-voice`
+- 个人语料：编辑 `.specify/memory/personal-voice.md`
+- 创作：在 AI 助手中使用 `/authentic-voice`
+- 自查：使用 `/authenticity-audit` 获取行级微调建议
+
+## 🧪 离线文本自查（无需 AI）
+
+- 运行：`scripts/bash/text-audit.sh <file>`
+- 功能：统计连接词与空话密度、句长均值/方差、连续长/短句阈值、抽象词密度示例
+- 配置：优先读取 `spec/knowledge/audit-config.json`；否则使用 `.specify/templates/knowledge/audit-config.json`
 
 ## 🛠️ CLI 命令
 

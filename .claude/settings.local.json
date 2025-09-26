@@ -25,7 +25,9 @@
       "mcp__context7__resolve-library-id",
       "mcp__context7__get-library-docs",
       "Bash(cat:*)",
-      "Bash(./scripts/bash/style-manager.sh:*)"
+      "Bash(./scripts/bash/style-manager.sh:*)",
+      "Read(//Users/coso/Documents/dev/ai/other/my-novel/stories/001-1984/**)",
+      "Read(//Users/coso/Documents/dev/ai/other/my-novel/.specify/**)"
     ],
     "deny": [],
     "ask": []

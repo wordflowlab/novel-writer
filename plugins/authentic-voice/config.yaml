@@ -1,0 +1,30 @@
+name: authentic-voice
+version: 1.0.0
+description: 真实人声写作插件——提升原创度、生活质感与个体声音一致性
+type: feature
+author: Novel Writer Community
+commands:
+  - id: authentic-voice
+    file: commands/authentic-voice.md
+    description: 启动真实人声写作模式（基于个人语料与生活细节）
+  - id: authenticity-audit
+    file: commands/authenticity-audit.md
+    description: 对现有文本进行“人味”自查与改写建议
+experts:
+  - id: authentic-editor
+    file: experts/authentic-editor.md
+    title: 真实人声编辑
+    description: 擅长将文本改写为更自然、更具生活细节的表达
+dependencies:
+  core: ">=0.5.0"
+installation:
+  message: |
+    ✅ 真实人声写作插件安装成功
+
+    用法建议：
+    1. 在 .specify/memory/personal-voice.md 中填写你的口头禅、常用句式、生活经历与行业词汇
+    2. 在 AI 助手中使用 /authentic-voice 进入真实人声写作模式
+    3. 对既有文本运行 /authenticity-audit 获取自查清单与修改建议
+
+    目标：提升原创度、生活质感和你的个人表达一致性，帮助构建可信的人设与稳定文风
+

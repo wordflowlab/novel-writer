@@ -11,8 +11,8 @@ prompt = """
 读取相关文件：
 - spec/knowledge/world-setting.md
 - spec/knowledge/locations.md
-- stories/*/story.md (世界观部分)
-- stories/*/chapters/*.md (场景描写)
+- 使用 glob_files 查找 "stories/**/story.md" (世界观部分)
+- 使用 glob_files 查找 "stories/**/chapters/**/*.md" (场景描写)
 
 ### 2. 执行一致性检查
 

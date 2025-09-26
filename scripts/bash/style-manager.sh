@@ -31,10 +31,93 @@ init_style() {
 
     ensure_file "$CONSTITUTION_FILE" "$TEMPLATE"
 
+    # 可选：融合个人语料摘要，增强个体表达一致性
+    integrate_personal_voice "$CONSTITUTION_FILE"
+
+    # 固定专章：个人表达基线（自动同步）
+    sync_personal_baseline "$CONSTITUTION_FILE"
+
     # 输出结果
     echo "CONSTITUTION_FILE: $CONSTITUTION_FILE"
     echo "STATUS: ready"
     echo "✅ 创作风格初始化完成"
+}
+
+# 从 personal-voice.md 提取要点并追加到创作准则
+integrate_personal_voice() {
+    local constitution_file="$1"
+    local pv_file="$PROJECT_ROOT/.specify/memory/personal-voice.md"
+
+    if [ -f "$pv_file" ]; then
+        local tmp="/tmp/pv_summary_$$.md"
+        echo "" > "$tmp"
+        echo "## 个人语料摘要（自动引用）" >> "$tmp"
+        echo "来源：.specify/memory/personal-voice.md" >> "$tmp"
+        echo "" >> "$tmp"
+
+        # 提取二级标题与紧邻的前2条列表项作为摘要
+        awk '
+            /^## / { if(h>6) exit; h++; if(cnt>0) {print ""}; print $0; lc=0; next }
+            /^- / && lc<2 { print $0; lc++; next }
+        ' "$pv_file" >> "$tmp"
+
+        # 防止重复追加：检测是否已存在本次摘要（按日期+章节标题近似判断）
+        if ! grep -q "个人语料摘要（自动引用）" "$constitution_file"; then
+            echo "" >> "$constitution_file"
+            cat "$tmp" >> "$constitution_file"
+            echo "    ✅ 已引用个人语料摘要"
+        fi
+        rm -f "$tmp"
+    fi
+}
+
+# 用固定专章方式同步 personal-voice 关键点（可重复执行，幂等）
+sync_personal_baseline() {
+    local constitution_file="$1"
+    local pv_file="$PROJECT_ROOT/.specify/memory/personal-voice.md"
+    [ -f "$pv_file" ] || return 0
+
+    local tmp="/tmp/pv_baseline_$$.md"
+    echo "<!-- BEGIN: PERSONAL_BASELINE_AUTO -->" > "$tmp"
+    echo "## 个人表达基线（自动同步）" >> "$tmp"
+    echo "来源：.specify/memory/personal-voice.md（只读镜像，修改请在源文件）" >> "$tmp"
+    echo "" >> "$tmp"
+
+    # 函数：按标题抓取前N条列表
+    fetch_section() {
+        local title="$1"; local n="$2"; local label="$3"
+        echo "### $label" >> "$tmp"
+        awk -v t="$title" -v n="$n" '
+            BEGIN{hit=0;cnt=0}
+            $0 ~ "^## " t "$" {hit=1; next}
+            hit==1 && $0 ~ /^## / {hit=0}
+            hit==1 && $0 ~ /^- / && cnt<n {print $0; cnt++}
+        ' "$pv_file" >> "$tmp"
+        echo "" >> "$tmp"
+    }
+
+    fetch_section "口头禅与常用表达" 6 "口头禅与常用表达"
+    fetch_section "固定句式与节奏偏好" 6 "固定句式与节奏偏好"
+    fetch_section "行业/地域词汇（口音、俚语、术语）" 6 "行业/地域词汇"
+    fetch_section "比喻口味与意象库" 8 "比喻与意象"
+    fetch_section "写作忌口与避讳" 6 "写作忌口"
+
+    echo "<!-- END: PERSONAL_BASELINE_AUTO -->" >> "$tmp"
+
+    # 将标记块写入或替换到创作准则
+    if grep -q "<!-- BEGIN: PERSONAL_BASELINE_AUTO -->" "$constitution_file"; then
+        # 替换现有块
+        awk -v RS='' -v ORS='\n\n' -v file="$tmp" '
+            BEGIN{while((getline l<file)>0){blk=blk l "\n"}} 
+            { gsub(/<!-- BEGIN: PERSONAL_BASELINE_AUTO -->[\s\S]*<!-- END: PERSONAL_BASELINE_AUTO -->/, blk) }1
+        ' "$constitution_file" > "$constitution_file.tmp" && mv "$constitution_file.tmp" "$constitution_file"
+    else
+        echo "" >> "$constitution_file"
+        cat "$tmp" >> "$constitution_file"
+    fi
+
+    rm -f "$tmp"
+    echo "    ✅ 已同步个人表达基线"
 }
 
 # 函数：解析JSON建议

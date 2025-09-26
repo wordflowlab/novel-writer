@@ -19,8 +19,8 @@ prompt = """
 如未设置，提示使用 /method 命令。
 
 ### 2. 创建故事文件
-执行命令获取当前日期：!{date '+%Y-%m-%d'}
-执行脚本创建故事目录：!{.specify/scripts/bash/create-new-story.sh --json "{{args}}"}
+使用 run_shell_command 获取当前日期：date '+%Y-%m-%d'
+使用 run_shell_command 创建故事目录：.specify/scripts/bash/create-new-story.sh
 
 解析脚本输出的 JSON，获取 STORY_NAME 和 STORY_FILE。
 
