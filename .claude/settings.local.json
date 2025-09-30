@@ -27,7 +27,11 @@
       "Bash(cat:*)",
       "Bash(./scripts/bash/style-manager.sh:*)",
       "Read(//Users/coso/Documents/dev/ai/other/my-novel/stories/001-1984/**)",
-      "Read(//Users/coso/Documents/dev/ai/other/my-novel/.specify/**)"
+      "Read(//Users/coso/Documents/dev/ai/other/my-novel/.specify/**)",
+      "Bash(git log:*)",
+      "Read(//Users/coso/**)",
+      "Bash(echo $PATH)",
+      "Bash(git tag:*)"
     ],
     "deny": [],
     "ask": []

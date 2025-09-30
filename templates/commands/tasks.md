@@ -1,7 +1,7 @@
 ---
 description: 将创作计划分解为可执行的任务清单
 scripts:
-  sh: .specify/scripts/bash/generate-tasks.sh
+  sh: .specify/scripts/bash/tasks-story.sh
   ps: .specify/scripts/powershell/generate-tasks.ps1
 ---
 
