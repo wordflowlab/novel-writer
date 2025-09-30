@@ -6,10 +6,10 @@ echo "🚀 初始化追踪系统..."
 story_exists=false
 outline_exists=false
 
-# 查找 story 文件
-if ls stories/*/story.md 1> /dev/null 2>&1; then
+# 查找 specification 文件
+if ls stories/*/specification.md 1> /dev/null 2>&1; then
     story_exists=true
-    story_file=$(ls stories/*/story.md | head -1)
+    story_file=$(ls stories/*/specification.md | head -1)
 fi
 
 # 查找 outline 文件
@@ -19,8 +19,8 @@ if ls stories/*/outline.md 1> /dev/null 2>&1; then
 fi
 
 if [ "$story_exists" = false ] || [ "$outline_exists" = false ]; then
-    echo "❌ 请先完成 /story 和 /outline 命令"
-    echo "   缺少: ${story_exists:+}${story_exists:-story.md} ${outline_exists:+}${outline_exists:-outline.md}"
+    echo "❌ 请先完成 /specify 和 /plan 命令"
+    echo "   缺少: ${story_exists:+}${story_exists:-specification.md} ${outline_exists:+}${outline_exists:-outline.md}"
     exit 1
 fi
 

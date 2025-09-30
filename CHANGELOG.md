@@ -1,5 +1,35 @@
 # 更新日志
 
+## [0.10.3] - 2025-09-30
+
+### 🔧 破坏性变更
+- **移除旧格式兼容**：完全移除对旧 `story.md` 格式的支持
+  - 所有脚本现在只支持新格式 `specification.md`
+  - `/clarify` 命令只查找 `specification.md`
+  - `/specify` 命令移除了迁移逻辑
+  - `/track-init` 和相关追踪脚本更新为新格式
+  - 更新提示信息从 `/story` 改为 `/specify`
+
+### 📝 文件更新
+- **Bash 脚本**：
+  - 更新 `clarify-story.sh` 只支持 `specification.md`
+  - 更新 `specify-story.sh` 移除 `story.md` 兼容逻辑
+  - 更新 `init-tracking.sh` 查找 `specification.md`
+  - 更新 `generate-tasks.sh` 检查 `specification.md`
+
+- **PowerShell 脚本**：
+  - 更新 `clarify-story.ps1` 只支持 `specification.md`
+  - 更新 `specify-story.ps1` 移除 `story.md` 兼容逻辑
+
+- **配置文件**：
+  - 更新 `.gitignore` 添加 `*.backup` 规则
+
+### ⚠️ 迁移提示
+如果您的项目还在使用 `story.md`，请手动将其重命名为 `specification.md`：
+```bash
+mv stories/your-story/story.md stories/your-story/specification.md
+```
+
 ## [0.10.2] - 2025-09-30
 
 ### 🐛 Bug 修复

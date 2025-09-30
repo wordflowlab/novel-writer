@@ -44,13 +44,14 @@ if ($StoryDirs.Count -eq 0) {
 $StoryDir = $StoryDirs[0]
 $StoryName = $StoryDir.Name
 
-# Find story.md file
-$StoryFile = Join-Path $StoryDir.FullName "story.md"
+# Find story file (新格式 specification.md)
+$StoryFile = Join-Path $StoryDir.FullName "specification.md"
+
 if (-not (Test-Path $StoryFile -PathType Leaf)) {
     if ($Json) {
-        Write-Output '{"error": "Story file not found"}'
+        Write-Output '{"error": "Story file not found (specification.md required)"}'
     } else {
-        Write-Error "错误：未找到故事文件 $StoryFile"
+        Write-Error "错误：未找到故事文件 specification.md"
     }
     exit 1
 }

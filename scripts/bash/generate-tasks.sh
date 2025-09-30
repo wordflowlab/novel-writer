@@ -16,8 +16,8 @@ if [ -z "$STORY_DIR" ]; then
 fi
 
 # 检查前置条件
-if [ ! -f "$STORY_DIR/story.md" ]; then
-    echo "错误: 未找到故事大纲，请先使用 /story 命令" >&2
+if [ ! -f "$STORY_DIR/specification.md" ]; then
+    echo "错误: 未找到故事规格，请先使用 /specify 命令" >&2
     exit 1
 fi
 

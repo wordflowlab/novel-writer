@@ -49,22 +49,17 @@ fi
 # 设置路径
 STORY_DIR="stories/$STORY_NAME"
 SPEC_FILE="$STORY_DIR/specification.md"
-OLD_STORY_FILE="$STORY_DIR/story.md"
 
 # 创建目录
 mkdir -p "$STORY_DIR"
 
 # 检查文件状态
 SPEC_EXISTS=false
-OLD_EXISTS=false
 STATUS="new"
 
 if [ -f "$SPEC_FILE" ]; then
     SPEC_EXISTS=true
     STATUS="exists"
-elif [ -f "$OLD_STORY_FILE" ]; then
-    OLD_EXISTS=true
-    STATUS="migrate"
 fi
 
 # 输出 JSON 格式
@@ -86,9 +81,6 @@ else
 
     if [ "$SPEC_EXISTS" = true ]; then
         echo "状态：规格文件已存在，准备更新"
-    elif [ "$OLD_EXISTS" = true ]; then
-        echo "状态：发现旧版故事文件，建议迁移"
-        echo "旧文件：$OLD_STORY_FILE"
     else
         echo "状态：准备创建新规格"
     fi

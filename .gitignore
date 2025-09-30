@@ -32,7 +32,8 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+*.backup
 .cache/
 temp/
-other/
+# other/
 .claude

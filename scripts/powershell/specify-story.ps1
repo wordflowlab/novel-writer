@@ -36,7 +36,6 @@ if ([string]::IsNullOrEmpty($StoryName)) {
 # 设置路径
 $StoryDir = "stories\$StoryName"
 $SpecFile = "$StoryDir\specification.md"
-$OldStoryFile = "$StoryDir\story.md"
 
 # 创建目录
 if (-not (Test-Path $StoryDir)) {
@@ -45,16 +44,11 @@ if (-not (Test-Path $StoryDir)) {
 
 # 检查文件状态
 $SpecExists = $false
-$OldExists = $false
 $Status = "new"
 
 if (Test-Path $SpecFile) {
     $SpecExists = $true
     $Status = "exists"
-}
-elseif (Test-Path $OldStoryFile) {
-    $OldExists = $true
-    $Status = "migrate"
 }
 
 # 输出 JSON 格式
@@ -75,10 +69,6 @@ else {
 
     if ($SpecExists) {
         Write-Host "状态：规格文件已存在，准备更新"
-    }
-    elseif ($OldExists) {
-        Write-Host "状态：发现旧版故事文件，建议迁移"
-        Write-Host "旧文件：$OldStoryFile"
     }
     else {
         Write-Host "状态：准备创建新规格"

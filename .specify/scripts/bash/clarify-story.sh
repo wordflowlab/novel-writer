@@ -59,13 +59,13 @@ fi
 # Extract story name from directory
 STORY_NAME=$(basename "$STORY_DIR")
 
-# Find story.md file
-STORY_FILE="$STORY_DIR/story.md"
+# Find story file (新格式 specification.md)
+STORY_FILE="$STORY_DIR/specification.md"
 if [ ! -f "$STORY_FILE" ]; then
     if [ "$JSON_MODE" = true ]; then
-        echo '{"error": "Story file not found"}'
+        echo '{"error": "Story file not found (specification.md required)"}'
     else
-        echo "错误：未找到故事文件 $STORY_FILE"
+        echo "错误：未找到故事文件 specification.md"
     fi
     exit 1
 fi
