@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">SDD完整循环流程</text>
+
+  <!-- Constitution -->
+  <rect x="300" y="60" width="200" height="50" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="400" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#7b1fa2">1. /constitution</text>
+
+  <path d="M 400 110 L 400 130" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Specify -->
+  <rect x="300" y="140" width="200" height="50" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+  <text x="400" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#1976d2">2. /specify</text>
+
+  <path d="M 400 190 L 400 210" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Clarify -->
+  <rect x="300" y="220" width="200" height="50" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="400" y="250" text-anchor="middle" font-size="14" font-weight="bold" fill="#388e3c">3. /clarify</text>
+
+  <path d="M 400 270 L 400 290" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Plan -->
+  <rect x="300" y="300" width="200" height="50" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+  <text x="400" y="330" text-anchor="middle" font-size="14" font-weight="bold" fill="#f57c00">4. /plan</text>
+
+  <path d="M 400 350 L 400 370" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Tasks -->
+  <rect x="300" y="380" width="200" height="50" fill="#fce4ec" stroke="#c2185b" stroke-width="2" rx="5"/>
+  <text x="400" y="410" text-anchor="middle" font-size="14" font-weight="bold" fill="#c2185b">5. /tasks</text>
+
+  <path d="M 400 430 L 400 450" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Write -->
+  <rect x="300" y="460" width="200" height="50" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="400" y="490" text-anchor="middle" font-size="14" font-weight="bold" fill="#d32f2f">6. /write</text>
+
+  <path d="M 400 510 L 400 530" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Analyze -->
+  <rect x="300" y="540" width="200" height="50" fill="#fff9c4" stroke="#f9a825" stroke-width="2" rx="5"/>
+  <text x="400" y="570" text-anchor="middle" font-size="14" font-weight="bold" fill="#f9a825">7. /analyze</text>
+
+  <!-- Feedback loop -->
+  <path d="M 500 570 Q 600 400 500 240" stroke="#e91e63" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow-pink)"/>
+  <text x="620" y="400" font-size="12" fill="#e91e63">发现问题</text>
+  <text x="620" y="415" font-size="12" fill="#e91e63">回到对应层级</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <polygon points="0 0, 10 5, 0 10" fill="#666"/>
+    </marker>
+    <marker id="arrow-pink" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <polygon points="0 0, 10 5, 0 10" fill="#e91e63"/>
+    </marker>
+  </defs>
+
+  <!-- Side notes -->
+  <text x="50" y="90" font-size="12" fill="#888">创作原则</text>
+  <text x="50" y="170" font-size="12" fill="#888">定义规格</text>
+  <text x="50" y="250" font-size="12" fill="#888">澄清决策</text>
+  <text x="50" y="330" font-size="12" fill="#888">制定计划</text>
+  <text x="50" y="410" font-size="12" fill="#888">分解任务</text>
+  <text x="50" y="490" font-size="12" fill="#888">执行创作</text>
+  <text x="50" y="570" font-size="12" fill="#888">质量验证</text>
+</svg>

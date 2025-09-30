@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">SDD方法论的分层递归</text>
+
+  <!-- Level 1: 整本书 -->
+  <rect x="50" y="60" width="700" height="80" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+  <text x="400" y="90" text-anchor="middle" font-size="16" font-weight="bold" fill="#1976d2">Level 1: 整本书级别</text>
+  <text x="400" y="115" text-anchor="middle" font-size="14" fill="#555">constitution → specify → clarify → plan → tasks</text>
+
+  <!-- Arrow -->
+  <path d="M 400 140 L 400 160" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Level 2: 一卷 -->
+  <rect x="100" y="170" width="600" height="80" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+  <text x="400" y="200" text-anchor="middle" font-size="16" font-weight="bold" fill="#f57c00">Level 2: 一卷级别 (75章)</text>
+  <text x="400" y="225" text-anchor="middle" font-size="14" fill="#555">specify(卷) → clarify → plan(卷) → tasks(卷) → write → analyze</text>
+
+  <!-- Arrow -->
+  <path d="M 400 250 L 400 270" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Level 3: 章节段 -->
+  <rect x="150" y="280" width="500" height="80" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="400" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#7b1fa2">Level 3: 章节段级别 (10-20章)</text>
+  <text x="400" y="335" text-anchor="middle" font-size="14" fill="#555">specify(段) → plan(段) → tasks(段) → write → analyze</text>
+
+  <!-- Arrow -->
+  <path d="M 400 360 L 400 380" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Level 4: 单章 -->
+  <rect x="200" y="390" width="400" height="80" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="400" y="420" text-anchor="middle" font-size="16" font-weight="bold" fill="#388e3c">Level 4: 单章级别</text>
+  <text x="400" y="445" text-anchor="middle" font-size="14" fill="#555">plan(章) → write → analyze</text>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <polygon points="0 0, 10 5, 0 10" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Note -->
+  <text x="400" y="490" text-anchor="middle" font-size="12" fill="#888" font-style="italic">每个层级都可以执行完整的SDD循环</text>
+</svg>
