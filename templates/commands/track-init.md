@@ -23,10 +23,74 @@ scripts:
 
 2. **初始化追踪文件**
 
+   **重要**：优先从 `specification.md` 第五章读取线索管理规格，填充到追踪文件。
+
    创建或更新 `spec/tracking/plot-tracker.json`：
-   - 从大纲提取主线和支线
-   - 标记关键情节节点
-   - 设置伏笔追踪点
+   - 从 `specification.md 5.1节` 读取所有线索定义
+   - 从 `specification.md 5.3节` 读取所有交汇点
+   - 从 `specification.md 5.4节` 读取所有伏笔
+   - 从 `creative-plan.md` 读取章节段的线索分布
+   - 设置当前状态（假设尚未开始写作）
+
+   **plot-tracker.json 结构**：
+   ```json
+   {
+     "novel": "[从specification.md读取故事名称]",
+     "lastUpdated": "[YYYY-MM-DD]",
+     "currentState": {
+       "chapter": 0,
+       "volume": 1,
+       "mainPlotStage": "[初始阶段]"
+     },
+     "plotlines": {
+       "main": {
+         "name": "[主线名称]",
+         "status": "active",
+         "currentNode": "[起点]",
+         "completedNodes": [],
+         "upcomingNodes": "[从交汇点和章节规划读取]"
+       },
+       "subplots": [
+         {
+           "id": "[从5.1读取，如PL-01]",
+           "name": "[线索名称]",
+           "type": "[主线/支线/主线支撑]",
+           "priority": "[P0/P1/P2]",
+           "status": "[active/dormant]",
+           "plannedStart": "[起始章节]",
+           "plannedEnd": "[结束章节]",
+           "currentNode": "[当前节点]",
+           "completedNodes": [],
+           "upcomingNodes": "[从交汇点表读取]",
+           "intersectionsWith": "[从5.3交汇点表读取相关线索]",
+           "activeChapters": "[从5.2节奏规划读取]"
+         }
+       ]
+     },
+     "foreshadowing": [
+       {
+         "id": "[从5.4读取，如F-001]",
+         "content": "[伏笔内容]",
+         "planted": {"chapter": null, "description": "[埋设说明]"},
+         "hints": [],
+         "plannedReveal": {"chapter": "[揭晓章节]", "description": "[揭晓方式]"},
+         "status": "planned",
+         "importance": "[high/medium/low]",
+         "relatedPlotlines": "[涉及的线索ID列表]"
+       }
+     ],
+     "intersections": [
+       {
+         "id": "[从5.3读取，如X-001]",
+         "chapter": "[交汇章节]",
+         "plotlines": "[涉及的线索ID列表]",
+         "content": "[交汇内容]",
+         "status": "upcoming",
+         "impact": "[预期效果]"
+       }
+     ]
+   }
+   ```
 
    创建或更新 `spec/tracking/timeline.json`：
    - 根据章节规划设置时间节点
