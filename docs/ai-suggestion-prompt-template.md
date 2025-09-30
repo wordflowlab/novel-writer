@@ -278,7 +278,7 @@ A：JSON格式建议控制在5000字符内，Markdown格式控制在3000字内�
 
 你的输出将通过以下命令整合到Novel Writer系统：
 ```
-/style refine [你的输出内容]
+/constitution refine [你的输出内容]
 ```
 
 系统会自动：

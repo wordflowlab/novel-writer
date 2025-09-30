@@ -3,6 +3,7 @@ name: relations
 description: 管理和追踪角色关系变化
 scripts:
   sh: .specify/scripts/bash/manage-relations.sh
+  ps: .specify/scripts/powershell/manage-relations.ps1
 ---
 
 # 角色关系管理
@@ -23,6 +24,13 @@ scripts:
 - `show` - 显示关系网络
 - `history` - 查看关系变化历史
 - `check` - 验证关系逻辑
+
+示例：
+```
+{SCRIPT} update 李中庸 allies 沈玉卿 --chapter 61 --note 初入翰林相助
+# PowerShell:
+{SCRIPT} -Command update -A 李中庸 -Relation allies -B 沈玉卿 -Chapter 61 -Note 初入翰林相助
+```
 
 ## 数据存储
 

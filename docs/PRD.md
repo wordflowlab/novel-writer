@@ -51,7 +51,7 @@ Novel Writer 提供两类命令：工作流命令和 CLI 工具命令。
 #### 工作流命令
 这些命令参考 Spec-Kit 的方法论，用于组织和管理小说项目：
 
-### 2.1 创作风格设定（/style）
+### 2.1 创作风格设定（/constitution）
 
 #### 功能描述
 设定小说的整体创作风格和准则，建立创作的基本原则，贯穿整个作品。
@@ -75,7 +75,7 @@ Novel Writer 提供两类命令：工作流命令和 CLI 工具命令。
   - 包含完整的风格规范文档
 ```
 
-### 2.2 故事大纲创建（/story）
+### 2.2 故事大纲创建（/specify）
 
 #### 功能描述
 创建完整的故事设定，包括主题、角色、世界观等核心要素。
@@ -94,12 +94,12 @@ Novel Writer 提供两类命令：工作流命令和 CLI 工具命令。
   - length: 预计字数
 
 输出格式:
-  - 创建 stories/[编号-名称]/story.md
+  - 创建 stories/[编号-名称]/specify.md
   - 使用 story-template.md 模板
   - 自动生成带编号的目录结构
 ```
 
-### 2.3 章节规划（/outline）
+### 2.3 章节规划（/plan）
 
 #### 功能描述
 将故事大纲细化为具体的章节结构，制定详细的创作计划。
@@ -118,12 +118,12 @@ Novel Writer 提供两类命令：工作流命令和 CLI 工具命令。
   - pacing_plan: 节奏规划
 
 输出格式:
-  - 生成 stories/[编号]/outline.md
+  - 生成 stories/[编号]/plan.md
   - 包含详细的章节大纲
   - 动态卷册管理（不限制固定卷数）
 ```
 
-### 2.4 任务分解（/chapters）
+### 2.4 任务分解（/tasks）
 
 #### 功能描述
 将章节规划分解为可执行的具体任务，便于管理和追踪。
@@ -210,25 +210,25 @@ novel check
 Novel Writer 采用五阶段工作流（扩展自 Spec-Kit 的四阶段模型）：
 
 #### Phase 1: Style（风格设定）
-- **命令**：`/style`
+- **命令**：`/constitution`
 - **输入**：创作风格描述
 - **输出**：.specify/memory/writing-constitution.md
 - **内容**：叙事视角、文字风格、创作原则
 
 #### Phase 2: Story（故事创建）
-- **命令**：`/story`
+- **命令**：`/specify`
 - **输入**：故事概念描述
-- **输出**：stories/[编号]/story.md
+- **输出**：stories/[编号]/specify.md
 - **内容**：故事大纲、角色设定、世界观
 
 #### Phase 3: Outline（章节规划）
-- **命令**：`/outline`
+- **命令**：`/plan`
 - **输入**：故事大纲
-- **输出**：stories/[编号]/outline.md
+- **输出**：stories/[编号]/plan.md
 - **内容**：卷册结构、章节安排、节奏控制
 
 #### Phase 4: Tasks（任务分解）
-- **命令**：`/chapters`
+- **命令**：`/tasks`
 - **输入**：章节大纲
 - **输出**：stories/[编号]/tasks.md
 - **内容**：具体任务、优先级、依赖关系
@@ -305,7 +305,7 @@ novel-project/
 ├── .windsurf/               # Windsurf 配置
 │   └── workflows/           # 工作流文件
 ├── stories/                 # 故事项目
-│   └── [编号-项目名]/       # 通过 /story 生成
+│   └── [编号-项目名]/       # 通过 /specify 生成
 │       ├── story.md         # 故事大纲
 │       ├── outline.md       # 章节规划
 │       ├── tasks.md         # 任务列表
@@ -335,7 +335,7 @@ cd damingfenghua
 
 #### Step 2: 风格设定
 ```
-/style
+/constitution
 文体风格：历史正剧，文学性较强
 叙事视角：第三人称全知视角
 语言风格：古白话结合现代汉语，典雅但不晦涩
@@ -346,7 +346,7 @@ cd damingfenghua
 
 #### Step 3: 故事大纲
 ```
-/story 明朝永乐年间，一个现代考古学家穿越成为朱棣第五子朱橚，
+/specify 明朝永乐年间，一个现代考古学家穿越成为朱棣第五子朱橚，
 利用现代知识改变历史，最终成就大明盛世的故事
 ```
 
@@ -358,7 +358,7 @@ cd damingfenghua
 
 #### Step 4: 章节规划
 ```
-/outline
+/plan
 总计划：240章，分为4卷
 第一卷：适应与谋划（1-60章）
 第二卷：改革与阻力（61-120章）
@@ -368,7 +368,7 @@ cd damingfenghua
 
 #### Step 5: 任务分解
 ```
-/chapters
+/tasks
 优先级P0：前10章（建立人物和世界观）
 优先级P1：各卷高潮章节
 优先级P2：日常推进章节
@@ -612,10 +612,10 @@ class CompatibilityChecker {
 ### 7.1 功能测试
 
 #### 命令测试
-- [ ] `/style` 命令生成正确的风格文档
-- [ ] `/story` 命令创建完整的故事大纲
-- [ ] `/outline` 命令生成合理的章节规划
-- [ ] `/chapters` 命令正确分解任务
+- [ ] `/constitution` 命令生成正确的风格文档
+- [ ] `/specify` 命令创建完整的故事大纲
+- [ ] `/plan` 命令生成合理的章节规划
+- [ ] `/tasks` 命令正确分解任务
 - [ ] `/write` 命令生成高质量章节内容
 
 #### CLI 测试

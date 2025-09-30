@@ -1,0 +1,132 @@
+# /specify 命令 - 定义故事规格
+# Gemini CLI 格式（TOML）
+
+[specify]
+description = "定义故事规格，明确要创造什么样的作品"
+category = "methodology"
+execute_immediately = false
+confirmation_message = "即将创建/更新故事规格文档。"
+
+[specify.parameters.story_name]
+type = "argument"
+required = false
+description = "故事名称"
+
+[specify.parameters.script]
+type = "script_path"
+value = ".specify/scripts/bash/specify-story.sh --json"
+value_ps = ".specify\\scripts\\powershell\\specify-story.ps1 -Json"
+
+[specify.prompts.main]
+template = """
+基于用户描述创建故事规格文档。
+
+用户输入：
+{ARGUMENTS}
+
+## 执行步骤
+
+### 1. 初始化故事规格
+运行脚本获取路径信息，解析JSON获取STORY_NAME和SPEC_PATH。
+
+### 2. 检查宪法合规性
+如果存在 `memory/novel-constitution.md`，确保规格符合宪法价值观。
+
+### 3. 创建规格文档
+创建 `stories/*/specification.md`：
+
+```markdown
+# 故事规格书
+
+## 元数据
+- 故事名称：[名称]
+- 版本：1.0.0
+- 创建日期：[YYYY-MM-DD]
+- 状态：草案
+
+## 一、故事概要
+
+### 一句话故事
+[30字以内描述故事核心]
+
+### 故事简介
+[100-200字扩展描述]
+
+### 核心主题
+- 主题：[成长/救赎/复仇等]
+- 深层含义：[想要表达什么]
+- 情感内核：[希望读者感受到什么]
+
+## 二、目标定位
+
+### 目标读者画像
+- 年龄段：[需要澄清]
+- 性别倾向：[需要澄清]
+- 阅读层次：[需要澄清]
+- 类型偏好：[类型]
+
+### 市场定位
+- 类型标签：[主标签] + [副标签]
+- 差异化：[需要澄清：核心卖点]
+
+## 三、成功标准
+
+### 量化指标
+- 目标字数：[需要澄清：3万/10万/50万]
+- 更新频率：[需要澄清]
+- 完成时间：[预计]
+
+### 质量标准
+- 逻辑一致性：必须无明显漏洞
+- 人物丰满度：[层次要求]
+- 情节紧凑度：[需要澄清]
+
+## 四、核心需求
+
+### 必须包含（P0）
+1. [核心情节元素]
+2. [核心人物关系]
+3. [核心冲突设定]
+
+### 应该包含（P1）
+[增强体验的元素]
+
+### 可以包含（P2）
+[锦上添花的内容]
+
+## 五、约束条件
+
+### 内容红线
+- 绝对禁止：[列表]
+- 需要避免：[列表]
+
+### 创作约束
+- 知识限制：[需要澄清]
+- 时间限制：[期限]
+
+## 六、核心决策点 [需要澄清]
+
+以下关键决策需要在 `/clarify` 阶段明确：
+1. [决策1]
+2. [决策2]
+3. [决策3]
+4. [决策4]
+5. [决策5]
+
+## 七、验证清单
+- [ ] 故事概要清晰明确
+- [ ] 目标读者定义准确
+- [ ] 成功标准可衡量
+- [ ] 核心需求已列出
+- [ ] 关键决策点已标记
+```
+
+### 4. 标记需要澄清的点
+使用 `[需要澄清：具体问题]` 格式标记5-10个关键决策点。
+
+提示下一步：运行 `/clarify` 澄清关键决策。
+"""
+
+[specify.outputs]
+file_pattern = "stories/{story_name}/specification.md"
+format = "markdown"

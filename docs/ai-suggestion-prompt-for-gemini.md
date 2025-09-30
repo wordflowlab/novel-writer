@@ -151,7 +151,7 @@
 1. 复制Gemini返回的完整JSON
 2. 在Claude Code中执行：
 ```
-/style refine [粘贴JSON]
+/constitution refine [粘贴JSON]
 ```
 3. 系统会自动整合建议到你的创作规范中
 

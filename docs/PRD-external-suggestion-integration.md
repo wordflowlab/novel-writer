@@ -20,9 +20,9 @@
 ## 2. 功能设计
 
 ### 2.1 核心功能
-扩展现有 `/style` 命令，新增 `refine` 子命令：
+扩展现有 `/constitution` 命令，新增 `refine` 子命令：
 ```
-/style refine [建议内容]
+/constitution refine [建议内容]
 ```
 
 ### 2.2 功能流程
@@ -31,7 +31,7 @@ graph LR
     A[作者完成N章] --> B[使用外部AI分析]
     B --> C[获得结构化建议]
     C --> D[复制建议到Claude Code]
-    D --> E[执行/style refine]
+    D --> E[执行/constitution refine]
     E --> F[系统解析建议]
     F --> G[智能合并到spec]
     G --> H[生成改进报告]
@@ -250,17 +250,17 @@ graph LR
 ## 4. 技术实现
 
 ### 4.1 命令扩展
-修改 `templates/commands/style.md`：
+修改 `templates/commands/constitution.md`：
 ```yaml
 ---
 description: 设定和优化小说创作风格
 scripts:
-  sh: .specify/scripts/bash/style-manager.sh
+  sh: .specify/scripts/bash/constitution-manager.sh
 ---
 
 使用方式：
-1. /style - 初始化创作风格
-2. /style refine [建议] - 整合外部建议
+1. /constitution - 初始化创作风格
+2. /constitution refine [建议] - 整合外部建议
 ```
 
 ### 4.2 建议解析器
@@ -293,7 +293,7 @@ scripts:
 
 3. **执行整合**
    ```
-   /style refine """
+   /constitution refine """
    [粘贴建议内容]
    """
    ```

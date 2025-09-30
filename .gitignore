@@ -35,3 +35,4 @@ coverage/
 .cache/
 temp/
 other/
+.claude

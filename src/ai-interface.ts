@@ -162,7 +162,7 @@ export class AIInterface {
     };
 
     const methodDir = methodMap[method] || 'three-act';
-    return `spec/presets/${methodDir}/story.md`;
+    return `spec/presets/${methodDir}/specification.md`;
   }
 
   /**

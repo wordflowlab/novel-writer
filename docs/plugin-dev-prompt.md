@@ -71,7 +71,7 @@ experts:
 
 ### 命名规范
 - 插件名：`novel-[功能]-[子功能]`，如 `novel-character-generator`
-- 命令ID：使用前缀避免冲突，如 `/char-`、`/plot-`、`/style-`
+- 命令ID：使用前缀避免冲突，如 `/char-`、`/plot-`、`/constitution-`
 - 文件名：与命令ID保持一致
 
 ### 必须遵守

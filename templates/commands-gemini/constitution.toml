@@ -1,0 +1,117 @@
+# /constitution 命令 - 创建创作宪法
+# Gemini CLI 格式（TOML）
+
+[constitution]
+description = "创建创作宪法，定义最高层级的创作原则和价值观"
+category = "methodology"
+execute_immediately = false
+confirmation_message = "即将创建/更新创作宪法，这将定义你的核心创作原则。"
+
+[constitution.parameters.script]
+type = "script_path"
+value = ".specify/scripts/bash/constitution.sh init"
+value_ps = ".specify\\scripts\\powershell\\constitution.ps1 -Command init"
+
+[constitution.prompts.main]
+template = """
+基于用户输入，创建或更新小说创作宪法文档。
+
+## 执行步骤
+
+### 1. 检查现有宪法
+运行脚本检查是否已存在宪法文件。
+
+### 2. 创建宪法文档
+创建 `memory/novel-constitution.md`，包含以下结构：
+
+```markdown
+# 小说创作宪法
+
+## 元数据
+- 版本：1.0.0
+- 创建日期：[YYYY-MM-DD]
+- 最后修订：[YYYY-MM-DD]
+- 作者：[作者名]
+
+## 第一章：核心价值观
+
+### 原则1：[原则名称]
+**声明**：[原则的明确表述]
+**理由**：[为什么这个原则重要]
+**执行**：[如何在创作中体现]
+
+### 原则2：[原则名称]
+[同上结构]
+
+### 原则3：[原则名称]
+[同上结构]
+
+## 第二章：质量标准
+
+### 标准1：逻辑一致性
+**要求**：[具体要求]
+**衡量**：[如何衡量]
+**底线**：[最低标准]
+
+### 标准2：人物饱满度
+[同上结构]
+
+### 标准3：文字水准
+[同上结构]
+
+## 第三章：创作风格
+
+### 风格原则
+- 叙事风格：[描述]
+- 语言风格：[描述]
+- 节奏控制：[描述]
+
+### 风格禁忌
+- 避免：[具体内容]
+- 慎用：[具体内容]
+
+## 第四章：内容规范
+
+### 内容红线
+- 绝对禁止：[列表]
+- 需要审慎：[列表]
+
+### 价值导向
+- 提倡：[正面价值]
+- 反对：[负面内容]
+
+## 第五章：读者契约
+
+### 对读者的承诺
+- 更新承诺：[频率等]
+- 质量承诺：[标准等]
+- 完结承诺：[保证等]
+
+### 互动原则
+- 反馈处理：[方式]
+- 批评态度：[态度]
+
+## 附录：修订记录
+
+### 版本1.0.0 - [日期]
+- 初始版本创建
+- 确立核心原则
+```
+
+### 3. 版本管理
+- 初始创建为1.0.0版本
+- 重大修改升级主版本号
+- 小调整升级次版本号
+
+提示下一步：运行 `/specify` 创建故事规格。
+"""
+
+[constitution.prompts.update]
+template = """
+宪法文件已存在，基于用户反馈更新宪法内容。
+保持版本追踪，记录修订历史。
+"""
+
+[constitution.outputs]
+file_path = "memory/novel-constitution.md"
+format = "markdown"

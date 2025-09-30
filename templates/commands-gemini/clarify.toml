@@ -1,0 +1,85 @@
+# /clarify 命令 - 澄清关键决策
+# Gemini CLI 格式（TOML）
+
+[clarify]
+description = "通过交互式问答澄清故事规格中的关键决策点"
+category = "methodology"
+execute_immediately = false
+confirmation_message = "即将开始交互式澄清流程，最多5个问题。"
+
+[clarify.parameters.script]
+type = "script_path"
+value = ".specify/scripts/bash/clarify-story.sh"
+value_ps = ".specify\\scripts\\powershell\\clarify-story.ps1"
+
+[clarify.prompts.main]
+template = """
+基于故事规格，通过结构化问答澄清关键决策。
+
+## 执行流程
+
+### 1. 加载规格文档
+运行脚本加载 `stories/*/specification.md`。
+
+### 2. 扫描需要澄清的点
+识别所有 `[需要澄清]` 标记，评估优先级。
+
+### 3. 生成5个精准问题
+
+**问题设计原则**：
+- 最多5个问题
+- 针对最关键的决策
+- 二选一或三选一形式
+- 提供选项理由
+
+**问题模板**：
+```
+问题1：关于[主题]
+背景：[为什么需要明确]
+选项：
+  A. [选项A] - [影响说明]
+  B. [选项B] - [影响说明]
+  C. [选项C] - [影响说明]
+推荐：[基于规格分析的建议]
+```
+
+### 4. 获取用户回答
+等待用户逐一回答问题。
+
+### 5. 更新规格文档
+- 移除 `[需要澄清]` 标记
+- 填入确定的决策
+- 保存澄清记录
+
+### 6. 创建澄清记录
+创建 `stories/*/clarification.md`：
+
+```markdown
+# 澄清记录
+
+## 澄清日期：[YYYY-MM-DD]
+
+### 问题1：[主题]
+- 决策：[选择的选项]
+- 理由：[用户提供的理由]
+- 影响：[对故事的影响]
+
+### 问题2：[主题]
+[同上格式]
+
+## 澄清总结
+- 核心决策已明确
+- 可以进入计划阶段
+```
+
+提示下一步：运行 `/plan` 制定创作计划。
+"""
+
+[clarify.interaction]
+type = "q_and_a"
+max_questions = 5
+question_format = "structured"
+
+[clarify.outputs]
+specification_update = true
+clarification_record = "stories/{story_name}/clarification.md"

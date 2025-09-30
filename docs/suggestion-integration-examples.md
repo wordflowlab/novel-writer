@@ -43,7 +43,7 @@
 
 ### 执行命令
 ```bash
-/style refine [上述JSON内容]
+/constitution refine [上述JSON内容]
 ```
 
 ### 系统处理结果
@@ -125,7 +125,7 @@
 
 ### 执行命令
 ```bash
-/style refine """
+/constitution refine """
 [上述Markdown内容]
 """
 ```
@@ -198,7 +198,7 @@
 
 ### 处理策略
 ```markdown
-/style refine --merge """
+/constitution refine --merge """
 来源1：Gemini建议...
 来源2：ChatGPT建议...
 来源3：Claude建议...
@@ -316,7 +316,7 @@ spec/tracking/pacing-tracker.json
 - 可以分批分析（如每10章一次）
 
 ### 2. 建议整合阶段
-- 使用 `/style refine` 命令
+- 使用 `/constitution refine` 命令
 - JSON格式优于Markdown格式
 - 大量建议可分次整合
 

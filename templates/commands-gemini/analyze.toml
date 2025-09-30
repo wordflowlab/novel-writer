@@ -1,0 +1,133 @@
+# /analyze 命令 - 综合验证分析
+# Gemini CLI 格式（TOML）
+
+[analyze]
+description = "对作品进行综合验证和分析"
+category = "methodology"
+execute_immediately = false
+confirmation_message = "即将执行综合质量分析。"
+
+[analyze.parameters.script]
+type = "script_path"
+value = ".specify/scripts/bash/analyze-story.sh"
+value_ps = ".specify\\scripts\\powershell\\analyze-story.ps1"
+
+[analyze.parameters.type]
+type = "option"
+options = ["full", "compliance", "quality", "progress"]
+default = "full"
+description = "分析类型"
+
+[analyze.prompts.main]
+template = """
+对已完成的故事内容进行综合分析。
+
+## 执行步骤
+
+### 1. 加载验证基准
+运行脚本加载：
+- 宪法文件：`memory/novel-constitution.md`
+- 规格文件：`stories/*/specification.md`
+- 计划文件：`stories/*/creative-plan.md`
+- 任务列表：`stories/*/tasks.md`
+- 已完成内容：`stories/*/content/*.md`
+
+### 2. 宪法合规性检查
+
+```markdown
+## 宪法合规性报告
+
+### 核心价值观检查
+- [ ] 原则1：[检查结果]
+- [ ] 原则2：[检查结果]
+- [ ] 原则3：[检查结果]
+
+### 质量标准验证
+- [ ] 逻辑一致性：[通过/警告/失败]
+- [ ] 人物饱满度：[评分]
+- [ ] 文字水准：[评分]
+```
+
+### 3. 规格符合度分析
+
+```markdown
+## 规格符合度分析
+
+### 核心需求覆盖
+#### P0（必须包含）
+- [需求1]：✅ 已实现
+- [需求2]：⚠️ 部分实现
+- [需求3]：❌ 未实现
+
+### 目标达成度
+- 目标读者适配：[X%]
+- 市场定位符合：[X%]
+```
+
+### 4. 计划执行分析
+
+```markdown
+## 计划执行分析
+
+### 章节架构对比
+| 计划 | 实际 | 偏差分析 |
+|------|------|----------|
+| 第1章 | ✅ | 符合预期 |
+| 第2章 | ✅ | 略有调整 |
+| 第3章 | ⚠️ | 延后1章 |
+```
+
+### 5. 内容质量分析
+
+```markdown
+## 内容质量分析
+
+### 文本统计
+- 总字数：[X]字
+- 平均章节长度：[X]字
+- 完成进度：[X%]
+
+### 技术问题
+#### 逻辑问题
+1. [位置]：[问题描述]
+
+#### 人物一致性
+1. [角色]：[行为矛盾点]
+```
+
+### 6. 生成改进建议
+
+```markdown
+## 改进建议
+
+### 紧急修复（P0）
+1. **[问题]**
+   - 影响：[影响描述]
+   - 建议：[修复方案]
+
+### 优化建议（P1）
+1. **[优化项]**
+   - 当前：[现状]
+   - 建议：[优化方案]
+```
+
+### 7. 生成分析报告
+保存到 `stories/*/analysis-report.md`。
+
+提示：根据分析结果决定下一步行动。
+"""
+
+[analyze.analysis_dimensions]
+dimensions = [
+    "合规性",
+    "一致性",
+    "完整性",
+    "质量性",
+    "创新性",
+    "可读性",
+    "可行性"
+]
+
+[analyze.outputs]
+report_path = "stories/{story_name}/analysis-report.md"
+format = "markdown"

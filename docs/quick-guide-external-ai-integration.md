@@ -28,7 +28,7 @@
 ### 第3步：执行整合
 在Claude Code中运行：
 ```
-/style refine
+/constitution refine
 [粘贴JSON]
 ```
 
@@ -73,7 +73,7 @@ cat .specify/memory/writing-constitution.md
 ### 批量处理
 可以同时整合多个AI的建议：
 ```
-/style refine --merge
+/constitution refine --merge
 [Gemini的JSON]
 ---
 [ChatGPT的JSON]

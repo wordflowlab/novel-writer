@@ -3,6 +3,7 @@ name: plot-check
 description: 检查情节发展的一致性和连贯性
 scripts:
   sh: .specify/scripts/bash/check-plot.sh
+  ps: .specify/scripts/powershell/check-plot.ps1
 ---
 
 # 检查情节发展
@@ -44,3 +45,27 @@ scripts:
 
 💡 建议：第65章前需要引入新的冲突点
 ```
+
+## 智能检查功能
+
+1. **自动更新当前状态**
+   - 读取最新写作进度 `stories/*/progress.json`
+   - 更新 `plot-tracker.json` 的 currentState
+   - 同步章节和位置信息
+
+2. **关联数据检查**
+   - 对比 `timeline.json` 确认时间连续性
+   - 检查 `relationships.json` 中的冲突是否体现
+   - 验证 `character-state.json` 中的角色位置
+
+3. **智能建议**
+   - 根据当前进度提醒即将到来的情节点
+   - 建议合适的伏笔回收时机
+   - 提示需要加强的冲突升级
+
+## 数据同步
+
+检查完成后自动：
+- 更新 plot-tracker.json 的检查时间
+- 记录发现的问题到 notes 字段
+- 生成下一步行动建议

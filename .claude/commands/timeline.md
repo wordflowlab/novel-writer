@@ -3,6 +3,7 @@ name: timeline
 description: 管理和验证故事时间线
 scripts:
   sh: .specify/scripts/bash/check-timeline.sh
+  ps: .specify/scripts/powershell/check-timeline.ps1
 ---
 
 # 时间线管理

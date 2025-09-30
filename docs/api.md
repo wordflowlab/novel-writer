@@ -57,7 +57,7 @@ novel style my-fantasy-novel --genre fantasy --tone serious --ai claude
 
 **输出：**
 ```yaml
-# specs/001-my-fantasy-novel/style.yaml
+# specs/001-my-fantasy-novel/constitution.yaml
 genre: fantasy
 tone: serious
 narrative_voice: third-person omniscient
@@ -90,7 +90,7 @@ novel story my-fantasy-novel --plot adventure --conflict person-vs-evil --settin
 
 **输出：**
 ```markdown
-# specs/001-my-fantasy-novel/story.md
+# specs/001-my-fantasy-novel/specify.md
 
 ## 一句话梗概
 一个普通农家少年意外获得古老魔法，踏上拯救王国的冒险之旅。
@@ -127,7 +127,7 @@ novel outline my-fantasy-novel --chapters 25 --words-per-chapter 4000 --pov thir
 
 **输出：**
 ```markdown
-# specs/001-my-fantasy-novel/outline.md
+# specs/001-my-fantasy-novel/plan.md
 
 ## 第一章：平静的清晨
 - 场景：小村庄的日常
@@ -312,7 +312,7 @@ Authorization: Bearer {api_key}
 ### 生成风格
 
 ```http
-POST /api/v1/projects/{project_id}/style
+POST /api/v1/projects/{project_id}/constitution
 Content-Type: application/json
 
 {
@@ -325,7 +325,7 @@ Content-Type: application/json
 ### 写作章节
 
 ```http
-POST /api/v1/projects/{project_id}/chapters
+POST /api/v1/projects/{project_id}/tasks
 Content-Type: application/json
 
 {

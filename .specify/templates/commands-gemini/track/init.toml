@@ -1,0 +1,118 @@
+description = "初始化进度追踪系统，创建追踪文件"
+
+prompt = """
+初始化进度追踪系统，设置追踪文件。
+
+用户要求：{{args}}
+
+## 执行步骤
+
+### 1. 创建追踪目录
+确保目录存在：
+```bash
+mkdir -p spec/tracking
+```
+
+### 2. 初始化追踪文件
+使用 run_shell_command 执行：.specify/scripts/bash/init-tracking.sh
+
+### 3. 创建角色状态文件
+使用 write_file 创建 spec/tracking/character-state.json：
+```json
+{
+  "characters": {
+    "protagonist": {
+      "name": "主角名",
+      "currentState": "初始状态",
+      "developmentStage": 1,
+      "keyChanges": [],
+      "relationships": {}
+    }
+  },
+  "lastUpdated": "日期"
+}
+```
+
+### 4. 创建情节追踪文件
+创建 spec/tracking/plot-tracker.json：
+```json
+{
+  "mainPlot": {
+    "currentStage": "开端",
+    "progress": 0,
+    "keyEvents": [],
+    "conflicts": []
+  },
+  "subPlots": {},
+  "lastUpdated": "日期"
+}
+```
+
+### 5. 创建关系追踪文件
+创建 spec/tracking/relationships.json：
+```json
+{
+  "relationships": [],
+  "changes": [],
+  "lastUpdated": "日期"
+}
+```
+
+### 6. 创建时间线文件
+创建 spec/tracking/timeline.json：
+```json
+{
+  "timeline": [],
+  "storyStartDate": "故事开始日期",
+  "currentDate": "当前故事日期",
+  "lastUpdated": "日期"
+}
+```
+
+### 7. 创建验证规则
+创建 spec/tracking/validation-rules.json：
+```json
+{
+  "rules": {
+    "chapterMinWords": 2000,
+    "chapterMaxWords": 4000,
+    "dailyTarget": 1500,
+    "weeklyTarget": 10000
+  },
+  "alerts": {
+    "plotHoles": true,
+    "timelineConflicts": true,
+    "characterInconsistency": true
+  }
+}
+```
+
+### 8. 初始化进度统计
+创建初始进度报告：
+```
+📊 追踪系统初始化完成！
+
+已创建文件：
+✅ character-state.json - 角色状态
+✅ plot-tracker.json - 情节进度
+✅ relationships.json - 关系网络
+✅ timeline.json - 时间线
+✅ validation-rules.json - 验证规则
+
+设置目标：
+- 每日目标：1,500字
+- 每周目标：10,000字
+- 章节字数：2,000-4,000字
+
+下一步：
+1. 使用 /track 查看进度
+2. 写作时自动更新追踪
+3. 定期运行检查脚本
+```
+
+## 注意事项
+- 初始化只需运行一次
+- 可以自定义目标参数
+- 追踪文件会自动更新
+- 定期备份追踪数据
+"""

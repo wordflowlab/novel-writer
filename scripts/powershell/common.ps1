@@ -25,3 +25,12 @@ function Get-CurrentStoryDir {
   return $null
 }
 
+function Get-ActiveStory {
+  $storyDir = Get-CurrentStoryDir
+  if ($storyDir) {
+    return Split-Path $storyDir -Leaf
+  }
+  # 如果没有故事，返回默认名称
+  return "story-$(Get-Date -Format 'yyyyMMdd')"
+}
+
