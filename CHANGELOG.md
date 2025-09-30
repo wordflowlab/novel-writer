@@ -1,5 +1,19 @@
 # 更新日志
 
+## [0.10.5] - 2025-09-30
+
+### 🐛 Bug 修复
+- **common.sh 缺少函数**：添加 `get_active_story()` 函数
+  - 修复脚本执行时 "get_active_story: 未找到命令" 错误
+  - 同步到 `.specify/scripts/bash/` 和 `scripts/bash/`
+
+### 📝 影响范围
+修复后以下脚本能正常执行：
+- `check-writing-state.sh`
+- `plan-story.sh`
+- `tasks-story.sh`
+- `analyze-story.sh`
+
 ## [0.10.4] - 2025-09-30
 
 ### 🐛 Bug 修复

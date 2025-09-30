@@ -34,6 +34,17 @@ get_current_story() {
     fi
 }
 
+# 获取活跃故事名称（只返回名称，不返回路径）
+get_active_story() {
+    story_dir=$(get_current_story)
+    if [ -n "$story_dir" ]; then
+        basename "$story_dir"
+    else
+        # 如果没有故事，返回默认名称
+        echo "story-$(date +%Y%m%d)"
+    fi
+}
+
 # 创建带编号的目录
 create_numbered_dir() {
     base_dir="$1"
