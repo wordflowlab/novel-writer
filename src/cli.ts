@@ -192,10 +192,19 @@ program
               scriptPath = '.specify/scripts/bash/style-manager.sh';
             }
 
-            // 为 Claude 生成命令文件
+            // 为 Claude 生成命令文件（优先使用增强版）
             if (aiDirs.some(dir => dir.includes('.claude'))) {
+              const claudeEnhancedPath = path.join(packageRoot, 'templates', 'commands-claude', file);
+              let commandContent = content; // 默认使用基础版
+
+              // 检查是否存在 Claude 增强版本
+              if (await fs.pathExists(claudeEnhancedPath)) {
+                commandContent = await fs.readFile(claudeEnhancedPath, 'utf-8');
+                console.log(chalk.gray(`    💎 Claude 增强: ${file}`));
+              }
+
               const claudePath = path.join(projectPath, '.claude', 'commands', file);
-              const claudeContent = generateMarkdownCommand(content, scriptPath);
+              const claudeContent = generateMarkdownCommand(commandContent, scriptPath);
               await fs.writeFile(claudePath, claudeContent);
             }
 

@@ -35,5 +35,5 @@ coverage/
 *.backup
 .cache/
 temp/
-# other/
+other/
 .claude

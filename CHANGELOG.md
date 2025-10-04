@@ -1,5 +1,80 @@
 # 更新日志
 
+## [0.12.2] - 2025-10-04
+
+### ✨ 新增功能：Claude Code 增强层
+
+#### 核心改进
+为 **Claude Code** 用户提供专属增强版本命令，同时**保持与其他平台（Gemini、Cursor、Windsurf）的完整兼容性**。
+
+#### 1. 分层架构设计
+- **基础层**：`templates/commands/` - 通用 Markdown 命令（所有平台兼容）
+- **Claude 增强层**：`templates/commands-claude/` - Claude Code 专属增强
+- **Gemini 层**：`templates/commands-gemini/` - Gemini TOML 格式
+- **自动优先级**：Claude 用户自动使用增强版本，fallback 到基础版本
+
+#### 2. Claude Code 专属特性
+
+**增强的 Frontmatter 字段**：
+- `argument-hint` - 命令参数自动补全提示
+- `allowed-tools` - 细粒度工具权限控制（如 `Bash(find:*)`, `Read(//**)`)
+- `model` - 为每个命令指定最适合的 AI 模型（默认 `claude-sonnet-4-5-20250929`）
+- `disable-model-invocation` - 控制 SlashCommand 工具是否可自动调用
+
+**动态上下文加载**：
+- 支持内联 bash 执行：`!`command``
+- 实时获取项目状态（章节数、字数、追踪文件等）
+- 减少用户手动输入，提升命令智能化
+
+#### 3. 增强的命令列表
+
+**P0 命令（3个）**：
+- `/analyze` - 添加阶段检测、章节列表、字数统计动态上下文
+- `/write` - 添加待办任务、最新章节、进度状态动态加载
+- `/clarify` - 添加故事文件路径、规格检测动态上下文
+
+**P1 命令（3个）**：
+- `/track` - 添加追踪文件状态、进度统计、章节列表、字数统计
+- `/specify` - 添加宪法检测、规格文件检测、路径信息
+- `/plan` - 添加规格状态、计划文件检测、待澄清项统计
+
+**P2 命令（5个）**：
+- `/tasks` - 添加计划/规格文件检测、线索管理规格摘要
+- `/plot-check` - 添加追踪文件状态、进度检测、章节统计
+- `/timeline` - 添加时间线状态、时间节点统计、章节映射
+- `/relations` - 添加关系网络状态、角色/派系统计
+- `/world-check` - 添加知识库检测、设定统计、专有名词统计
+
+#### 4. CLI 逻辑优化
+
+修改 `src/cli.ts` 支持优先级选择：
+```typescript
+// 为 Claude 生成命令时，优先使用增强版本
+if (await fs.pathExists(claudeEnhancedPath)) {
+  commandContent = await fs.readFile(claudeEnhancedPath, 'utf-8');
+  console.log(chalk.gray(`    💎 Claude 增强: ${file}`));
+}
+```
+
+#### 5. 兼容性保证
+- ✅ 不修改其他平台的命令目录（`.claude`、`.cursor`、`.gemini` 等）
+- ✅ 基础命令保持不变，确保 Gemini/Cursor/Windsurf 正常使用
+- ✅ Claude 增强层是可选的，不影响现有用户
+- ✅ 所有增强特性仅在 Claude Code 环境生效
+
+### 📚 文档更新
+- **README.md**：新增 v0.12.2 Claude Code 增强层特性说明
+- **CHANGELOG.md**：详细记录增强功能和实现细节
+
+### 🎯 设计理念
+**增强而不破坏兼容性**：
+- ❌ 不创建新命令或新平台特定命令
+- ✅ 分层架构，优先级选择
+- ✅ Claude 用户获得最佳体验
+- ✅ 其他平台用户体验不受影响
+
+---
+
 ## [0.12.1] - 2025-10-01
 
 ### ✨ 新增功能:智能双模式 analyze
