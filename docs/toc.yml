@@ -15,6 +15,14 @@
   items:
     - name: 创作流程
       href: workflow.md
+    - name: Gemini 命令指南
+      href: gemini-command-guide.md
+
+# 技术说明
+- name: 技术说明
+  items:
+    - name: 为什么不支持 Codex
+      href: why-codex-not-supported.md
 
 # 项目信息
 - name: 项目信息
