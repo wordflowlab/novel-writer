@@ -7,28 +7,6 @@ scripts:
   sh: .specify/scripts/bash/check-world.sh
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**世界观设定文件**：
-!`find spec/knowledge -name "world-setting.md" 2>/dev/null && echo "✅ 世界观文件存在" || echo "⚠️  无世界观文件"`
-
-**知识库文件列表**：
-!`find spec/knowledge -type f 2>/dev/null | sort`
-
-**核心设定摘要**：
-!`test -f spec/knowledge/world-setting.md && head -30 spec/knowledge/world-setting.md | grep -E "^#|^-" || echo "无设定内容"`
-
-**地点数量统计**：
-!`test -f spec/knowledge/locations.md && grep -c "^##" spec/knowledge/locations.md | xargs echo "已定义地点:" || echo "地点: 0"`
-
-**专有名词统计**：
-!`find spec/knowledge -type f -exec grep -h "^-" {} \; 2>/dev/null | wc -l | xargs echo "专有名词约:"`
-
-**已写章节检索**：
-!`find stories/*/content -name "*.md" ! -name "README.md" | wc -l | xargs echo "需检查章节:"`
-
----
-
 # 世界观一致性检查
 
 确保故事中的世界观设定保持前后一致，避免矛盾和冲突。

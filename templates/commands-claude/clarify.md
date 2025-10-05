@@ -9,20 +9,7 @@ scripts:
   ps: .specify/scripts/powershell/clarify-story.ps1 -Json -PathsOnly
 ---
 
-## 用户输入处理
-
 焦点区域（可选）：$ARGUMENTS
-
-用户输入可以直接提供或作为命令参数 - 你**必须**在继续之前考虑它（如果不为空）。
-
-## 动态上下文加载（Claude Code 增强）
-
-**故事文件路径**：
-!`bash {SCRIPT} 2>/dev/null || find stories -name "story.md" -o -name "outline.md" | head -5`
-
-**最近修改的故事文件**：
-!`find stories -name "story.md" -o -name "specification.md" -type f -exec ls -lt {} + 2>/dev/null | head -3 | awk '{print $NF}'`
-
 ---
 
 ## 目标

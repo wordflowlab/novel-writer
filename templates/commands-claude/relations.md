@@ -9,25 +9,6 @@ scripts:
   ps: .specify/scripts/powershell/manage-relations.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**关系网络文件**：
-!`test -f spec/tracking/relationships.json && echo "✅ relationships.json 存在" || echo "⚠️  无关系文件"`
-
-**角色数量统计**：
-!`cat spec/tracking/relationships.json 2>/dev/null | grep -c '"name":' | xargs echo "已追踪角色:"`
-
-**派系统计**：
-!`cat spec/tracking/relationships.json 2>/dev/null | grep -E '"factions"' -A 20 | grep -c '"name":' | xargs echo "派系数量:"`
-
-**主要角色关系**：
-!`cat spec/tracking/relationships.json 2>/dev/null | grep -E '"主角"|"protagonist"' -A 10 || echo "无主角关系数据"`
-
-**最近关系变化**：
-!`cat spec/tracking/relationships.json 2>/dev/null | grep -E '"history"|"chapter"' | tail -10 || echo "无历史记录"`
-
----
-
 # 角色关系管理
 
 追踪和管理角色之间的关系动态，确保关系发展的合理性。

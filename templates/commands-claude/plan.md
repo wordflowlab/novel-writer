@@ -8,26 +8,7 @@ scripts:
   ps: .specify/scripts/powershell/plan-story.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**宪法文件**：
-!`test -f memory/novel-constitution.md && echo "✅ 宪法存在" || echo "⚠️  无宪法"`
-
-**规格文件状态**：
-!`find stories -name "specification.md" -exec bash -c 'echo "📄 $(dirname {})/specification.md"; grep -E "需要澄清" {} | wc -l | xargs echo "  待澄清项:"' \; 2>/dev/null`
-
-**现有计划文件**：
-!`find stories -name "creative-plan.md" 2>/dev/null`
-
-**故事基本信息**：
-!`bash {SCRIPT} 2>/dev/null | head -20 || echo "运行脚本获取故事信息"`
-
----
-
-基于澄清后的故事规格，制定具体的创作技术方案。
-
-用户输入（技术选择和偏好）：
-$ARGUMENTS
+用户输入：$ARGUMENTS
 
 ## 目标
 

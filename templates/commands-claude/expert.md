@@ -5,22 +5,6 @@ allowed-tools: Read(//experts/core/**), Read(//plugins/**/experts/**), Bash(find
 model: claude-sonnet-4-5-20250929
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**核心专家列表**：
-!`test -d experts/core && ls experts/core/ | sed 's/.md$//' | xargs echo "可用:" || echo "无核心专家"`
-
-**核心专家数量**：
-!`test -d experts/core && ls experts/core/*.md 2>/dev/null | wc -l | xargs echo "核心专家:" || echo "0"`
-
-**插件专家检测**：
-!`find plugins -type d -name "experts" 2>/dev/null | wc -l | xargs echo "插件专家目录:"`
-
-**插件专家列表**：
-!`find plugins -type f -path "*/experts/*.md" 2>/dev/null | sed 's|.*/||; s/.md$//' | head -5 || echo "无插件专家"`
-
----
-
 # 专家模式
 
 根据用户输入执行相应操作：

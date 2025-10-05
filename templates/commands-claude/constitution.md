@@ -8,26 +8,7 @@ scripts:
   ps: .specify/scripts/powershell/constitution.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**宪法文件状态**：
-!`test -f memory/novel-constitution.md && echo "✅ 宪法已存在" || echo "⚠️  无宪法文件，将创建新宪法"`
-
-**现有宪法版本**：
-!`test -f memory/novel-constitution.md && grep -E "^- 版本：|^- 创建日期：|^- 最后修订：" memory/novel-constitution.md | head -3 || echo "无版本信息"`
-
-**核心原则摘要**：
-!`test -f memory/novel-constitution.md && sed -n '/## 第一章：核心价值观/,/## 第二章/p' memory/novel-constitution.md | grep "^### " | head -5 || echo "无现有原则"`
-
-**质量标准摘要**：
-!`test -f memory/novel-constitution.md && sed -n '/## 第二章：质量标准/,/## 第三章/p' memory/novel-constitution.md | grep "^### " | head -3 || echo "无质量标准"`
-
----
-
-用户输入可以直接提供或作为命令参数 - 你**必须**在继续之前考虑它（如果不为空）。
-
-用户输入：
-$ARGUMENTS
+用户输入：$ARGUMENTS
 
 ## 目标
 

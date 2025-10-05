@@ -9,25 +9,6 @@ scripts:
   ps: .specify/scripts/powershell/check-timeline.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**时间线文件状态**：
-!`test -f spec/tracking/timeline.json && echo "✅ timeline.json 存在" || echo "⚠️  无时间线文件"`
-
-**当前故事时间**：
-!`cat spec/tracking/timeline.json 2>/dev/null | grep -E '"current_time"|"story_start"|"story_end"' | head -5 || echo '{"current_time": "未知"}'`
-
-**时间节点数量**：
-!`cat spec/tracking/timeline.json 2>/dev/null | grep -c '"chapter":' | xargs echo "时间节点数:"`
-
-**章节-时间映射**：
-!`cat spec/tracking/timeline.json 2>/dev/null | grep -E '"chapter"|"date"' | head -20 || echo "无时间记录"`
-
-**已写章节列表**：
-!`find stories/*/content -name "*.md" ! -name "README.md" | sort | head -15`
-
----
-
 # 时间线管理
 
 维护故事的时间轴，确保时间逻辑的一致性。

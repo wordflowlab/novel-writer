@@ -8,26 +8,7 @@ scripts:
   ps: .specify/scripts/powershell/specify-story.ps1 -Json
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**宪法文件检测**：
-!`test -f memory/novel-constitution.md && echo "✅ 宪法存在" || echo "⚠️  无宪法文件"`
-
-**宪法内容摘要**：
-!`test -f memory/novel-constitution.md && head -30 memory/novel-constitution.md | grep -E "^#|^-" || echo "无宪法"`
-
-**现有规格文件**：
-!`find stories -name "specification.md" 2>/dev/null`
-
-**故事名称和路径**：
-!`bash {SCRIPT} 2>/dev/null | grep -E '"story_name"|"spec_path"' || echo '{"story_name": "unknown", "spec_path": "unknown"}'`
-
----
-
-用户输入描述了他们想要创作的故事。基于这个描述，创建一个完整的故事规格文档。
-
-用户输入：
-$ARGUMENTS
+用户输入：$ARGUMENTS
 
 ## 目标
 

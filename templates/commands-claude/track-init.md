@@ -8,34 +8,6 @@ scripts:
   ps: .specify/scripts/powershell/init-tracking.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**规格文件状态**：
-!`find stories -name "specification.md" 2>/dev/null | head -1 | xargs -I {} echo "✅ 规格文件: {}" || echo "⚠️  无规格文件"`
-
-**大纲文件状态**：
-!`find stories -name "outline.md" 2>/dev/null | head -1 | xargs -I {} echo "✅ 大纲文件: {}" || echo "⚠️  无大纲文件"`
-
-**创作计划状态**：
-!`find stories -name "creative-plan.md" 2>/dev/null | head -1 | xargs -I {} echo "✅ 计划文件: {}" || echo "⚠️  无计划文件"`
-
-**线索数量统计**：
-!`find stories -name "specification.md" -exec grep -c "^| PL-" {} \; 2>/dev/null | head -1 | xargs echo "规格中定义线索:" || echo "线索: 0"`
-
-**交汇点数量**：
-!`find stories -name "specification.md" -exec grep -c "^| X-" {} \; 2>/dev/null | head -1 | xargs echo "交汇点:" || echo "交汇点: 0"`
-
-**伏笔数量**：
-!`find stories -name "specification.md" -exec grep -c "^| F-" {} \; 2>/dev/null | head -1 | xargs echo "伏笔:" || echo "伏笔: 0"`
-
-**现有追踪文件**：
-!`ls spec/tracking/*.json 2>/dev/null | wc -l | xargs echo "已存在追踪文件:" || echo "追踪文件: 0"`
-
-**追踪目录状态**：
-!`test -d spec/tracking && echo "✅ 追踪目录存在" || echo "⚠️  需创建追踪目录"`
-
----
-
 # 初始化追踪系统
 
 基于已创建的故事大纲和章节规划，初始化所有追踪数据文件。

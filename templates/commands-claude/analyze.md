@@ -9,21 +9,6 @@ scripts:
 ---
 
 对小说项目进行智能化综合分析。根据当前创作阶段，自动选择执行**框架一致性分析**（write 之前）或**内容质量分析**（write 之后）。
-
-## 动态上下文加载（Claude Code 增强）
-
-**阶段检测结果**：
-!`bash {SCRIPT} 2>/dev/null || echo '{"analyze_type": "framework", "chapter_count": 0, "reason": "脚本未找到"}'`
-
-**当前章节列表**：
-!`find stories/*/content -name "*.md" ! -name "README.md" ! -name "index.md" 2>/dev/null | sort | head -20`
-
-**字数统计**：
-!`find stories/*/content -name "*.md" ! -name "README.md" -exec wc -w {} + 2>/dev/null | tail -1 | awk '{print $1 " 字"}'`
-
-**最近修改**：
-!`find stories/*/content -name "*.md" -type f -exec ls -lt {} + 2>/dev/null | head -5 | awk '{print $NF}'`
-
 ---
 
 ## 核心理念

@@ -7,25 +7,6 @@ scripts:
   ps: .specify/scripts/powershell/generate-tasks.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**创作计划文件**：
-!`find stories -name "creative-plan.md" 2>/dev/null | head -1`
-
-**规格文件检测**：
-!`find stories -name "specification.md" 2>/dev/null | head -1`
-
-**线索管理规格摘要**：
-!`find stories -name "specification.md" -exec sed -n '/## 五、线索管理规格/,/## 六、/p' {} \; 2>/dev/null | head -50`
-
-**现有任务文件**：
-!`find stories -name "tasks.md" 2>/dev/null`
-
-**章节架构信息**：
-!`find stories -name "creative-plan.md" -exec sed -n '/## 章节架构/,/## /p' {} \; 2>/dev/null | head -60`
-
----
-
 基于创作计划生成具体的、可执行的任务列表。
 
 ## 目标

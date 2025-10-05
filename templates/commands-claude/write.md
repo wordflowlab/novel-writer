@@ -9,24 +9,6 @@ scripts:
 ---
 
 基于七步方法论流程执行章节写作。
-
-## 动态上下文加载（Claude Code 增强）
-
-**当前故事**：
-!`ls -1 stories/ 2>/dev/null | head -1`
-
-**待完成任务**：
-!`grep -A2 "status: pending" stories/*/tasks.md 2>/dev/null | head -20`
-
-**最近章节**：
-!`find stories/*/content -name "*.md" -type f -exec ls -lt {} + 2>/dev/null | head -5 | awk '{print $NF}'`
-
-**进度统计**：
-!`find stories/*/content -name "*.md" ! -name "README.md" 2>/dev/null | wc -l | awk '{print $1 " 章已完成"}'`
-
-**字数统计**：
-!`find stories/*/content -name "*.md" ! -name "README.md" -exec wc -w {} + 2>/dev/null | tail -1 | awk '{print "总字数：" $1}'`
-
 ---
 
 ## 前置检查

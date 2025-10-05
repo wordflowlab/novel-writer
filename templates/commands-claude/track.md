@@ -9,22 +9,6 @@ scripts:
   ps: .specify/scripts/powershell/track-progress.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**追踪文件状态**：
-!`find spec/tracking -name "*.json" 2>/dev/null | sort`
-
-**完成进度统计**：
-!`cat spec/tracking/progress.json 2>/dev/null | grep -E '"completed_chapters"|"total_chapters"|"word_count"' || echo '{"completed_chapters": 0, "total_chapters": 0}'`
-
-**章节列表**：
-!`find stories/*/content -name "*.md" ! -name "README.md" | sort | head -20`
-
-**总字数**：
-!`find stories/*/content -name "*.md" -exec wc -w {} + 2>/dev/null | tail -1 || echo "0 total"`
-
----
-
 # 综合进度追踪
 
 全面展示小说创作的各项进度和状态。

@@ -8,25 +8,6 @@ scripts:
   ps: .specify/scripts/powershell/check-plot.ps1
 ---
 
-## 动态上下文加载（Claude Code 增强）
-
-**情节追踪文件**：
-!`test -f spec/tracking/plot-tracker.json && echo "✅ plot-tracker.json 存在" || echo "⚠️  无追踪文件"`
-
-**当前进度状态**：
-!`cat spec/tracking/plot-tracker.json 2>/dev/null | grep -E '"currentState"|"chapter"|"plotline"' | head -15 || echo '{"currentState": "未知"}'`
-
-**大纲文件**：
-!`test -f outline.md && echo "✅ outline.md 存在" || echo "⚠️  无大纲文件"`
-
-**已写章节数量**：
-!`find stories/*/content -name "*.md" ! -name "README.md" 2>/dev/null | wc -l | xargs echo "已完成章节:"`
-
-**最新写作进度**：
-!`cat stories/*/progress.json 2>/dev/null | grep -E '"completed_chapters"|"current_chapter"' || echo '{"completed_chapters": 0}'`
-
----
-
 # 检查情节发展
 
 分析当前章节与大纲的对齐情况，验证情节发展的连贯性。
