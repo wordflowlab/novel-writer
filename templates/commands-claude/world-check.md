@@ -1,7 +1,7 @@
 ---
 name: world-check
 description: 验证世界观设定的一致性
-allowed-tools: Read(//spec/knowledge/**), Read(//stories/**/content/**), Bash(find:*), Bash(grep:*)
+allowed-tools: Read(//spec/knowledge/**), Read(//stories/**/content/**), Bash(find:*), Bash(grep:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/check-world.sh

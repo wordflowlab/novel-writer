@@ -1,7 +1,7 @@
 ---
 description: 创建或更新小说创作宪法，定义不可妥协的创作原则
 argument-hint: [创作原则描述]
-allowed-tools: Write(//memory/novel-constitution.md), Read(//memory/**), Bash(find:*)
+allowed-tools: Write(//memory/novel-constitution.md), Read(//memory/**), Bash(find:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/constitution.sh

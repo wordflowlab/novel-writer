@@ -1,7 +1,7 @@
 ---
 name: plot-check
 description: 检查情节发展的一致性和连贯性
-allowed-tools: Read(//spec/tracking/plot-tracker.json), Read(//outline.md), Read(//stories/**/content/**), Bash(find:*), Bash(wc:*)
+allowed-tools: Read(//spec/tracking/plot-tracker.json), Read(//outline.md), Read(//stories/**/content/**), Bash(find:*), Bash(wc:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/check-plot.sh
