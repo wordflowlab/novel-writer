@@ -1,7 +1,7 @@
-import * as fs from 'fs-extra'
-import * as path from 'path'
-import * as yaml from 'js-yaml'
-import { logger } from '../utils/logger.js'
+import fs from 'fs-extra';
+import path from 'path';
+import yaml from 'js-yaml';
+import { logger } from '../utils/logger.js';
 
 interface PluginConfig {
   name: string
@@ -87,7 +87,12 @@ export class PluginManager {
    */
   private async scanPlugins(): Promise<string[]> {
     try {
-      const entries = await fs.readdir(this.pluginsDir, { withFileTypes: true })
+      // 检查插件目录是否存在
+      if (!await fs.pathExists(this.pluginsDir)) {
+        return []
+      }
+
+      const entries = await fs.promises.readdir(this.pluginsDir, { withFileTypes: true })
 
       // 过滤出目录，并且包含config.yaml的
       const plugins = []
@@ -364,7 +369,7 @@ export class PluginManager {
       const supportedAIs = await this.detectSupportedAIs()
 
       if (supportedAIs.claude && await fs.pathExists(this.commandsDirs.claude)) {
-        const commandFiles = await fs.readdir(this.commandsDirs.claude)
+        const commandFiles = await fs.promises.readdir(this.commandsDirs.claude)
         for (const file of commandFiles) {
           if (file.startsWith(`plugin-${pluginName}-`)) {
             await fs.remove(path.join(this.commandsDirs.claude, file))
@@ -376,7 +381,7 @@ export class PluginManager {
       // 对其他 AI 目录做同样的清理
       for (const [aiType, dir] of Object.entries(this.commandsDirs)) {
         if (aiType !== 'claude' && await fs.pathExists(dir)) {
-          const commandFiles = await fs.readdir(dir)
+          const commandFiles = await fs.promises.readdir(dir)
           for (const file of commandFiles) {
             if (file.startsWith(`plugin-${pluginName}-`)) {
               await fs.remove(path.join(dir, file))

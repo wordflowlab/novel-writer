@@ -9,6 +9,7 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { getVersion, getVersionInfo } from './version.js';
 import { PluginManager } from './plugins/manager.js';
+import { ensureProjectRoot, getProjectInfo } from './utils/project.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -561,19 +562,30 @@ program
   .command('plugins:list')
   .description('列出已安装的插件')
   .action(async () => {
-    const projectPath = process.cwd();
-    const pluginManager = new PluginManager(projectPath);
-
     try {
+      // 检测项目
+      const projectPath = await ensureProjectRoot();
+      const projectInfo = await getProjectInfo(projectPath);
+
+      if (!projectInfo) {
+        console.log(chalk.red('❌ 无法读取项目信息'));
+        process.exit(1);
+      }
+
+      const pluginManager = new PluginManager(projectPath);
       const plugins = await pluginManager.listPlugins();
 
+      console.log(chalk.cyan('\n📦 已安装的插件\n'));
+      console.log(chalk.gray(`项目: ${path.basename(projectPath)}`));
+      console.log(chalk.gray(`AI 配置: ${projectInfo.installedAI.join(', ') || '无'}\n`));
+
       if (plugins.length === 0) {
-        console.log(chalk.yellow('没有安装任何插件'));
-        console.log(chalk.gray('\n使用 "novel plugins add <name>" 安装插件'));
+        console.log(chalk.yellow('暂无插件'));
+        console.log(chalk.gray('\n使用 "novel plugins:add <name>" 安装插件'));
+        console.log(chalk.gray('可用插件: translate, authentic-voice, book-analysis\n'));
         return;
       }
 
-      console.log(chalk.cyan('\n已安装的插件:\n'));
       for (const plugin of plugins) {
         console.log(chalk.yellow(`  ${plugin.name}`) + ` (v${plugin.version})`);
         console.log(chalk.gray(`    ${plugin.description}`));
@@ -585,9 +597,17 @@ program
         if (plugin.experts && plugin.experts.length > 0) {
           console.log(chalk.gray(`    专家: ${plugin.experts.map(e => e.title).join(', ')}`));
         }
+        console.log('');
       }
-    } catch (error) {
-      console.error(chalk.red('列出插件失败:'), error);
+    } catch (error: any) {
+      if (error.message === 'NOT_IN_PROJECT') {
+        console.log(chalk.red('\n❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.gray('   请在项目根目录运行此命令\n'));
+        process.exit(1);
+      }
+
+      console.error(chalk.red('❌ 列出插件失败:'), error);
+      process.exit(1);
     }
   });
 
@@ -595,25 +615,92 @@ program
   .command('plugins:add <name>')
   .description('安装插件')
   .action(async (name) => {
-    const spinner = ora(`正在安装插件 ${name}...`).start();
-    const projectPath = process.cwd();
-    const pluginManager = new PluginManager(projectPath);
-
     try {
-      // 获取 package root
-      const packageRoot = path.dirname(require.resolve('../package.json'));
+      // 1. 检测项目
+      const projectPath = await ensureProjectRoot();
+      const projectInfo = await getProjectInfo(projectPath);
+
+      if (!projectInfo) {
+        console.log(chalk.red('❌ 无法读取项目信息'));
+        process.exit(1);
+      }
+
+      console.log(chalk.cyan('\n📦 Novel Writer 插件安装\n'));
+      console.log(chalk.gray(`项目版本: ${projectInfo.version}`));
+      console.log(chalk.gray(`AI 配置: ${projectInfo.installedAI.join(', ') || '无'}\n`));
+
+      // 2. 查找插件
+      const packageRoot = path.resolve(__dirname, '..');
       const builtinPluginPath = path.join(packageRoot, 'plugins', name);
 
-      if (await fs.pathExists(builtinPluginPath)) {
-        await pluginManager.installPlugin(name, builtinPluginPath);
-        spinner.succeed(chalk.green(`插件 ${name} 安装成功！`));
-      } else {
-        spinner.fail(chalk.red(`插件 ${name} 未找到`));
-        console.log(chalk.gray('\n可用插件: translate, authentic-voice'));
+      if (!await fs.pathExists(builtinPluginPath)) {
+        console.log(chalk.red(`❌ 插件 ${name} 未找到\n`));
+        console.log(chalk.gray('可用插件:'));
+        console.log(chalk.gray('  - translate (翻译出海插件)'));
+        console.log(chalk.gray('  - authentic-voice (真实人声插件)'));
+        console.log(chalk.gray('  - book-analysis (拆书分析插件)'));
+        process.exit(1);
       }
-    } catch (error) {
-      spinner.fail(chalk.red(`安装插件 ${name} 失败`));
-      console.error(error);
+
+      // 3. 读取插件配置
+      const pluginConfigPath = path.join(builtinPluginPath, 'config.yaml');
+      const yaml = await import('js-yaml');
+      const pluginConfigContent = await fs.readFile(pluginConfigPath, 'utf-8');
+      const pluginConfig = yaml.load(pluginConfigContent) as any;
+
+      // 4. 显示插件信息
+      console.log(chalk.cyan(`准备安装: ${pluginConfig.description || name}`));
+      console.log(chalk.gray(`版本: ${pluginConfig.version}`));
+
+      if (pluginConfig.commands && pluginConfig.commands.length > 0) {
+        console.log(chalk.gray(`命令数量: ${pluginConfig.commands.length}`));
+      }
+
+      if (pluginConfig.experts && pluginConfig.experts.length > 0) {
+        console.log(chalk.gray(`专家模式: ${pluginConfig.experts.length} 个`));
+      }
+
+      if (projectInfo.installedAI.length > 0) {
+        console.log(chalk.gray(`目标 AI: ${projectInfo.installedAI.join(', ')}\n`));
+      } else {
+        console.log(chalk.yellow('\n⚠️  未检测到 AI 配置目录'));
+        console.log(chalk.gray('   插件将被复制，但命令不会被注入到任何 AI 平台\n'));
+      }
+
+      // 5. 安装插件
+      const spinner = ora('正在安装插件...').start();
+      const pluginManager = new PluginManager(projectPath);
+
+      await pluginManager.installPlugin(name, builtinPluginPath);
+      spinner.succeed(chalk.green('插件安装成功！\n'));
+
+      // 6. 显示后续步骤
+      if (pluginConfig.commands && pluginConfig.commands.length > 0) {
+        console.log(chalk.cyan('可用命令:'));
+        for (const cmd of pluginConfig.commands) {
+          console.log(chalk.gray(`  /${cmd.id} - ${cmd.description || ''}`));
+        }
+      }
+
+      if (pluginConfig.experts && pluginConfig.experts.length > 0) {
+        console.log(chalk.cyan('\n专家模式:'));
+        for (const expert of pluginConfig.experts) {
+          console.log(chalk.gray(`  /expert ${expert.id} - ${expert.title || ''}`));
+        }
+      }
+
+      console.log('');
+    } catch (error: any) {
+      if (error.message === 'NOT_IN_PROJECT') {
+        console.log(chalk.red('\n❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.gray('   请在项目根目录运行此命令，或使用 novel init 创建新项目\n'));
+        process.exit(1);
+      }
+
+      console.log(chalk.red('\n❌ 安装插件失败'));
+      console.error(chalk.gray(error.message || error));
+      console.log('');
+      process.exit(1);
     }
   });
 
@@ -621,16 +708,265 @@ program
   .command('plugins:remove <name>')
   .description('移除插件')
   .action(async (name) => {
-    const spinner = ora(`正在移除插件 ${name}...`).start();
+    try {
+      // 检测项目
+      const projectPath = await ensureProjectRoot();
+      const projectInfo = await getProjectInfo(projectPath);
+
+      if (!projectInfo) {
+        console.log(chalk.red('❌ 无法读取项目信息'));
+        process.exit(1);
+      }
+
+      const pluginManager = new PluginManager(projectPath);
+
+      console.log(chalk.cyan('\n📦 Novel Writer 插件移除\n'));
+      console.log(chalk.gray(`准备移除插件: ${name}`));
+      console.log(chalk.gray(`AI 配置: ${projectInfo.installedAI.join(', ') || '无'}\n`));
+
+      const spinner = ora('正在移除插件...').start();
+      await pluginManager.removePlugin(name);
+      spinner.succeed(chalk.green('插件移除成功！\n'));
+    } catch (error: any) {
+      if (error.message === 'NOT_IN_PROJECT') {
+        console.log(chalk.red('\n❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.gray('   请在项目根目录运行此命令\n'));
+        process.exit(1);
+      }
+
+      console.log(chalk.red('\n❌ 移除插件失败'));
+      console.error(chalk.gray(error.message || error));
+      console.log('');
+      process.exit(1);
+    }
+  });
+
+// upgrade 命令 - 升级现有项目
+program
+  .command('upgrade')
+  .option('--ai <type>', '指定要升级的 AI 配置: claude | cursor | gemini | windsurf')
+  .option('--all', '升级所有 AI 配置')
+  .option('--no-backup', '跳过备份')
+  .option('--dry-run', '预览升级内容，不实际修改')
+  .description('升级现有项目到最新版本')
+  .action(async (options) => {
     const projectPath = process.cwd();
-    const pluginManager = new PluginManager(projectPath);
+    const packageRoot = path.resolve(__dirname, '..');
 
     try {
-      await pluginManager.removePlugin(name);
-      spinner.succeed(chalk.green(`插件 ${name} 移除成功！`));
+      // 1. 检测项目
+      const configPath = path.join(projectPath, '.specify', 'config.json');
+      if (!await fs.pathExists(configPath)) {
+        console.log(chalk.red('❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.gray('   请在项目根目录运行此命令，或使用 novel init 创建新项目'));
+        process.exit(1);
+      }
+
+      // 读取项目配置
+      const config = await fs.readJson(configPath);
+      const projectVersion = config.version || '未知';
+
+      console.log(chalk.cyan('\n📦 Novel Writer 项目升级\n'));
+      console.log(chalk.gray(`当前版本: ${projectVersion}`));
+      console.log(chalk.gray(`目标版本: ${getVersion()}\n`));
+
+      // 2. 检测已安装的 AI 配置
+      const installedAI: string[] = [];
+      const aiConfigs = [
+        { name: 'claude', dir: '.claude' },
+        { name: 'cursor', dir: '.cursor' },
+        { name: 'gemini', dir: '.gemini' },
+        { name: 'windsurf', dir: '.windsurf' }
+      ];
+
+      for (const ai of aiConfigs) {
+        if (await fs.pathExists(path.join(projectPath, ai.dir))) {
+          installedAI.push(ai.name);
+        }
+      }
+
+      if (installedAI.length === 0) {
+        console.log(chalk.yellow('⚠️  未检测到任何 AI 配置目录'));
+        process.exit(1);
+      }
+
+      console.log(chalk.green('✓') + ' 检测到 AI 配置: ' + installedAI.join(', '));
+
+      // 确定要升级的 AI 配置
+      let targetAI = installedAI;
+      if (options.ai) {
+        if (!installedAI.includes(options.ai)) {
+          console.log(chalk.red(`❌ AI 配置 "${options.ai}" 未安装`));
+          process.exit(1);
+        }
+        targetAI = [options.ai];
+      } else if (!options.all) {
+        // 默认升级所有已安装的 AI 配置
+        targetAI = installedAI;
+      }
+
+      console.log(chalk.cyan(`\n升级目标: ${targetAI.join(', ')}\n`));
+
+      if (options.dryRun) {
+        console.log(chalk.yellow('🔍 预览模式（不会实际修改文件）\n'));
+      }
+
+      // 3. 创建备份
+      let backupPath = '';
+      if (options.backup !== false && !options.dryRun) {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+        backupPath = path.join(projectPath, 'backup', timestamp);
+        await fs.ensureDir(backupPath);
+
+        console.log(chalk.cyan('📦 创建备份...'));
+
+        // 备份 AI 配置目录
+        for (const ai of targetAI) {
+          const aiDir = aiConfigs.find(c => c.name === ai)!.dir;
+          const source = path.join(projectPath, aiDir);
+          const dest = path.join(backupPath, aiDir);
+          if (await fs.pathExists(source)) {
+            await fs.copy(source, dest);
+            console.log(chalk.gray(`  ✓ 备份 ${aiDir}/`));
+          }
+        }
+
+        // 备份脚本
+        const scriptsSource = path.join(projectPath, '.specify', 'scripts');
+        if (await fs.pathExists(scriptsSource)) {
+          await fs.copy(scriptsSource, path.join(backupPath, '.specify', 'scripts'));
+          console.log(chalk.gray('  ✓ 备份 .specify/scripts/'));
+        }
+
+        // 保存备份信息
+        const backupInfo = {
+          timestamp,
+          fromVersion: projectVersion,
+          toVersion: getVersion(),
+          upgradedAI: targetAI,
+          backupPath
+        };
+        await fs.writeJson(path.join(backupPath, 'BACKUP_INFO.json'), backupInfo, { spaces: 2 });
+
+        console.log(chalk.green(`✓ 备份完成: ${backupPath}\n`));
+      }
+
+      // 4. 升级命令文件
+      console.log(chalk.cyan('📝 升级命令文件...'));
+
+      const upgradeStats = {
+        commands: 0,
+        claudeEnhanced: 0,
+        scripts: 0
+      };
+
+      for (const ai of targetAI) {
+        const aiConfig = aiConfigs.find(c => c.name === ai)!;
+        const aiDir = path.join(projectPath, aiConfig.dir);
+        const commandsDir = ai === 'gemini' ? path.join(aiDir, 'commands') :
+                           ai === 'windsurf' ? path.join(aiDir, 'workflows') :
+                           path.join(aiDir, 'commands');
+
+        // 读取所有命令模板
+        const templatesDir = path.join(packageRoot, 'templates', 'commands');
+        if (await fs.pathExists(templatesDir)) {
+          const commandFiles = await fs.readdir(templatesDir);
+
+          for (const file of commandFiles) {
+            if (!file.endsWith('.md')) continue;
+
+            const commandName = path.basename(file, '.md');
+            let content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
+
+            // 提取脚本路径
+            const shMatch = content.match(/sh:\s*(.+)/);
+            let scriptPath = shMatch ? shMatch[1].trim() : `.specify/scripts/bash/${commandName}.sh`;
+
+            // Claude 优先使用增强版本
+            if (ai === 'claude') {
+              const claudeEnhancedPath = path.join(packageRoot, 'templates', 'commands-claude', file);
+              if (await fs.pathExists(claudeEnhancedPath)) {
+                content = await fs.readFile(claudeEnhancedPath, 'utf-8');
+                upgradeStats.claudeEnhanced++;
+                console.log(chalk.gray(`  💎 ${file} (Claude 增强版)`));
+              } else {
+                console.log(chalk.gray(`  ✓ ${file}`));
+              }
+            } else {
+              console.log(chalk.gray(`  ✓ ${file}`));
+            }
+
+            // 生成命令文件
+            const destPath = path.join(commandsDir, file);
+            const processedContent = generateMarkdownCommand(content, scriptPath);
+
+            if (!options.dryRun) {
+              await fs.writeFile(destPath, processedContent);
+            }
+
+            upgradeStats.commands++;
+          }
+        }
+      }
+
+      // 5. 升级脚本文件
+      console.log(chalk.cyan('\n🔧 升级脚本文件...'));
+
+      const scriptsSource = path.join(packageRoot, 'scripts');
+      const scriptsDest = path.join(projectPath, '.specify', 'scripts');
+
+      if (await fs.pathExists(scriptsSource)) {
+        if (!options.dryRun) {
+          await fs.copy(scriptsSource, scriptsDest, { overwrite: true });
+        }
+
+        // 统计脚本数量
+        const bashScripts = await fs.readdir(path.join(scriptsSource, 'bash'));
+        const psScripts = await fs.readdir(path.join(scriptsSource, 'powershell'));
+
+        console.log(chalk.gray(`  ✓ 更新 ${bashScripts.length} 个 bash 脚本`));
+        console.log(chalk.gray(`  ✓ 更新 ${psScripts.length} 个 powershell 脚本`));
+
+        upgradeStats.scripts = bashScripts.length + psScripts.length;
+      }
+
+      // 6. 生成升级报告
+      console.log(chalk.cyan('\n📊 升级报告\n'));
+      console.log(chalk.green('✅ 升级完成！\n'));
+
+      console.log(chalk.yellow('升级统计:'));
+      console.log(`  • 版本: ${projectVersion} → ${getVersion()}`);
+      console.log(`  • AI 配置: ${targetAI.join(', ')}`);
+      console.log(`  • 命令文件: ${upgradeStats.commands} 个`);
+      if (upgradeStats.claudeEnhanced > 0) {
+        console.log(`  • Claude 增强: ${upgradeStats.claudeEnhanced} 个`);
+      }
+      console.log(`  • 脚本文件: ${upgradeStats.scripts} 个`);
+
+      if (backupPath) {
+        console.log(chalk.gray(`\n📦 备份位置: ${backupPath}`));
+        console.log(chalk.gray('   如需回滚，删除当前文件并从备份恢复'));
+      }
+
+      console.log(chalk.cyan('\n✨ 新功能提示:'));
+      if (upgradeStats.claudeEnhanced > 0) {
+        console.log('  • Claude Code 增强: argument-hint, allowed-tools, 动态上下文');
+      }
+      console.log('  • 多线索管理: /specify 命令中的线索管理规格');
+      console.log('  • 智能分析: /analyze 双模式（框架分析 + 内容分析）');
+
+      console.log(chalk.gray('\n📚 查看详细升级指南: docs/upgrade-guide.md'));
+      console.log(chalk.gray('   或访问: https://github.com/wordflowlab/novel-writer/blob/main/docs/upgrade-guide.md'));
+
+      if (!options.dryRun) {
+        // 更新项目版本号
+        config.version = getVersion();
+        await fs.writeJson(configPath, config, { spaces: 2 });
+      }
+
     } catch (error) {
-      spinner.fail(chalk.red(`移除插件 ${name} 失败`));
-      console.error(error);
+      console.error(chalk.red('\n❌ 升级失败:'), error);
+      process.exit(1);
     }
   });
 
