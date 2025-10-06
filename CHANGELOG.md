@@ -1,5 +1,15 @@
 # 更新日志
 
+## [0.13.7] - 2025-10-06
+
+### 🐛 问题修复
+
+- **插件命令文件命名优化**：修复插件安装后命令文件名过于复杂的问题
+  - 移除不必要的 `plugin-{pluginName}-` 前缀
+  - 插件命令文件名简化：`plugin-book-analysis-book-analyze.md` → `book-analyze.md`
+  - 保持与核心命令一致的命名风格
+  - 适用于所有 AI 平台（Claude、Cursor、Windsurf、Gemini）
+
 ## [0.13.6] - 2025-10-06
 
 ### 🐛 问题修复

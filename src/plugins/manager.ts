@@ -230,21 +230,21 @@ export class PluginManager {
         const sourcePath = path.join(this.pluginsDir, pluginName, cmd.file)
 
         if (supportedAIs.claude) {
-          const destPath = path.join(this.commandsDirs.claude, `plugin-${pluginName}-${cmd.id}.md`)
+          const destPath = path.join(this.commandsDirs.claude, `${cmd.id}.md`)
           await fs.ensureDir(this.commandsDirs.claude)
           await fs.copy(sourcePath, destPath)
           logger.debug(`注入命令到 Claude: /${cmd.id}`)
         }
 
         if (supportedAIs.cursor) {
-          const destPath = path.join(this.commandsDirs.cursor, `plugin-${pluginName}-${cmd.id}.md`)
+          const destPath = path.join(this.commandsDirs.cursor, `${cmd.id}.md`)
           await fs.ensureDir(this.commandsDirs.cursor)
           await fs.copy(sourcePath, destPath)
           logger.debug(`注入命令到 Cursor: /${cmd.id}`)
         }
 
         if (supportedAIs.windsurf) {
-          const destPath = path.join(this.commandsDirs.windsurf, `plugin-${pluginName}-${cmd.id}.md`)
+          const destPath = path.join(this.commandsDirs.windsurf, `${cmd.id}.md`)
           await fs.ensureDir(this.commandsDirs.windsurf)
           await fs.copy(sourcePath, destPath)
           logger.debug(`注入命令到 Windsurf: /${cmd.id}`)
@@ -257,7 +257,7 @@ export class PluginManager {
           const tomlSourcePath = path.join(this.pluginsDir, pluginName, 'commands-gemini', `${cmdId}.toml`)
 
           if (await fs.pathExists(tomlSourcePath)) {
-            const destPath = path.join(this.commandsDirs.gemini, `plugin-${pluginName}-${cmdId}.toml`)
+            const destPath = path.join(this.commandsDirs.gemini, `${cmdId}.toml`)
             await fs.ensureDir(this.commandsDirs.gemini)
             await fs.copy(tomlSourcePath, destPath)
             logger.debug(`注入命令到 Gemini: /${cmdId} (TOML)`)
@@ -267,7 +267,7 @@ export class PluginManager {
               const mdContent = await fs.readFile(sourcePath, 'utf-8')
               const tomlContent = this.convertMarkdownToToml(mdContent, cmd)
               if (tomlContent) {
-                const destPath = path.join(this.commandsDirs.gemini, `plugin-${pluginName}-${cmdId}.toml`)
+                const destPath = path.join(this.commandsDirs.gemini, `${cmdId}.toml`)
                 await fs.ensureDir(this.commandsDirs.gemini)
                 await fs.writeFile(destPath, tomlContent)
                 logger.debug(`自动转换并注入命令到 Gemini: /${cmdId}`)
