@@ -462,14 +462,14 @@ node_modules/
       }
       console.log(`  3. 使用以下斜杠命令开始创作:`);
 
-      console.log('\n' + chalk.yellow('     📝 核心创作流程:'));
-      console.log(`     ${chalk.cyan('/method')}      - 智能选择写作方法（推荐先执行）`);
-      console.log(`     ${chalk.cyan('/style')}       - 设定创作风格和准则`);
-      console.log(`     ${chalk.cyan('/story')}       - 创建故事大纲`);
-      console.log(`     ${chalk.cyan('/outline')}     - 规划章节结构`);
-      console.log(`     ${chalk.cyan('/track-init')} - 初始化追踪系统`);
-      console.log(`     ${chalk.cyan('/chapters')}    - 分解写作任务`);
-      console.log(`     ${chalk.cyan('/write')}       - 开始章节创作`);
+      console.log('\n' + chalk.yellow('     📝 七步方法论:'));
+      console.log(`     ${chalk.cyan('/constitution')} - 创建创作宪法，定义核心原则`);
+      console.log(`     ${chalk.cyan('/specify')}      - 定义故事规格，明确要创造什么`);
+      console.log(`     ${chalk.cyan('/clarify')}      - 澄清关键决策点，明确模糊之处`);
+      console.log(`     ${chalk.cyan('/plan')}         - 制定技术方案，决定如何创作`);
+      console.log(`     ${chalk.cyan('/tasks')}        - 分解执行任务，生成可执行清单`);
+      console.log(`     ${chalk.cyan('/write')}        - AI 辅助写作章节内容`);
+      console.log(`     ${chalk.cyan('/analyze')}      - 综合验证分析，确保质量一致`);
 
       console.log('\n' + chalk.yellow('     📊 追踪管理命令:'));
       console.log(`     ${chalk.cyan('/plot-check')}  - 检查情节一致性`);
@@ -496,7 +496,7 @@ node_modules/
         }
       }
 
-      console.log('\n' + chalk.gray('推荐流程: method → story → outline → track-init → write'));
+      console.log('\n' + chalk.gray('推荐流程: constitution → specify → clarify → plan → tasks → write → analyze'));
       console.log(chalk.dim('提示: 斜杠命令在 AI 助手内部使用，不是在终端中'));
 
     } catch (error) {

@@ -1,5 +1,14 @@
 # 更新日志
 
+## [0.13.6] - 2025-10-06
+
+### 🐛 问题修复
+
+- **CLI 帮助文本更新**：修复 `novel init` 初始化后显示的帮助文本
+  - 更新核心命令列表为正确的七步方法论命令（constitution, specify, clarify, plan, tasks, write, analyze）
+  - 移除已废弃的旧命令（method, style, story, outline, chapters）
+  - 更新推荐流程为：`constitution → specify → clarify → plan → tasks → write → analyze`
+
 ## [0.12.2] - 2025-10-04
 
 ### ✨ 新增功能：Claude Code 增强层

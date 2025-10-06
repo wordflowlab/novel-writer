@@ -1,6 +1,6 @@
 {
   "name": "novel-writer-cn",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "type": "module",
   "description": "AI 驱动的中文小说创作工具 - 基于结构化工作流的智能写作助手",
   "keywords": [
