@@ -1,7 +1,7 @@
 ---
 description: 基于故事规格制定技术实现方案
 argument-hint: [技术偏好和选择]
-allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Read(//stories/**/creative-plan.md), Read(stories/**/creative-plan.md), Write(//stories/**/creative-plan.md), Write(stories/**/creative-plan.md), Read(//memory/novel-constitution.md), Read(memory/novel-constitution.md), Bash(find:*), Bash(grep:*), Bash(*)
+allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Read(//stories/**/creative-plan.md), Read(stories/**/creative-plan.md), Read(//spec/knowledge/genres/**), Read(spec/knowledge/genres/**), Write(//stories/**/creative-plan.md), Write(stories/**/creative-plan.md), Read(//memory/novel-constitution.md), Read(memory/novel-constitution.md), Bash(find:*), Bash(grep:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/plan-story.sh
@@ -23,6 +23,12 @@ scripts:
 - 规格文件：`stories/*/specification.md`
 - 澄清记录（如果已运行 `/clarify`）
 
+**加载类型知识库**：
+- 从 specification.md 读取故事主类型
+- 加载对应的类型指导文件 `spec/knowledge/genres/[类型].md`
+- 如 `shuangwen.md`（爽文）、`mystery.md`（悬疑）等
+- 基于类型特征选择最适合的写作方法和技术方案
+
 验证规格中的 `[需要澄清]` 标记：
 - 如果存在未澄清的关键决策，提示先运行 `/clarify`
 - 或接受用户明确指示跳过
@@ -33,12 +39,13 @@ scripts:
 
 #### 2.1 写作方法选择
 
-基于规格分析，选择最适合的写作方法：
+基于规格分析和故事类型，选择最适合的写作方法：
 - **三幕结构**：适合线性叙事、明确起承转合
 - **英雄之旅**：适合成长型、冒险类故事
 - **七点结构**：适合悬念、反转类故事
 - **故事圈**：适合角色驱动、心理深度
 - **混合方法**：主线+支线使用不同方法
+- **类型专用结构**：如爽文的"爽点分布结构"、悬疑的"线索布局结构"等（参考类型知识库）
 
 记录选择理由和应用方式。
 

@@ -262,6 +262,11 @@ scripts:
 
 深入分析作品质量：
 
+**类型专项检查**：
+- 从 specification.md 读取故事主类型
+- 加载 `spec/knowledge/genres/[类型].md` 中的质量检查标准
+- 执行类型特定的专项验证（如爽文的爽点密度、悬疑的线索完整性等）
+
 ```markdown
 ## 内容质量分析
 
