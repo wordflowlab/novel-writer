@@ -1,7 +1,7 @@
 ---
 description: 创建或更新小说创作宪法，定义不可妥协的创作原则
 argument-hint: [创作原则描述]
-allowed-tools: Write(//memory/novel-constitution.md), Read(//memory/**), Bash(find:*), Bash(*)
+allowed-tools: Write(//memory/novel-constitution.md), Write(memory/novel-constitution.md), Read(//memory/**), Read(memory/**), Bash(find:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/constitution.sh
@@ -18,9 +18,13 @@ scripts:
 
 ### 1. 检查现有宪法
 
-运行 `{SCRIPT} check` 检查是否已存在宪法文件：
-- 如果存在 `memory/novel-constitution.md`，加载并准备更新
-- 如果不存在，准备创建新宪法
+首先使用 Bash 检查宪法文件是否存在：
+```bash
+test -f memory/novel-constitution.md && echo "exists" || echo "not-found"
+```
+
+- 如果存在（输出 "exists"），使用 Read 工具读取 `memory/novel-constitution.md` 并准备更新
+- 如果不存在（输出 "not-found"），跳过读取步骤，直接准备创建新宪法
 
 ### 2. 收集创作原则
 
@@ -161,7 +165,6 @@ scripts:
 ### 5. 一致性传播
 
 检查并更新相关文件以保持一致：
-- 更新 `.specify/memory/writing-constitution.md`（如存在）
 - 在后续命令中引用宪法原则
 - 建议更新 README 中的创作理念部分
 

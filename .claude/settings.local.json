@@ -31,7 +31,8 @@
       "Bash(git log:*)",
       "Read(//Users/coso/**)",
       "Bash(echo $PATH)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Read(//private/tmp/**)"
     ],
     "deny": [],
     "ask": []

@@ -1,7 +1,7 @@
 ---
 description: 通过针对性问答澄清故事大纲中的模糊点，确保创作方向明确，支持焦点参数
 argument-hint: [关键词或焦点领域]
-allowed-tools: Read(//stories/**), Write(//stories/*/story.md), Bash(ls:*), Bash(find:*), Bash(*)
+allowed-tools: Read(//stories/**), Read(stories/**), Write(//stories/*/story.md), Write(stories/*/story.md), Bash(ls:*), Bash(find:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 disable-model-invocation: false
 scripts:

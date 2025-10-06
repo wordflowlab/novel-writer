@@ -14,7 +14,6 @@ Set-Location $ProjectRoot
 
 # 定义文件路径
 $ConstitutionFile = "memory\novel-constitution.md"
-$OldConstitutionFile = ".specify\memory\writing-constitution.md"
 
 switch ($Command) {
     "check" {
@@ -40,12 +39,6 @@ switch ($Command) {
             Write-Host "  最后修订：$updated"
             exit 0
         }
-        elseif (Test-Path $OldConstitutionFile) {
-            Write-Host "⚠️ 发现旧版创作准则文件" -ForegroundColor Yellow
-            Write-Host "  位置：$OldConstitutionFile"
-            Write-Host "  建议：运行 /constitution 升级为完整宪法"
-            exit 0
-        }
         else {
             Write-Host "❌ 尚未创建宪法文件" -ForegroundColor Red
             Write-Host "  建议：运行 /constitution 创建创作宪法"
@@ -65,11 +58,6 @@ switch ($Command) {
         }
         else {
             Write-Host "准备创建新的宪法文件"
-
-            # 如果存在旧文件，提示迁移
-            if (Test-Path $OldConstitutionFile) {
-                Write-Host "检测到旧版创作准则，将作为参考"
-            }
         }
     }
 

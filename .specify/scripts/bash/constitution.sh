@@ -18,7 +18,6 @@ cd "$PROJECT_ROOT"
 
 # 定义文件路径
 CONSTITUTION_FILE="memory/novel-constitution.md"
-OLD_CONSTITUTION_FILE=".specify/memory/writing-constitution.md"
 
 case "$COMMAND" in
     check)
@@ -30,11 +29,6 @@ case "$COMMAND" in
             UPDATED=$(grep -E "^- 最后修订：" "$CONSTITUTION_FILE" 2>/dev/null | cut -d'：' -f2 | tr -d ' ' || echo "未知")
             echo "  版本：$VERSION"
             echo "  最后修订：$UPDATED"
-            exit 0
-        elif [ -f "$OLD_CONSTITUTION_FILE" ]; then
-            echo "⚠️ 发现旧版创作准则文件"
-            echo "  位置：$OLD_CONSTITUTION_FILE"
-            echo "  建议：运行 /constitution 升级为完整宪法"
             exit 0
         else
             echo "❌ 尚未创建宪法文件"
@@ -51,11 +45,6 @@ case "$COMMAND" in
             echo "宪法文件已存在，准备更新"
         else
             echo "准备创建新的宪法文件"
-
-            # 如果存在旧文件，提示迁移
-            if [ -f "$OLD_CONSTITUTION_FILE" ]; then
-                echo "检测到旧版创作准则，将作为参考"
-            fi
         fi
         ;;
 
