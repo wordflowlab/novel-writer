@@ -34,11 +34,17 @@ function generateTomlCommand(template: string, scriptPath: string): string {
   // 替换 {SCRIPT}
   const processedContent = content.replace(/{SCRIPT}/g, scriptPath);
 
-  return `description = "${description}"
+  // 规范化换行符，避免 Windows CRLF 导致 TOML 解析失败
+  const normalizedContent = processedContent.replace(/\r\n/g, '\n');
+  const promptValue = JSON.stringify(normalizedContent);
+  const escapedDescription = description
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"');
 
-prompt = """
-${processedContent}
-"""`;
+  return `description = "${escapedDescription}"
+
+prompt = ${promptValue}
+`;
 }
 
 // 显示欢迎横幅
