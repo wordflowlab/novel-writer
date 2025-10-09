@@ -66,7 +66,7 @@ program
   .command('init')
   .argument('[name]', '小说项目名称')
   .option('--here', '在当前目录初始化')
-  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf', 'claude')
+  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode', 'claude')
   .option('--all', '为所有支持的 AI 助手生成配置')
   .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar | snowflake', 'three-act')
   .option('--no-git', '跳过 Git 初始化')
@@ -117,7 +117,7 @@ program
       const aiDirs: string[] = [];
       if (options.all) {
         // 创建所有 AI 目录
-        aiDirs.push('.claude/commands', '.cursor/commands', '.gemini/commands', '.windsurf/workflows');
+        aiDirs.push('.claude/commands', '.cursor/commands', '.gemini/commands', '.windsurf/workflows', '.roo/commands');
       } else {
         // 根据选择的 AI 创建目录
         switch(options.ai) {
@@ -132,6 +132,9 @@ program
             break;
           case 'windsurf':
             aiDirs.push('.windsurf/workflows');
+            break;
+          case 'roocode':
+            aiDirs.push('.roo/commands');
             break;
         }
       }
@@ -221,6 +224,13 @@ program
               const windsurfPath = path.join(projectPath, '.windsurf', 'workflows', file);
               const windsurfContent = generateMarkdownCommand(content, scriptPath);
               await fs.writeFile(windsurfPath, windsurfContent);
+            }
+
+            // 为 Roo Code 生成命令文件
+            if (aiDirs.some(dir => dir.includes('.roo'))) {
+              const roocodePath = path.join(projectPath, '.roo', 'commands', file);
+              const roocodeContent = generateMarkdownCommand(content, scriptPath);
+              await fs.writeFile(roocodePath, roocodeContent);
             }
 
             // 为 Gemini 生成 TOML 格式
@@ -380,6 +390,11 @@ program
               const expertPath = path.join(projectPath, aiDir, 'expert.md');
               await fs.writeFile(expertPath, expertContent);
             }
+            // Roo Code 使用 Markdown 命令目录
+            if (aiDir.includes('.roo')) {
+              const expertPath = path.join(projectPath, aiDir, 'expert.md');
+              await fs.writeFile(expertPath, expertContent);
+            }
             // Gemini 格式处理
             if (aiDir.includes('gemini')) {
               const expertPath = path.join(projectPath, aiDir, 'expert.toml');
@@ -452,11 +467,12 @@ node_modules/
         'claude': 'Claude Code',
         'cursor': 'Cursor',
         'gemini': 'Gemini',
-        'windsurf': 'Windsurf'
+        'windsurf': 'Windsurf',
+        'roocode': 'Roo Code'
       }[options.ai] || 'AI 助手';
 
       if (options.all) {
-        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目（Claude Code、Cursor、Gemini、Windsurf）')}`);
+        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目（Claude Code、Cursor、Gemini、Windsurf、Roo Code）')}`);
       } else {
         console.log(`  2. ${chalk.white(`在 ${aiName} 中打开项目`)}`);
       }
@@ -538,6 +554,7 @@ program
       console.log('  • Claude: https://claude.ai');
       console.log('  • Cursor: https://cursor.sh');
       console.log('  • Gemini: https://gemini.google.com');
+      console.log('  • Roo Code: https://roocode.com');
     } else {
       console.log('\n' + chalk.green('环境检查通过！'));
     }
@@ -744,7 +761,7 @@ program
 // upgrade 命令 - 升级现有项目
 program
   .command('upgrade')
-  .option('--ai <type>', '指定要升级的 AI 配置: claude | cursor | gemini | windsurf')
+  .option('--ai <type>', '指定要升级的 AI 配置: claude | cursor | gemini | windsurf | roocode')
   .option('--all', '升级所有 AI 配置')
   .option('--no-backup', '跳过备份')
   .option('--dry-run', '预览升级内容，不实际修改')
@@ -776,7 +793,8 @@ program
         { name: 'claude', dir: '.claude' },
         { name: 'cursor', dir: '.cursor' },
         { name: 'gemini', dir: '.gemini' },
-        { name: 'windsurf', dir: '.windsurf' }
+        { name: 'windsurf', dir: '.windsurf' },
+        { name: 'roocode', dir: '.roo' }
       ];
 
       for (const ai of aiConfigs) {

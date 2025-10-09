@@ -42,7 +42,8 @@ export async function detectInstalledAI(projectPath: string): Promise<string[]> 
     { name: 'claude', dir: '.claude' },
     { name: 'cursor', dir: '.cursor' },
     { name: 'gemini', dir: '.gemini' },
-    { name: 'windsurf', dir: '.windsurf' }
+    { name: 'windsurf', dir: '.windsurf' },
+    { name: 'roocode', dir: '.roo' }
   ];
 
   const installedAI: string[] = [];

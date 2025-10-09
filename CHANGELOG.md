@@ -1,5 +1,16 @@
 # 更新日志
 
+## [0.14.0] - 2025-10-09
+
+### ✨ 新增功能
+
+- **Roo Code 斜杠命令支持**：`novel init` 与 `novel upgrade` 现在支持生成 `.roo/commands` 目录，并自动输出 Roo Code 兼容的 Markdown 命令
+- **插件系统集成**：插件命令注入流程同步扩展至 Roo Code，确保安装的插件可在 Roo Code 中即时使用
+
+### 📚 文档更新
+
+- README 与 CHANGELOG 新增 Roo Code 支持说明，同时更新可用 AI 列表提示
+
 ## [0.13.7] - 2025-10-06
 
 ### 🐛 问题修复
@@ -586,5 +597,5 @@ mv stories/your-story/story.md stories/your-story/specification.md
 ### 新增
 
 - 初始版本发布
-- 支持 Claude、Cursor、Gemini、Windsurf 多种 AI 助手
+- 支持 Claude、Cursor、Gemini、Windsurf、Roo Code 多种 AI 助手
 - 提供了完整的小说创作工作流命令

@@ -39,6 +39,7 @@ export class PluginManager {
     cursor: string
     gemini: string
     windsurf: string
+    roocode: string
   }
   private expertsDir: string
 
@@ -48,7 +49,8 @@ export class PluginManager {
       claude: path.join(projectRoot, '.claude', 'commands'),
       cursor: path.join(projectRoot, '.cursor', 'commands'),
       gemini: path.join(projectRoot, '.gemini', 'commands'),
-      windsurf: path.join(projectRoot, '.windsurf', 'workflows')
+      windsurf: path.join(projectRoot, '.windsurf', 'workflows'),
+      roocode: path.join(projectRoot, '.roo', 'commands')
     }
     this.expertsDir = path.join(projectRoot, 'experts')
   }
@@ -203,12 +205,14 @@ export class PluginManager {
     cursor: boolean
     gemini: boolean
     windsurf: boolean
+    roocode: boolean
   }> {
     return {
       claude: await fs.pathExists(this.commandsDirs.claude),
       cursor: await fs.pathExists(this.commandsDirs.cursor),
       gemini: await fs.pathExists(this.commandsDirs.gemini),
-      windsurf: await fs.pathExists(this.commandsDirs.windsurf)
+      windsurf: await fs.pathExists(this.commandsDirs.windsurf),
+      roocode: await fs.pathExists(this.commandsDirs.roocode)
     }
   }
 
@@ -248,6 +252,13 @@ export class PluginManager {
           await fs.ensureDir(this.commandsDirs.windsurf)
           await fs.copy(sourcePath, destPath)
           logger.debug(`注入命令到 Windsurf: /${cmd.id}`)
+        }
+
+        if (supportedAIs.roocode) {
+          const destPath = path.join(this.commandsDirs.roocode, `${cmd.id}.md`)
+          await fs.ensureDir(this.commandsDirs.roocode)
+          await fs.copy(sourcePath, destPath)
+          logger.debug(`注入命令到 Roo Code: /${cmd.id}`)
         }
 
         // 处理 TOML 格式（Gemini）

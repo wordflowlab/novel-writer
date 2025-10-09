@@ -37,3 +37,4 @@ coverage/
 temp/
 other/
 .claude
+.codex
