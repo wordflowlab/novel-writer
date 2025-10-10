@@ -86,14 +86,39 @@ check_pending_tasks() {
 # 检查已完成内容
 check_completed_content() {
     local content_dir="$STORY_DIR/content"
+    local validation_rules="spec/tracking/validation-rules.json"
+    local min_words=2000
+    local max_words=4000
+
+    # 读取验证规则（如果存在）
+    if [ -f "$validation_rules" ]; then
+        if command -v jq >/dev/null 2>&1; then
+            min_words=$(jq -r '.rules.chapterMinWords // 2000' "$validation_rules")
+            max_words=$(jq -r '.rules.chapterMaxWords // 4000' "$validation_rules")
+        fi
+    fi
 
     if [ -d "$content_dir" ]; then
         local chapter_count=$(ls "$content_dir"/*.md 2>/dev/null | wc -l)
         if [ $chapter_count -gt 0 ]; then
             echo ""
             echo "已完成章节：$chapter_count"
+            echo "字数要求：${min_words}-${max_words} 字"
+            echo ""
             echo "最近写作："
-            ls -lt "$content_dir"/*.md 2>/dev/null | head -n 3 | awk '{print "  -", $9}'
+            for file in $(ls -t "$content_dir"/*.md 2>/dev/null | head -n 3); do
+                local filename=$(basename "$file")
+                local words=$(count_chinese_words "$file")
+                local status="✅"
+
+                if [ "$words" -lt "$min_words" ]; then
+                    status="⚠️ 字数不足"
+                elif [ "$words" -gt "$max_words" ]; then
+                    status="⚠️ 字数超出"
+                fi
+
+                echo "  - $filename: $words 字 $status"
+            done
         fi
     else
         echo ""

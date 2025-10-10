@@ -142,10 +142,28 @@ template = """
 - 符合节奏设计
 - 达到字数要求
 
-### 9. 完成报告
+### 9. 验证字数和完成报告
+
+**字数统计说明**：
+- 使用准确的中文字数统计方法
+- 排除Markdown标记（#、*、-等）
+- 只统计实际内容字符
+- 字数要求来自 spec/tracking/validation-rules.json（默认2000-4000字）
+
+**验证方法**：
+使用 run_shell_command 执行字数统计：
+```bash
+source scripts/bash/common.sh && count_chinese_words "stories/*/content/第X章.md"
+```
+
+⚠️ 注意：不要使用 wc -w 统计中文字数，它对中文极不准确！
+
+**完成报告**：
 ✅ 章节创作完成！
 - 保存位置：stories/*/content/第X章.md
-- 字数：[实际字数]
+- 实际字数：[X]字
+- 字数要求：2000-4000字
+- 字数状态：✅ 符合要求 / ⚠️ 字数不足 / ⚠️ 字数超出
 - 任务状态：已更新
 
 ### 10. 建议下一步

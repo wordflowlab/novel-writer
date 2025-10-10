@@ -51,21 +51,27 @@ analyze_content() {
     local chapter_count=0
 
     if [ -d "$content_dir" ]; then
+        echo "内容统计："
+        echo ""
         for file in "$content_dir"/*.md; do
             if [ -f "$file" ]; then
                 ((chapter_count++))
-                # 简单的字数统计（中文按字符算）
-                local words=$(grep -o . "$file" | wc -l)
+                # 使用准确的中文字数统计
+                local words=$(count_chinese_words "$file")
                 ((total_words += words))
+                local filename=$(basename "$file")
+                echo "  $filename: $words 字"
             fi
         done
-    fi
-
-    echo "内容统计："
-    echo "  总字数：$total_words"
-    echo "  章节数：$chapter_count"
-    if [ $chapter_count -gt 0 ]; then
-        echo "  平均章节长度：$((total_words / chapter_count))"
+        echo ""
+        echo "  总字数：$total_words"
+        echo "  章节数：$chapter_count"
+        if [ $chapter_count -gt 0 ]; then
+            echo "  平均章节长度：$((total_words / chapter_count)) 字"
+        fi
+    else
+        echo "内容统计："
+        echo "  尚未开始写作"
     fi
 }
 
