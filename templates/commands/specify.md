@@ -1,14 +1,14 @@
 ---
 description: 定义故事规格，明确要创造什么样的作品
+argument-hint: [故事描述]
+allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Write(//stories/**/specification.md), Write(stories/**/specification.md), Read(//memory/novel-constitution.md), Read(memory/novel-constitution.md), Bash(find:*), Bash(*)
+model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/specify-story.sh --json
   ps: .specify/scripts/powershell/specify-story.ps1 -Json
 ---
 
-用户输入描述了他们想要创作的故事。基于这个描述，创建一个完整的故事规格文档。
-
-用户输入：
-$ARGUMENTS
+用户输入：$ARGUMENTS
 
 ## 目标
 

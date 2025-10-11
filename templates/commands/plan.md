@@ -1,14 +1,14 @@
 ---
 description: 基于故事规格制定技术实现方案
+argument-hint: [技术偏好和选择]
+allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Read(//stories/**/creative-plan.md), Read(stories/**/creative-plan.md), Read(//spec/knowledge/genres/**), Read(spec/knowledge/genres/**), Write(//stories/**/creative-plan.md), Write(stories/**/creative-plan.md), Read(//memory/novel-constitution.md), Read(memory/novel-constitution.md), Bash(find:*), Bash(grep:*), Bash(*)
+model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/plan-story.sh
   ps: .specify/scripts/powershell/plan-story.ps1
 ---
 
-基于澄清后的故事规格，制定具体的创作技术方案。
-
-用户输入（技术选择和偏好）：
-$ARGUMENTS
+用户输入：$ARGUMENTS
 
 ## 目标
 
@@ -26,6 +26,7 @@ $ARGUMENTS
 **加载类型知识库**：
 - 从 specification.md 读取故事主类型
 - 加载对应的类型指导文件 `spec/knowledge/genres/[类型].md`
+- 如 `shuangwen.md`（爽文）、`mystery.md`（悬疑）等
 - 基于类型特征选择最适合的写作方法和技术方案
 
 验证规格中的 `[需要澄清]` 标记：

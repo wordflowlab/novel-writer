@@ -72,7 +72,7 @@ program
   .command('init')
   .argument('[name]', '小说项目名称')
   .option('--here', '在当前目录初始化')
-  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode', 'claude')
+  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode | copilot | qwen | opencode | codex | kilocode | auggie | codebuddy | q', 'claude')
   .option('--all', '为所有支持的 AI 助手生成配置')
   .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar | snowflake', 'three-act')
   .option('--no-git', '跳过 Git 初始化')
@@ -123,7 +123,22 @@ program
       const aiDirs: string[] = [];
       if (options.all) {
         // 创建所有 AI 目录
-        aiDirs.push('.claude/commands', '.cursor/commands', '.gemini/commands', '.windsurf/workflows', '.roo/commands');
+        aiDirs.push(
+          '.claude/commands',
+          '.cursor/commands',
+          '.gemini/commands',
+          '.windsurf/workflows',
+          '.roo/commands',
+          '.github/prompts',
+          '.vscode',
+          '.qwen/commands',
+          '.opencode/command',
+          '.codex/prompts',
+          '.kilocode/workflows',
+          '.augment/commands',
+          '.codebuddy/commands',
+          '.amazonq/prompts'
+        );
       } else {
         // 根据选择的 AI 创建目录
         switch(options.ai) {
@@ -141,6 +156,30 @@ program
             break;
           case 'roocode':
             aiDirs.push('.roo/commands');
+            break;
+          case 'copilot':
+            aiDirs.push('.github/prompts', '.vscode');
+            break;
+          case 'qwen':
+            aiDirs.push('.qwen/commands');
+            break;
+          case 'opencode':
+            aiDirs.push('.opencode/command');
+            break;
+          case 'codex':
+            aiDirs.push('.codex/prompts');
+            break;
+          case 'kilocode':
+            aiDirs.push('.kilocode/workflows');
+            break;
+          case 'auggie':
+            aiDirs.push('.augment/commands');
+            break;
+          case 'codebuddy':
+            aiDirs.push('.codebuddy/commands');
+            break;
+          case 'q':
+            aiDirs.push('.amazonq/prompts');
             break;
         }
       }
@@ -161,123 +200,48 @@ program
 
       await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
 
-      // 创建 spec.md 文件，合并所有命令模板
+      // 从构建产物复制 AI 配置和命令文件
       const packageRoot = path.resolve(__dirname, '..');
-      const templatesDir = path.join(packageRoot, 'templates', 'commands');
       const scriptsDir = path.join(packageRoot, 'scripts');
+      const sourceMap: Record<string, string> = {
+        'claude': 'dist/claude',
+        'gemini': 'dist/gemini',
+        'cursor': 'dist/cursor',
+        'windsurf': 'dist/windsurf',
+        'roocode': 'dist/roocode',
+        'copilot': 'dist/copilot',
+        'qwen': 'dist/qwen',
+        'opencode': 'dist/opencode',
+        'codex': 'dist/codex',
+        'kilocode': 'dist/kilocode',
+        'auggie': 'dist/auggie',
+        'codebuddy': 'dist/codebuddy',
+        'q': 'dist/q'
+      };
 
-      // 读取所有命令模板
-      let specContent = `# Novel Writer Spec - AI 小说创作命令规范
-
-本文件定义了 Novel Writer 支持的所有斜杠命令。
-在 Claude Code、Cursor 或其他 AI 助手中使用这些命令进行小说创作。
-
-`;
-
-      if (await fs.pathExists(templatesDir)) {
-        const commandFiles = await fs.readdir(templatesDir);
-
-        // 生成合并的 spec.md
-        for (const file of commandFiles.sort()) {
-          if (file.endsWith('.md')) {
-            const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
-            const commandName = path.basename(file, '.md');
-            specContent += `## /${commandName}\n\n${content}\n\n`;
-          }
-        }
-        await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
-
-        // 为每个 AI 助手生成特定格式的命令文件
-        for (const file of commandFiles) {
-          if (file.endsWith('.md')) {
-            const content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
-            const commandName = path.basename(file, '.md');
-
-            // 提取脚本路径，特殊处理style命令
-            const shMatch = content.match(/sh:\s*(.+)/);
-            let scriptPath = shMatch ? shMatch[1].trim() : `.specify/scripts/bash/${commandName}.sh`;
-
-            // 如果是style命令，更新为新的style-manager.sh
-            if (commandName === 'style') {
-              scriptPath = '.specify/scripts/bash/style-manager.sh';
-            }
-
-            // 为 Claude 生成命令文件（优先使用增强版）
-            if (aiDirs.some(dir => dir.includes('.claude'))) {
-              const claudeEnhancedPath = path.join(packageRoot, 'templates', 'commands-claude', file);
-              let commandContent = content; // 默认使用基础版
-
-              // 检查是否存在 Claude 增强版本
-              if (await fs.pathExists(claudeEnhancedPath)) {
-                commandContent = await fs.readFile(claudeEnhancedPath, 'utf-8');
-                console.log(chalk.gray(`    💎 Claude 增强: ${file}`));
-              }
-
-              const claudePath = path.join(projectPath, '.claude', 'commands', file);
-              const claudeContent = generateMarkdownCommand(commandContent, scriptPath);
-              await fs.writeFile(claudePath, claudeContent);
-            }
-
-            // 为 Cursor 生成命令文件
-            if (aiDirs.some(dir => dir.includes('.cursor'))) {
-              const cursorPath = path.join(projectPath, '.cursor', 'commands', file);
-              const cursorContent = generateMarkdownCommand(content, scriptPath);
-              await fs.writeFile(cursorPath, cursorContent);
-            }
-
-            // 为 Windsurf 生成命令文件
-            if (aiDirs.some(dir => dir.includes('.windsurf'))) {
-              const windsurfPath = path.join(projectPath, '.windsurf', 'workflows', file);
-              const windsurfContent = generateMarkdownCommand(content, scriptPath);
-              await fs.writeFile(windsurfPath, windsurfContent);
-            }
-
-            // 为 Roo Code 生成命令文件
-            if (aiDirs.some(dir => dir.includes('.roo'))) {
-              const roocodePath = path.join(projectPath, '.roo', 'commands', file);
-              const roocodeContent = generateMarkdownCommand(content, scriptPath);
-              await fs.writeFile(roocodePath, roocodeContent);
-            }
-
-            // 为 Gemini 生成 TOML 格式
-            if (aiDirs.some(dir => dir.includes('.gemini'))) {
-              // 优先使用预定义的 TOML 文件
-              const geminiTemplateDir = path.join(packageRoot, 'templates', 'commands-gemini');
-              const tomlSourceFile = path.join(geminiTemplateDir, `${commandName}.toml`);
-
-              // 处理带有命名空间的命令（如 track-init → track/init.toml）
-              let actualTomlPath = tomlSourceFile;
-              let geminiDestPath = path.join(projectPath, '.gemini', 'commands', `${commandName}.toml`);
-
-              if (commandName === 'track-init') {
-                actualTomlPath = path.join(geminiTemplateDir, 'track', 'init.toml');
-                geminiDestPath = path.join(projectPath, '.gemini', 'commands', 'track-init.toml');
-              } else if (commandName === 'plot-check') {
-                actualTomlPath = path.join(geminiTemplateDir, 'plot', 'check.toml');
-                geminiDestPath = path.join(projectPath, '.gemini', 'commands', 'plot-check.toml');
-              } else if (commandName === 'world-check') {
-                actualTomlPath = path.join(geminiTemplateDir, 'world', 'check.toml');
-                geminiDestPath = path.join(projectPath, '.gemini', 'commands', 'world-check.toml');
-              }
-
-              if (await fs.pathExists(actualTomlPath)) {
-                // 使用预定义的 TOML 文件
-                await fs.ensureDir(path.dirname(geminiDestPath));
-                await fs.copy(actualTomlPath, geminiDestPath);
-              } else {
-                // 降级到自动转换
-                const geminiContent = generateTomlCommand(content, scriptPath);
-                await fs.writeFile(geminiDestPath, geminiContent);
-              }
-            }
-          }
-        }
+      // 确定需要复制的 AI 平台
+      const targetAI: string[] = [];
+      if (options.all) {
+        targetAI.push('claude', 'gemini', 'cursor', 'windsurf', 'roocode', 'copilot', 'qwen', 'opencode', 'codex', 'kilocode', 'auggie', 'codebuddy', 'q');
       } else {
-        await fs.writeFile(path.join(projectPath, '.specify', 'spec.md'), specContent);
+        targetAI.push(options.ai);
       }
 
-      // 复制脚本文件到用户项目的 .specify/scripts 目录
-      if (await fs.pathExists(scriptsDir)) {
+      // 复制 AI 配置目录（包含命令文件和 .specify 目录）
+      for (const ai of targetAI) {
+        const sourceDir = path.join(packageRoot, sourceMap[ai]);
+        if (await fs.pathExists(sourceDir)) {
+          // 复制整个构建产物目录到项目
+          await fs.copy(sourceDir, projectPath, { overwrite: false });
+          spinner.text = `已安装 ${ai} 配置...`;
+        } else {
+          console.log(chalk.yellow(`\n警告: ${ai} 构建产物未找到，请运行 npm run build:commands`));
+        }
+      }
+
+      // 复制脚本文件到用户项目的 .specify/scripts 目录（构建产物已包含）
+      // 注意：.specify 目录已由上面的 fs.copy 复制，此处仅作为备份逻辑
+      if (await fs.pathExists(scriptsDir) && !await fs.pathExists(path.join(projectPath, '.specify', 'scripts'))) {
         const userScriptsDir = path.join(projectPath, '.specify', 'scripts');
         await fs.copy(scriptsDir, userScriptsDir);
 
@@ -367,6 +331,16 @@ program
         if (await fs.pathExists(geminiMdSource)) {
           await fs.copy(geminiMdSource, geminiMdDest);
           console.log('  ✓ 已复制 GEMINI.md');
+        }
+      }
+
+      // 为 GitHub Copilot 复制 VS Code settings
+      if (aiDirs.some(dir => dir.includes('.github') || dir.includes('.vscode'))) {
+        const vscodeSettingsSource = path.join(packageRoot, 'templates', 'vscode-settings.json');
+        const vscodeSettingsDest = path.join(projectPath, '.vscode', 'settings.json');
+        if (await fs.pathExists(vscodeSettingsSource)) {
+          await fs.copy(vscodeSettingsSource, vscodeSettingsDest);
+          console.log('  ✓ 已复制 GitHub Copilot settings.json');
         }
       }
 
@@ -474,11 +448,19 @@ node_modules/
         'cursor': 'Cursor',
         'gemini': 'Gemini',
         'windsurf': 'Windsurf',
-        'roocode': 'Roo Code'
+        'roocode': 'Roo Code',
+        'copilot': 'GitHub Copilot',
+        'qwen': 'Qwen Code',
+        'opencode': 'OpenCode',
+        'codex': 'Codex CLI',
+        'kilocode': 'Kilo Code',
+        'auggie': 'Auggie CLI',
+        'codebuddy': 'CodeBuddy',
+        'q': 'Amazon Q Developer'
       }[options.ai] || 'AI 助手';
 
       if (options.all) {
-        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目（Claude Code、Cursor、Gemini、Windsurf、Roo Code）')}`);
+        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目（Claude Code、Cursor、Gemini、Windsurf、Roo Code、GitHub Copilot、Qwen Code、OpenCode、Codex CLI、Kilo Code、Auggie CLI、CodeBuddy、Amazon Q Developer）')}`);
       } else {
         console.log(`  2. ${chalk.white(`在 ${aiName} 中打开项目`)}`);
       }
@@ -767,7 +749,7 @@ program
 // upgrade 命令 - 升级现有项目
 program
   .command('upgrade')
-  .option('--ai <type>', '指定要升级的 AI 配置: claude | cursor | gemini | windsurf | roocode')
+  .option('--ai <type>', '指定要升级的 AI 配置: claude | cursor | gemini | windsurf | roocode | copilot | qwen | opencode | codex | kilocode | auggie | codebuddy | q')
   .option('--all', '升级所有 AI 配置')
   .option('--no-backup', '跳过备份')
   .option('--dry-run', '预览升级内容，不实际修改')
@@ -800,7 +782,15 @@ program
         { name: 'cursor', dir: '.cursor' },
         { name: 'gemini', dir: '.gemini' },
         { name: 'windsurf', dir: '.windsurf' },
-        { name: 'roocode', dir: '.roo' }
+        { name: 'roocode', dir: '.roo' },
+        { name: 'copilot', dir: '.github' },
+        { name: 'qwen', dir: '.qwen' },
+        { name: 'opencode', dir: '.opencode' },
+        { name: 'codex', dir: '.codex' },
+        { name: 'kilocode', dir: '.kilocode' },
+        { name: 'auggie', dir: '.augment' },
+        { name: 'codebuddy', dir: '.codebuddy' },
+        { name: 'q', dir: '.amazonq' }
       ];
 
       for (const ai of aiConfigs) {
@@ -875,7 +865,7 @@ program
         console.log(chalk.green(`✓ 备份完成: ${backupPath}\n`));
       }
 
-      // 4. 升级命令文件
+      // 4. 升级命令文件（从构建产物复制）
       console.log(chalk.cyan('📝 升级命令文件...'));
 
       const upgradeStats = {
@@ -884,52 +874,55 @@ program
         scripts: 0
       };
 
+      const sourceMap: Record<string, string> = {
+        'claude': 'dist/claude',
+        'gemini': 'dist/gemini',
+        'cursor': 'dist/cursor',
+        'windsurf': 'dist/windsurf',
+        'roocode': 'dist/roocode',
+        'copilot': 'dist/copilot',
+        'qwen': 'dist/qwen',
+        'opencode': 'dist/opencode',
+        'codex': 'dist/codex',
+        'kilocode': 'dist/kilocode',
+        'auggie': 'dist/auggie',
+        'codebuddy': 'dist/codebuddy',
+        'q': 'dist/q'
+      };
+
       for (const ai of targetAI) {
-        const aiConfig = aiConfigs.find(c => c.name === ai)!;
-        const aiDir = path.join(projectPath, aiConfig.dir);
-        const commandsDir = ai === 'gemini' ? path.join(aiDir, 'commands') :
-                           ai === 'windsurf' ? path.join(aiDir, 'workflows') :
-                           path.join(aiDir, 'commands');
+        const sourceDir = path.join(packageRoot, sourceMap[ai]);
 
-        // 读取所有命令模板
-        const templatesDir = path.join(packageRoot, 'templates', 'commands');
-        if (await fs.pathExists(templatesDir)) {
-          const commandFiles = await fs.readdir(templatesDir);
+        if (await fs.pathExists(sourceDir)) {
+          const aiConfig = aiConfigs.find(c => c.name === ai)!;
+          const targetDir = path.join(projectPath, aiConfig.dir);
 
-          for (const file of commandFiles) {
-            if (!file.endsWith('.md')) continue;
+          // 复制命令文件目录
+          const commandsSubDir = ai === 'windsurf' ? 'workflows' : 'commands';
+          const sourceCommandsDir = path.join(sourceDir, aiConfig.dir, commandsSubDir);
+          const targetCommandsDir = path.join(targetDir, commandsSubDir);
 
-            const commandName = path.basename(file, '.md');
-            let content = await fs.readFile(path.join(templatesDir, file), 'utf-8');
-
-            // 提取脚本路径
-            const shMatch = content.match(/sh:\s*(.+)/);
-            let scriptPath = shMatch ? shMatch[1].trim() : `.specify/scripts/bash/${commandName}.sh`;
-
-            // Claude 优先使用增强版本
-            if (ai === 'claude') {
-              const claudeEnhancedPath = path.join(packageRoot, 'templates', 'commands-claude', file);
-              if (await fs.pathExists(claudeEnhancedPath)) {
-                content = await fs.readFile(claudeEnhancedPath, 'utf-8');
-                upgradeStats.claudeEnhanced++;
-                console.log(chalk.gray(`  💎 ${file} (Claude 增强版)`));
-              } else {
-                console.log(chalk.gray(`  ✓ ${file}`));
-              }
-            } else {
-              console.log(chalk.gray(`  ✓ ${file}`));
-            }
-
-            // 生成命令文件
-            const destPath = path.join(commandsDir, file);
-            const processedContent = generateMarkdownCommand(content, scriptPath);
-
+          if (await fs.pathExists(sourceCommandsDir)) {
             if (!options.dryRun) {
-              await fs.writeFile(destPath, processedContent);
+              await fs.copy(sourceCommandsDir, targetCommandsDir, { overwrite: true });
             }
 
-            upgradeStats.commands++;
+            // 统计命令文件数
+            const commandFiles = await fs.readdir(sourceCommandsDir);
+            upgradeStats.commands += commandFiles.filter(f =>
+              f.endsWith('.md') || f.endsWith('.toml')
+            ).length;
+
+            if (ai === 'claude') {
+              upgradeStats.claudeEnhanced = commandFiles.filter(f =>
+                f.startsWith('novel.')
+              ).length;
+            }
+
+            console.log(chalk.gray(`  ✓ ${ai}: ${commandFiles.length} 个文件`));
           }
+        } else {
+          console.log(chalk.yellow(`  ⚠ ${ai}: 构建产物未找到`));
         }
       }
 

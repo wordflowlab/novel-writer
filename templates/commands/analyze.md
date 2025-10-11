@@ -1,11 +1,15 @@
 ---
-description: 智能分析：根据创作阶段自动选择框架分析或内容分析
+description: 智能分析：自动选择框架分析（write前）或内容分析（write后），支持 --type 手动指定
+argument-hint: [--type=framework|content]
+allowed-tools: Bash(find:*), Bash(wc:*), Bash(grep:*), Read(//**), Read(//spec/knowledge/genres/**), Read(spec/knowledge/genres/**), Write(//stories/**/analysis-report.md), Bash(*)
+model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/check-analyze-stage.sh --json
   ps: .specify/scripts/powershell/check-analyze-stage.ps1 -Json
 ---
 
 对小说项目进行智能化综合分析。根据当前创作阶段，自动选择执行**框架一致性分析**（write 之前）或**内容质量分析**（write 之后）。
+---
 
 ## 核心理念
 

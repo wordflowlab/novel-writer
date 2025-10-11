@@ -1,14 +1,16 @@
 ---
-description: 通过针对性问答澄清故事大纲中的模糊点，确保创作方向明确
+description: 通过针对性问答澄清故事大纲中的模糊点，确保创作方向明确，支持焦点参数
+argument-hint: [关键词或焦点领域]
+allowed-tools: Read(//stories/**), Read(stories/**), Read(//spec/knowledge/genres/**), Read(spec/knowledge/genres/**), Write(//stories/*/story.md), Write(stories/*/story.md), Bash(ls:*), Bash(find:*), Bash(*)
+model: claude-sonnet-4-5-20250929
+disable-model-invocation: false
 scripts:
   sh: .specify/scripts/bash/clarify-story.sh --json --paths-only
   ps: .specify/scripts/powershell/clarify-story.ps1 -Json -PathsOnly
 ---
 
-用户输入可以直接提供或作为命令参数 - 你**必须**在继续之前考虑它（如果不为空）。
-
-用户输入：
-$ARGUMENTS
+焦点区域（可选）：$ARGUMENTS
+---
 
 ## 目标
 
@@ -29,6 +31,7 @@ $ARGUMENTS
 
 如果故事大纲中已定义类型（如"爽文"、"悬疑"等）：
 - 尝试加载对应的类型知识文件 `spec/knowledge/genres/[类型].md`
+- 如 `spec/knowledge/genres/shuangwen.md`（爽文指导）
 - 基于类型知识，提供更针对性的澄清问题
 - 如果类型知识文件不存在，使用通用问题模板
 
@@ -178,9 +181,9 @@ $ARGUMENTS
 
 ## 小说创作特定考虑
 
-- **类型惯例**：不同类型（玄幻、都市、历史）有不同的重点
-- **读者预期**：商业作品vs文学作品的不同标准
-- **文化敏感**：某些题材需要特别谨慎
-- **系列规划**：是否为系列作品会影响很多决策
+- **类型适配**：根据故事类型（爽文/悬疑/言情/严肃文学等）加载对应知识库，提供针对性问题
+- **读者导向**：商业作品vs文学作品的不同标准和侧重点
+- **文化敏感**：某些题材需要特别谨慎处理
+- **系列规划**：是否为系列作品会影响整体架构和决策
 
 优先级上下文：{ARGS}

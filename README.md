@@ -155,7 +155,30 @@ scripts/bash/text-audit.sh draft.md
 
 如果你已经有使用旧版本创建的项目，想升级到最新版本（v0.12.2），有以下几种方法：
 
-### 方法 1：快速升级（推荐）
+### 方法 1：自动升级（推荐）
+
+```bash
+# 1. 升级全局包
+npm install -g novel-writer-cn@latest
+
+# 2. 进入项目目录并运行升级命令
+cd my-novel
+novel upgrade
+
+# 或指定特定 AI 平台
+novel upgrade --ai claude
+```
+
+**说明**：
+- ✅ 自动备份：升级前自动创建备份（backup/ 目录）
+- ✅ 保留内容：所有创作内容（stories/, spec/, memory/）完全保留
+- ✅ 更新命令：从构建产物更新命令文件（带命名空间）
+- ✅ 更新脚本：同步最新的支持脚本
+- ⚠️ 可回滚：如有问题可从备份恢复
+
+### 方法 2：手动重新初始化
+
+适合需要完全重置配置的用户：
 
 ```bash
 # 1. 升级全局包
@@ -166,26 +189,6 @@ cd my-novel
 
 # 3. 重新初始化（只更新命令文件和脚本，保留所有创作内容）
 novel init --here --ai claude
-```
-
-**说明**：
-- ✅ 保留：所有创作内容（stories/, spec/, memory/）
-- ✅ 更新：命令文件（.claude/commands/）和脚本（.specify/scripts/）
-- ⚠️ 如果你修改过命令文件，建议先备份
-
-### 方法 2：手动升级（保留自定义）
-
-适合修改过命令文件的用户：
-
-```bash
-# 1. 找到安装位置
-npm list -g novel-writer-cn
-
-# 2. 复制 Claude Code 增强命令
-cp -r /path/to/novel-writer-cn/templates/commands-claude/* .claude/commands/
-
-# 3. 更新脚本
-cp -r /path/to/novel-writer-cn/scripts/* .specify/scripts/
 ```
 
 ### 详细升级指南
@@ -384,10 +387,23 @@ my-novel/
 
 ## 🤖 支持的 AI 助手
 
-- **Claude** (推荐) - Anthropic 的 AI 助手
-- **Cursor** - AI 代码编辑器
-- **Gemini** - Google 的 AI 助手
- - 其他支持斜杠命令的 AI 工具
+| AI 工具 | 说明 | 状态 |
+|---------|------|------|
+| **Claude Code** | Anthropic 的 AI 助手 | ✅ 推荐 |
+| **Cursor** | AI 代码编辑器 | ✅ 完整支持 |
+| **Gemini CLI** | Google 的 AI 助手 | ✅ TOML 格式 |
+| **Windsurf** | Codeium 的 AI 编辑器 | ✅ 完整支持 |
+| **Roo Code** | AI 编程助手 | ✅ 完整支持 |
+| **GitHub Copilot** | GitHub 的 AI 编程助手 | ✅ 完整支持 |
+| **Qwen Code** | 阿里通义千问代码助手 | ✅ TOML 格式 |
+| **OpenCode** | 开源 AI 编程工具 | ✅ 完整支持 |
+| **Codex CLI** | AI 编程助手 | ✅ 完整支持 |
+| **Kilo Code** | AI 编程工具 | ✅ 完整支持 |
+| **Auggie CLI** | AI 开发助手 | ✅ 完整支持 |
+| **CodeBuddy** | AI 编程伙伴 | ✅ 完整支持 |
+| **Amazon Q Developer** | AWS 的 AI 开发助手 | ✅ 完整支持 |
+
+> 💡 使用 `novel init --all` 可以同时为所有 AI 工具生成配置
 
 ## 🔌 推荐插件：Authentic Voice（真实人声）
 

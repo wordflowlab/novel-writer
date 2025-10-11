@@ -1,5 +1,8 @@
 ---
 description: 专家模式 - 获取专业写作指导
+argument-hint: [plot | character | world | style]
+allowed-tools: Read(//experts/core/**), Read(experts/core/**), Read(//plugins/**/experts/**), Read(plugins/**/experts/**), Bash(find:*), Bash(ls:*), Bash(*)
+model: claude-sonnet-4-5-20250929
 ---
 
 # 专家模式

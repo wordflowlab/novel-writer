@@ -1,6 +1,9 @@
 ---
 name: relations
 description: 管理和追踪角色关系变化
+argument-hint: [update | show | history | check] [角色] [关系] [目标角色]
+allowed-tools: Read(//spec/tracking/relationships.json), Read(spec/tracking/relationships.json), Write(//spec/tracking/relationships.json), Write(spec/tracking/relationships.json), Bash(find:*), Bash(*)
+model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/manage-relations.sh
   ps: .specify/scripts/powershell/manage-relations.ps1
