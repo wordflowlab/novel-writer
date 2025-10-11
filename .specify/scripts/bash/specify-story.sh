@@ -86,7 +86,7 @@ else
     fi
 
     # 检查宪法
-    if [ -f "memory/novel-constitution.md" ]; then
+    if [ -f "memory/writing-constitution.md" ] || [ -f ".specify/memory/writing-constitution.md" ]; then
         echo ""
         echo "✅ 检测到创作宪法，规格将遵循宪法原则"
     fi

@@ -29,7 +29,7 @@ check_story_files() {
     local missing_files=()
 
     # 检查基准文档
-    [ ! -f "memory/novel-constitution.md" ] && missing_files+=("宪法文件")
+    [ ! -f "memory/writing-constitution.md" ] && [ ! -f ".specify/memory/writing-constitution.md" ] && missing_files+=("宪法文件")
     [ ! -f "$STORY_DIR/specification.md" ] && missing_files+=("规格文件")
     [ ! -f "$STORY_DIR/creative-plan.md" ] && missing_files+=("计划文件")
 

@@ -17,7 +17,14 @@ PROJECT_ROOT=$(get_project_root)
 cd "$PROJECT_ROOT"
 
 # 定义文件路径
-CONSTITUTION_FILE="memory/novel-constitution.md"
+# 优先使用 memory 目录，如不存在则检查 .specify/memory
+if [ -f "memory/writing-constitution.md" ]; then
+    CONSTITUTION_FILE="memory/writing-constitution.md"
+elif [ -f ".specify/memory/writing-constitution.md" ]; then
+    CONSTITUTION_FILE=".specify/memory/writing-constitution.md"
+else
+    CONSTITUTION_FILE="memory/writing-constitution.md"
+fi
 
 case "$COMMAND" in
     check)

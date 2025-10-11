@@ -37,7 +37,7 @@ echo ""
 # 检查前置文档
 missing=()
 
-if [ ! -f "memory/novel-constitution.md" ]; then
+if [ ! -f "memory/writing-constitution.md" ] && [ ! -f ".specify/memory/writing-constitution.md" ]; then
     missing+=("宪法文件")
 fi
 
@@ -56,7 +56,7 @@ if [ ${#missing[@]} -gt 0 ]; then
     done
     echo ""
     echo "请先完成："
-    if [ ! -f "memory/novel-constitution.md" ]; then
+    if [ ! -f "memory/writing-constitution.md" ] && [ ! -f ".specify/memory/writing-constitution.md" ]; then
         echo "  1. /constitution - 创建创作宪法"
     fi
     if [ ! -f "$SPEC_FILE" ]; then
