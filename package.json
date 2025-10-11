@@ -1,6 +1,6 @@
 {
   "name": "novel-writer-cn",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "type": "module",
   "description": "AI 驱动的中文小说创作工具 - 基于结构化工作流的智能写作助手",
   "keywords": [
@@ -21,12 +21,13 @@
   },
   "scripts": {
     "build": "tsc",
+    "postbuild": "chmod +x dist/cli.js",
     "build:commands": "bash scripts/build/generate-commands.sh --agents=claude,gemini,cursor,windsurf,roocode,copilot,qwen,opencode,codex,kilocode,auggie,codebuddy,q --scripts=sh",
     "dev": "tsx src/cli.ts",
     "start": "node dist/cli.js",
     "clean": "rm -rf dist",
-    "prepare": "npm run build && npm run build:commands",
-    "prepublishOnly": "npm run clean && npm run build && npm run build:commands"
+    "prepare": "npm run build:commands && npm run build",
+    "prepublishOnly": "npm run clean && npm run build:commands && npm run build"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.0.0",
