@@ -3,387 +3,139 @@
 [![npm version](https://badge.fury.io/js/novel-writer-cn.svg)](https://www.npmjs.com/package/novel-writer-cn)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> 🚀 基于 Spec Kit 架构的 AI 智能小说创作助手
+> 🚀 基于规格驱动开发（SDD）的 AI 智能小说创作助手
+>
+> 在 Claude、Cursor、Gemini 等 AI 助手中直接使用斜杠命令，系统化创作高质量小说
 
-## ✨ 特性
+## ✨ 核心特性
 
-- 📚 **AI 斜杠命令** - 在 Claude、Cursor、Gemini CLI、Windsurf、Roo Code 等 AI 助手中直接使用
+- 📚 **斜杠命令** - 在 Claude、Cursor、Gemini、Windsurf、Roo Code 等 AI 助手中直接使用
 - 🎯 **七步方法论** - 基于规格驱动开发（SDD）的系统化创作流程
 - 🤖 **智能辅助** - AI 理解上下文，提供针对性创作建议
-- 📝 **中文优化** - 专为中文小说创作设计的命令和模板
-- 🔄 **跨平台支持** - Windows PowerShell 和 Unix/Linux Bash 脚本
-- 🎓 **专家模式** - 获取剧情、人物、世界观、文风等专业指导
-- 🔌 **插件系统** - 可扩展的功能模块，如翻译、营销等
+- 📝 **中文优化** - 专为中文小说创作设计，支持字数统计、多线索管理
+- 🔄 **跨平台** - 支持 13 个 AI 工具，Windows/Mac/Linux 全平台
+- 🔌 **插件系统** - 可扩展功能，如真实人声、翻译、风格模仿等
+- ✅ **质量保障** - 情节追踪、时间线管理、角色一致性验证
 
-### 🆕 v0.12.2 Claude Code 增强层
-
-- 💎 **Claude Code 专属增强** - 为 Claude Code 用户提供更强大的命令体验
-- 🎯 **智能参数提示** - `argument-hint` 提供命令参数自动补全
-- 🔧 **细粒度权限控制** - `allowed-tools` 精确控制命令可用工具
-- 🤖 **模型选择** - 每个命令可指定最适合的 AI 模型
-- 📊 **动态上下文加载** - 内联 bash 执行 (`!`command``) 实时获取项目状态
-- 🌐 **跨平台兼容** - 保持与 Gemini、Cursor、Windsurf、Roo Code 的完整兼容性
-- 🚀 **自动优先级** - Claude 用户自动使用增强版本，其他平台使用基础版本
-
-### 🆕 v0.10.0 方法论体系升级
-
-- 📐 **完整方法论** - 引入规格驱动开发（SDD）的七步方法论
-- 🏛️ **创作宪法** - 最高层级的创作原则和价值观
-- 📋 **故事规格** - 像 PRD 一样定义故事需求
-- 🎯 **交互澄清** - 通过对话明确关键决策
-- 📊 **计划分解** - 从规格到计划到任务的系统化分解
-- ✅ **综合验证** - 全方位验证作品质量和一致性
-
-### v0.8.2 Google Gemini CLI 支持
-
-- 🌐 **Gemini CLI 集成** - 完整支持 Google Gemini CLI 斜杠命令
-- 📝 **TOML 格式命令** - 13 个预定义的 TOML 格式命令
-- 🔄 **双格式支持** - Markdown（Claude/Cursor/Windsurf/Roo Code）和 TOML（Gemini）同时支持
-- 🔌 **插件兼容** - 插件可同时提供两种格式
-- 🎯 **智能转换** - 自动将 Markdown 命令转换为 TOML 格式
-
-### v0.5.0 AI 原生交互升级
-
-- 🤖 **智能方法选择** - AI 通过对话了解需求，推荐最适合的写作方法
-- 🎯 **6种写作方法** - 支持三幕结构、英雄之旅、故事圈、七点结构、皮克斯公式、雪花十步
-- 🔄 **方法转换** - 在不同写作方法之间智能转换
-- 🎨 **混合方法** - 主线、支线、章节可使用不同方法组合
-- 💬 **自然语言交互** - 无需记住命令参数，通过对话完成所有操作
-
-### v0.4.0 追踪系统
-
-- 🔍 **情节追踪** - 追踪情节节点、伏笔和冲突发展
-- ⏰ **时间线管理** - 维护故事时间轴，确保时间逻辑一致
-- 👥 **关系矩阵** - 管理角色关系和派系动态
-- 🌍 **世界观检查** - 验证设定一致性，避免矛盾
-- ✅ **一致性检查** - 全方位验证小说的逻辑连贯性
+> 📖 **详细特性说明**：查看 [CHANGELOG.md](CHANGELOG.md) 了解各版本的完整更新
 
 ## 🚀 快速开始
 
-### 安装
+### 1. 安装
 
 ```bash
 npm install -g novel-writer-cn
 ```
 
-### 初始化项目
+### 2. 初始化项目
 
 ```bash
-# 创建新的小说项目
+# 基本用法
 novel init my-novel
 
-# 或在当前目录初始化
-novel init --here
-
-# 包含专家模式
-novel init my-novel --with-experts
-
-# 指定 AI 平台（Gemini CLI）
-novel init my-novel --ai gemini
-
-# 支持所有 AI 平台
-novel init my-novel --all
-
-# 预装插件
-novel init my-novel --plugins translate
-
-# 推荐：预装真实人声插件，沉淀个人语料提升自然度
+# 推荐：预装真实人声插件
 novel init my-novel --plugins authentic-voice
+
+# 指定 AI 平台
+novel init my-novel --ai claude    # Claude Code
+novel init my-novel --ai gemini    # Gemini CLI
+novel init my-novel --ai cursor    # Cursor
 ```
 
-### 在 AI 助手中使用斜杠命令
+### 3. 开始创作
 
-初始化后，在 Claude、Cursor、Gemini CLI、Windsurf、Roo Code 等 AI 助手中使用以下斜杠命令：
+在 AI 助手中使用斜杠命令：
 
-> **Gemini CLI 用户**：命令使用 `:` 分隔符，如 `/track:init`、`/plot:check`
-
-#### 七步方法论命令（v0.10.0 新增）
-
-1. **`/constitution`** - 创建创作宪法，定义核心原则
-2. **`/specify`** - 定义故事规格，明确要创造什么
-3. **`/clarify`** - 澄清关键决策点，明确模糊之处
-4. **`/plan`** - 制定技术方案，决定如何创作
-5. **`/tasks`** - 分解执行任务，生成可执行清单
-6. **`/write`** - AI 辅助写作章节内容
-7. **`/analyze`** - 综合验证分析，确保质量一致
-
-#### 追踪与验证命令
-
-8. **`/track-init`** - 初始化追踪系统（首次使用）
-9. **`/track`** - 综合追踪创作进度和内容
-10. **`/plot-check`** - 检查情节发展的一致性
-11. **`/timeline`** - 管理和验证故事时间线
-12. **`/relations`** - 追踪角色关系变化
-13. **`/world-check`** - 验证世界观设定一致性
-
-#### 专家模式命令（需要 --with-experts）
-
-14. **`/expert`** - 列出可用专家
-15. **`/expert plot`** - 剧情结构专家
-16. **`/expert character`** - 人物塑造专家
-17. **`/expert world`** - 世界观设计专家
-18. **`/expert style`** - 文风语言专家
-
-### 快速开始：真实人声一键示例
-
-```bash
-# 1）创建并预装真实人声插件
-novel init my-voicebook --plugins authentic-voice
-
-# 2）补充个人语料（强烈建议，越具体越好）
-#   编辑 .specify/memory/personal-voice.md，填入口头禅、固定句式、生活经历、行业/地域词汇、比喻意象等
-
-# 3）设定风格（会自动引用个人语料并生成“个人表达基线”专章）
-#   在 AI 助手中执行：
-# /style
-
-# 4）真实人声创作
-#   在 AI 助手中执行：
-# /authentic-voice --tone 自由 --pace 适中  标题：在雨棚下等车的那十分钟
-
-# 5）成稿人味自查（AI 内）
-# /authenticity-audit
-#   粘贴文本即可获得行级微调建议
-
-# 6）离线自查（无需 AI）
-scripts/bash/text-audit.sh draft.md
-# 若需要自定义规则，将 templates/knowledge/audit-config.json 复制到
-# 项目的 spec/knowledge/audit-config.json 并修改
 ```
+/novel.constitution    # Claude Code 格式
+/novel/constitution    # Gemini CLI 格式
+/constitution          # 其他平台格式
+```
+
+**七步方法论流程**：
+1. `/constitution` → 2. `/specify` → 3. `/clarify` →
+4. `/plan` → 5. `/tasks` → 6. `/write` → 7. `/analyze`
+
+> 📚 **详细安装说明**：[docs/installation.md](docs/installation.md)
+> 📖 **完整工作流程**：[docs/workflow.md](docs/workflow.md)
 
 ## 📦 升级现有项目
 
-如果你已经有使用旧版本创建的项目，想升级到最新版本（v0.12.2），有以下几种方法：
-
-### 方法 1：自动升级（推荐）
-
 ```bash
-# 1. 升级全局包
+# 升级到最新版本
 npm install -g novel-writer-cn@latest
-
-# 2. 进入项目目录并运行升级命令
 cd my-novel
 novel upgrade
 
-# 或指定特定 AI 平台
+# 或指定 AI 平台
 novel upgrade --ai claude
 ```
 
-**说明**：
-- ✅ 自动备份：升级前自动创建备份（backup/ 目录）
-- ✅ 保留内容：所有创作内容（stories/, spec/, memory/）完全保留
-- ✅ 更新命令：从构建产物更新命令文件（带命名空间）
-- ✅ 更新脚本：同步最新的支持脚本
-- ⚠️ 可回滚：如有问题可从备份恢复
+> 📚 **完整升级指南**：[docs/upgrade-guide.md](docs/upgrade-guide.md) - 包含版本兼容性、迁移说明、回滚方法
 
-### 方法 2：手动重新初始化
+## 📚 斜杠命令
 
-适合需要完全重置配置的用户：
+### 命名空间说明
 
-```bash
-# 1. 升级全局包
-npm install -g novel-writer-cn@latest
+| AI 平台 | 命令格式 | 示例 |
+|---------|----------|------|
+| **Claude Code** | `/novel.命令名` | `/novel.write` |
+| **Gemini CLI** | `/novel/命令名` | `/novel/write` |
+| **其他平台** | `/命令名` | `/write` |
 
-# 2. 进入项目目录
-cd my-novel
+> 💡 下表使用通用格式，实际使用时请根据您的 AI 平台添加相应前缀
 
-# 3. 重新初始化（只更新命令文件和脚本，保留所有创作内容）
-novel init --here --ai claude
-```
+### 七步方法论
 
-### 详细升级指南
+| 命令 | 描述 | 何时使用 |
+|------|------|----------|
+| `/constitution` | 创作宪法 | 项目开始，定义核心创作原则 |
+| `/specify` | 故事规格 | 像 PRD 一样定义故事需求 |
+| `/clarify` | 澄清决策 | 通过 5 个问题明确模糊点 |
+| `/plan` | 创作计划 | 制定章节结构和技术方案 |
+| `/tasks` | 任务分解 | 生成可执行的任务清单 |
+| `/write` | 章节写作 | 基于任务清单进行创作 |
+| `/analyze` | 综合验证 | 智能双模式：框架分析/内容分析 |
 
-查看完整的升级指南，包括：
-- 版本兼容性说明
-- 多线索管理功能迁移
-- 常见问题解答
-- 回滚方法
+### 追踪与验证
 
-📚 **[查看完整升级指南](docs/upgrade-guide.md)**
+| 命令 | 描述 | 何时使用 |
+|------|------|----------|
+| `/track-init` | 初始化追踪 | 首次使用（只需一次） |
+| `/checklist` | 质量检查清单 ⭐ | 规格验证（写作前）+ 内容扫描（写作后） |
+| `/track` | 综合追踪 | 每完成一章后 |
+| `/plot-check` | 情节检查 | 每 5-10 章定期检查 |
+| `/timeline` | 时间线管理 | 重要事件后 |
+| `/relations` | 关系追踪 | 角色关系变化时 |
+| `/world-check` | 世界观检查 | 新设定出现后 |
 
-## 📖 斜杠命令详解
+> 📖 **详细命令说明**：[docs/commands.md](docs/commands.md) - 包含每个命令的详细用法、参数和最佳实践
 
-### 七步方法论命令 (v0.10.0)
-
-#### `/constitution` - 创作宪法
-
-定义最高层级的创作原则和价值观：
-- 核心创作理念
-- 价值观和禁忌
-- 质量标准
-- 风格偏好
-
-这是整个创作过程的"宪法"，所有后续决策都要符合这里定义的原则。
-
-#### `/specify` - 故事规格
-
-像产品需求文档（PRD）一样精确定义故事：
-- 故事概念和核心冲突
-- 目标读者和市场定位
-- 主要角色和世界观
-- 成功标准和验收条件
-
-把故事当作"产品"来规格化，确保创作方向明确。
-
-#### `/clarify` - 澄清决策
-
-通过交互式问答明确故事规格中的模糊点：
-- AI 自动识别规格中的不明确之处
-- 通过 5 个精准问题进行澄清
-- 记录所有决策和理由
-- 更新规格文档
-
-确保在动笔前所有关键决策都已明确。
-
-#### `/plan` - 创作计划
-
-基于明确的规格制定技术实现方案：
-- 章节结构设计
-- 叙事技巧选择
-- 节奏控制方案
-- 伏笔铺设计划
-
-像软件架构设计一样规划如何实现故事。
-
-#### `/tasks` - 任务分解
-
-将创作计划分解为可执行的任务清单：
-- 章节写作任务（优先级、预估字数）
-- 角色完善任务
-- 世界观补充任务
-- 质量检查任务
-
-生成可追踪、可执行的具体任务。
-
-#### `/write` - 章节写作
-
-基于任务清单进行 AI 辅助创作：
-- 根据规格和计划创作
-- 遵循创作宪法的原则
-- 保持风格和角色一致
-- 自动引用个人语料（如配置）
-
-提示：若存在 `.specify/memory/personal-voice.md`，会自动引用个人语料保证表达的自然度。推荐配合 `/authentic-voice` 插件使用。
-
-#### `/analyze` - 智能综合验证 ⭐新增
-
-**智能双模式分析**，根据创作阶段自动选择：
-
-**模式1：框架分析**（write 之前）
-- 验证规格、计划、任务的一致性
-- 检查覆盖率和逻辑完整性
-- 评估准备就绪程度
-- 提前发现设计矛盾
-
-**模式2：内容分析**（write 之后）
-- 验证已完成内容质量
-- 检查宪法合规和规格符合度
-- 分析情节连贯性、角色一致性
-- 提供具体改进建议
-
-**自动判断**：
-- 无章节或 <3 章 → 框架分析
-- ≥3 章 → 内容分析
-
-**手动指定**：
-- `/analyze --type=framework` - 强制框架分析
-- `/analyze --type=content` - 强制内容分析
-
-一个命令，双重智能，克制而强大。
-
-### 追踪与验证命令
-
-#### `/track-init` - 初始化追踪系统
-
-首次使用追踪功能前需要初始化：
-- 基于故事大纲设置追踪数据
-- 创建情节节点和时间线
-- 初始化角色关系矩阵
-- 设置验证规则
-
-只需运行一次，后续使用其他追踪命令自动更新。
-
-#### `/track` - 综合追踪
-
-全面展示小说创作的各项进度和状态：
-- 写作进度（字数、章节、完成率）
-- 情节发展（主线进度、支线状态）
-- 时间线（故事时间推进）
-- 角色状态（角色发展和位置）
-- 伏笔管理（埋设和回收状态）
-
-建议每完成一个章节后运行一次。
-
-#### `/plot-check` - 情节检查
-
-检查情节发展的一致性和连贯性：
-- 验证当前进度与大纲规划是否一致
-- 追踪已埋设的伏笔和回收计划
-- 确认冲突升级符合预期节奏
-- 验证角色发展与规划一致
-
-定期检查（建议每 5-10 章）确保情节不偏离规划。
-
-#### `/timeline` - 时间线管理
-
-维护和验证故事时间线：
-- 追踪每个章节的时间点
-- 管理同时发生的多线剧情
-- 与真实历史事件对比（历史小说）
-- 检查时间跨度的合理性
-
-特别适合多线并进或有复杂时间设定的故事。
-
-#### `/relations` - 关系追踪
-
-管理和追踪角色关系变化：
-- 维护角色之间的关系图谱
-- 记录关系的演变历程
-- 追踪各势力派系的对立与合作
-- 管理角色间的情感发展
-
-在角色关系发生重要变化时及时更新。
-
-#### `/world-check` - 世界观检查
-
-验证世界观设定的一致性：
-- 验证规则、法则、体系的一致
-- 检查地点、距离、方位的合理性
-- 确保风俗、语言、传统的统一
-- 验证能力范围和限制
-
-特别适合奇幻、科幻等有复杂设定的故事。
-
-## 📁 项目结构
+<details>
+<summary>📁 项目结构（点击展开）</summary>
 
 ```
 my-novel/
 ├── .specify/          # Spec Kit 配置
-│   ├── spec.md        # 命令规范文档
-│   ├── memory/        # 创作记忆
+│   ├── memory/        # 创作记忆（constitution.md等）
 │   └── scripts/       # 支持脚本
-├── .claude/           # Claude 命令
+├── .claude/           # Claude 命令（或 .cursor/.gemini 等）
 │   └── commands/      # 斜杠命令文件
-├── spec/              # 小说规格数据 (v0.4.0 新增)
-│   ├── tracking/      # 动态追踪
-│   │   ├── plot-tracker.json      # 情节追踪
-│   │   ├── timeline.json          # 时间线
-│   │   ├── relationships.json     # 关系矩阵
-│   │   └── character-state.json   # 角色状态
-│   └── knowledge/     # 知识库
-│       ├── world-setting.md       # 世界观设定
-│       ├── character-profiles.md  # 角色档案
-│       └── locations.md           # 场景地点
+├── spec/              # 小说规格数据
+│   ├── tracking/      # 追踪数据（plot-tracker.json等）
+│   └── knowledge/     # 知识库（world-setting.md等）
 ├── stories/           # 故事内容
 │   └── 001-故事名/
-│       ├── story.md   # 故事大纲
-│       ├── outline.md # 章节规划
-│       ├── progress.json # 进度追踪
-│       └── chapters/  # 章节内容
+│       ├── specification.md    # 故事规格
+│       ├── creative-plan.md    # 创作计划
+│       ├── tasks.md            # 任务清单
+│       └── content/            # 章节内容
 └── scripts/           # 支持脚本
     ├── bash/          # Unix/Linux/Mac
     └── powershell/    # Windows
 ```
+
+</details>
 
 ## 🤖 支持的 AI 助手
 
@@ -405,224 +157,79 @@ my-novel/
 
 > 💡 使用 `novel init --all` 可以同时为所有 AI 工具生成配置
 
-## 🔌 推荐插件：Authentic Voice（真实人声）
-
-- 安装：`novel plugins add authentic-voice`
-- 个人语料：编辑 `.specify/memory/personal-voice.md`
-- 创作：在 AI 助手中使用 `/authentic-voice`
-- 自查：使用 `/authenticity-audit` 获取行级微调建议
-
-## 🧪 离线文本自查（无需 AI）
-
-- 运行：`scripts/bash/text-audit.sh <file>`
-- 功能：统计连接词与空话密度、句长均值/方差、连续长/短句阈值、抽象词密度示例
-- 配置：优先读取 `spec/knowledge/audit-config.json`；否则使用 `.specify/templates/knowledge/audit-config.json`
-
 ## 🛠️ CLI 命令
+
+<details>
+<summary>详细选项（点击展开）</summary>
 
 ### `novel init [name]`
 
-初始化小说项目
+```bash
+novel init my-novel [选项]
+```
 
-**选项：**
+**常用选项**：
 - `--here` - 在当前目录初始化
-- `--ai <type>` - 选择 AI 助手类型 (claude/cursor/gemini/windsurf/roocode)
+- `--ai <type>` - 选择 AI 平台（claude/gemini/cursor等）
 - `--with-experts` - 包含专家模式
 - `--plugins <names>` - 预装插件（逗号分隔）
+- `--all` - 生成所有 AI 平台配置
 
 ### `novel plugins`
 
-插件管理命令
+```bash
+novel plugins list                # 列出已安装插件
+novel plugins add <name>          # 安装插件
+novel plugins remove <name>       # 移除插件
+```
 
-- `novel plugins list` - 列出已安装插件
-- `novel plugins add <name>` - 安装插件
-- `novel plugins remove <name>` - 移除插件
+### `novel upgrade`
+
+```bash
+novel upgrade [--ai <type>]       # 升级项目到最新版本
+```
 
 ### `novel check`
 
-检查项目配置和状态
-
-## 📚 支持的写作方法
-
-Novel Writer 支持多种经典写作方法，由 AI 智能推荐：
-
-| 方法 | 特点 | 适用场景 |
-|------|------|----------|
-| **三幕结构** | 经典的设置-对抗-解决 | 通用，适合大多数类型 |
-| **英雄之旅** | 12阶段的成长历程 | 奇幻、冒险、成长故事 |
-| **故事圈** | 8步循环结构 | 角色驱动、心理深度 |
-| **七点结构** | 7个关键节点 | 悬疑、惊悚、紧凑叙事 |
-| **皮克斯公式** | 6步因果链 | 短篇、儿童故事 |
-| **雪花十步** | 递进式细化构建 | 长篇、复杂故事结构 |
-
-### 混合方法
-
-支持在不同层级使用不同方法：
-- **主线**：控制整体故事结构
-- **支线**：角色弧线或支线情节
-- **章节**：单个场景或章节内部
-
-## 🎓 专家模式
-
-获取专业的写作指导：
-
-### 核心专家
-- **剧情结构专家** (`/expert plot`) - 情节设计、节奏控制、冲突升级
-- **人物塑造专家** (`/expert character`) - 人物弧光、动机分析、对话优化
-- **世界观设计专家** (`/expert world`) - 世界构建、设定一致性、文化背景
-- **文风语言专家** (`/expert style`) - 叙述技巧、修辞手法、语言风格
-
-### 使用方式
-1. 使用 `/expert` 列出可用专家
-2. 使用 `/expert [type]` 激活特定专家
-3. 进入专家模式后获得深度指导
-4. 使用其他 `/` 命令自动退出专家模式
-
-## 🔌 插件系统
-
-扩展 Novel Writer 的功能：
-
-### 内置插件
-- **翻译插件** - 中英文小说翻译和本地化
-  - `/translate` - 四步翻译流程
-  - `/polish` - 英文润色优化
-  - `/expert translate` - 翻译专家模式
-
-### 插件管理
 ```bash
-# 列出已安装插件
-novel plugins list
-
-# 安装插件
-novel plugins add translate
-
-# 移除插件
-novel plugins remove translate
+novel check                       # 检查项目配置和状态
 ```
 
-## 📚 工作流程
+</details>
 
-### 七步方法论流程 (v0.10.0)
+## 📖 文档索引
 
-1. **建立创作宪法**
-   ```
-   /constitution
-   ```
-   定义核心创作原则和价值观
+### 核心文档
+- **[命令详解](docs/commands.md)** - 所有斜杠命令的详细用法、参数和最佳实践
+- **[工作流程](docs/workflow.md)** - 完整的创作流程说明
+- **[写作方法](docs/writing-methods.md)** - 6种经典写作方法详解
+- **[最佳实践](docs/best-practices.md)** - 实战经验和高级技巧
 
-2. **定义故事规格**
-   ```
-   /specify
-   ```
-   像 PRD 一样精确定义故事需求
+### 进阶文档
+- **[实战指南](docs/writing/practical-guide.md)** - 基于真实案例的 SDD 应用
+- **[升级指南](docs/upgrade-guide.md)** - 版本升级说明和迁移指南
+- **[安装指南](docs/installation.md)** - 详细安装步骤
+- **[字数统计](docs/word-count-guide.md)** - 中文字数统计最佳实践
 
-3. **澄清关键决策**
-   ```
-   /clarify
-   ```
-   通过 5 个精准问题明确模糊点
+### 插件与扩展
+- **真实人声插件** - `novel plugins add authentic-voice`
+  - 编辑 `.specify/memory/personal-voice.md` 配置个人语料
+  - 使用 `/authentic-voice` 创作，`/authenticity-audit` 自查
+- **翻译插件** - `novel plugins add translate`
+- **风格模仿插件** - 路遥、王钰等作家风格
 
-4. **制定创作计划**
-   ```
-   /plan
-   ```
-   基于规格制定技术实现方案
+> 💡 使用 `novel plugins list` 查看所有可用插件
 
-5. **分解执行任务**
-   ```
-   /tasks
-   ```
-   生成可执行、可追踪的任务清单
+## 📈 版本历史
 
-6. **章节写作**
-   ```
-   /write
-   ```
-   基于任务清单执行创作
+查看完整的更新日志：**[CHANGELOG.md](CHANGELOG.md)**
 
-7. **综合验证**
-   ```
-   /analyze
-   ```
-   全方位检查质量和一致性
-
-
-### 质量保障流程 (v0.4.0 新增)
-
-7. **情节检查**
-   定期使用 `/plot-check` 确保情节发展与大纲一致，追踪伏笔状态
-
-8. **时间线验证**
-   使用 `/timeline` 管理时间节点，验证时间逻辑的合理性
-
-9. **关系维护**
-   使用 `/relations` 追踪角色关系变化，确保人物互动合理
-
-10. **世界观验证**
-    使用 `/world-check` 检查设定一致性，避免前后矛盾
-
-11. **综合追踪**
-    使用 `/track` 查看整体创作状态，获取全局视图
-
-## 🎯 最佳实践
-
-### AI 原生交互 (v0.5.0)
-- **自然对话**：用自然语言描述需求，AI 会理解并引导
-- **智能选择**：让 AI 根据故事特征推荐方法
-- **灵活转换**：随时可以转换或混合使用方法
-- **持续支持**：AI 记住你的选择并在全程应用
-
-### 创作建议
-- **保持一致性**：始终参考 `memory/writing-constitution.md` 中的风格设定
-- **循序渐进**：按照工作流程顺序使用命令
-- **版本管理**：使用 Git 管理你的创作版本
-- **定期备份**：重要内容及时备份
-
-### 质量控制
-- **定期检查**：每写完 5-10 章执行一次 `/plot-check`
-- **时间线同步**：每个重要事件后更新 `/timeline`
-- **关系追踪**：角色关系发生变化时及时更新
-- **设定记录**：新增世界观设定立即记录到知识库
-- **综合验证**：每卷结束时运行 `/track` 全面检查
-
-## 📈 版本更新
-
-### v0.10.0 (2025-09)
-- 📐 **方法论体系** - 引入完整的七步创作方法论
-- 🏛️ **创作宪法** - `/constitution` 命令定义核心创作原则
-- 📋 **故事规格** - `/specify` 命令像 PRD 一样定义故事
-- 📊 **创作计划** - `/plan` 命令制定技术实现方案
-- 📝 **任务分解** - `/tasks` 命令生成可执行任务清单
-- ✅ **综合验证** - `/analyze` 命令全方位质量检查
-- 🔄 **系统重构** - 基于规格驱动开发（SDD）重新设计
-
-### v0.9.0 (2025-09)
-- 🎯 **方法论升级** - 引入 spec-kit 的规格驱动开发理念
-- 🔍 **`/clarify` 命令** - 交互式澄清故事大纲中的关键决策点
-- 📋 **结构化创作** - 更清晰的创作流程：story → clarify → outline
-- ✨ **智能问答** - AI 识别模糊点，通过5个精准问题明确创作方向
-- 📝 **澄清记录** - 所有决策记录在案，便于回溯和保持一致性
-
-### v0.6.0 (2025-09)
-- 🎓 专家模式系统
-- 🔌 插件架构实现
-- 🌍 翻译插件支持
-- 📚 四位核心专家
-- 🔧 插件管理命令
-
-### v0.5.2 (2025-09)
-- ❄️ 雪花十步法支持
-- 🎯 6种经典写作方法完整支持
-- 🔄 智能方法转换
-- 🎨 混合方法设计
-- 💬 自然语言对话
-
-### v0.4.0 (2025-09)
-- 🔍 情节追踪系统
-- ⏰ 时间线管理
-- 👥 关系矩阵
-- 🌍 世界观检查
-- ✅ 一致性验证
+**最新版本亮点**：
+- v0.15.0 - 多平台命令格式优化
+- v0.14.2 - 中文字数统计修复
+- v0.12.2 - Claude Code 增强层
+- v0.12.0 - 多线索管理系统
+- v0.10.0 - 七步方法论体系
 
 ## 🤝 贡献
 

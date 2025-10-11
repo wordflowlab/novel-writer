@@ -6,14 +6,19 @@
 
 ```
 docs/
-├── README.md          # 本文件
-├── docfx.json        # DocFX 配置
-├── toc.yml           # 目录配置
-├── index.md          # 文档主页
-├── installation.md   # 安装指南
-├── quickstart.md     # 快速入门
-├── workflow.md       # 创作流程
-└── _site/            # 生成的文档（git忽略）
+├── README.md              # 本文件
+├── docfx.json            # DocFX 配置
+├── toc.yml               # 目录配置
+├── index.md              # 文档主页
+├── installation.md       # 安装指南
+├── quickstart.md         # 快速入门
+├── workflow.md           # 创作流程
+├── commands.md           # 斜杠命令详解 ⭐新增
+├── writing-methods.md    # 写作方法详解 ⭐新增
+├── best-practices.md     # 最佳实践指南 ⭐新增
+├── upgrade-guide.md      # 升级指南
+├── word-count-guide.md   # 字数统计指南
+└── _site/                # 生成的文档（git忽略）
 ```
 
 ## 本地构建
@@ -69,10 +74,20 @@ docs/
 
 ### 文档组织
 
+#### 核心文档
 1. **index.md** - 项目介绍和概览
 2. **installation.md** - 详细的安装步骤
 3. **quickstart.md** - 5分钟快速开始
 4. **workflow.md** - 完整的创作流程
+
+#### 参考文档（⭐新增）
+5. **commands.md** - 所有斜杠命令的详细说明、参数和最佳实践
+6. **writing-methods.md** - 6种经典写作方法详解（三幕结构、英雄之旅等）
+7. **best-practices.md** - 实战经验、高级技巧和常见问题解决
+
+#### 进阶文档
+8. **upgrade-guide.md** - 版本升级说明和迁移指南
+9. **word-count-guide.md** - 中文字数统计最佳实践
 
 ### 添加新文档
 

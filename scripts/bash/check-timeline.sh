@@ -7,6 +7,14 @@ set -e
 SCRIPT_DIR=$(dirname "$0")
 source "$SCRIPT_DIR/common.sh"
 
+# 检查是否为 checklist 模式
+CHECKLIST_MODE=false
+COMMAND="${1:-show}"
+if [ "$COMMAND" = "--checklist" ]; then
+    CHECKLIST_MODE=true
+    COMMAND="check"
+fi
+
 # 获取当前故事目录
 STORY_DIR=$(get_current_story)
 
@@ -19,8 +27,7 @@ fi
 TIMELINE="$STORY_DIR/spec/tracking/timeline.json"
 PROGRESS="$STORY_DIR/progress.json"
 
-# 命令参数
-COMMAND="${1:-show}"
+# 命令参数（已在上面处理 checklist 模式）
 PARAM2="${2:-}"
 
 # 初始化时间线文件
@@ -204,8 +211,110 @@ sync_parallel() {
     echo "✅ 并行事件已同步：$timepoint"
 }
 
+# 生成 checklist 格式输出
+output_checklist() {
+    init_timeline
+
+    local event_count=0
+    local parallel_count=0
+    local current_time=""
+    local start_time=""
+    local has_issues=0
+
+    if [ -f "$TIMELINE" ]; then
+        event_count=$(jq '.events | length' "$TIMELINE")
+        parallel_count=$(jq '.parallelEvents.timepoints | length' "$TIMELINE" 2>/dev/null || echo "0")
+        current_time=$(jq -r '.storyTime.current // ""' "$TIMELINE")
+        start_time=$(jq -r '.storyTime.start // ""' "$TIMELINE")
+
+        # 检查事件顺序问题
+        has_issues=$(jq '
+            .events |
+            sort_by(.chapter) |
+            . as $sorted |
+            reduce range(1; length) as $i (0;
+                if $sorted[$i].chapter <= $sorted[$i-1].chapter then . + 1 else . end
+            )' "$TIMELINE")
+    fi
+
+    cat <<EOF
+# 时间线检查 Checklist
+
+**检查时间**: $(date '+%Y-%m-%d %H:%M:%S')
+**检查对象**: spec/tracking/timeline.json
+**记录事件数**: $event_count
+
+---
+
+## 文件完整性
+
+- [$([ -f "$TIMELINE" ] && echo "x" || echo " ")] CHK001 timeline.json 存在且格式有效
+
+## 时间设定
+
+- [$([ -n "$start_time" ] && echo "x" || echo " ")] CHK002 故事起始时间已设定（$start_time）
+- [$([ -n "$current_time" ] && echo "x" || echo " ")] CHK003 当前故事时间已更新（$current_time）
+
+## 事件记录
+
+- [$([ $event_count -gt 0 ] && echo "x" || echo " ")] CHK004 时间事件已记录（$event_count 个）
+- [$([ $has_issues -eq 0 ] && echo "x" || echo "!")] CHK005 时间事件按章节有序排列$([ $has_issues -gt 0 ] && echo "（⚠️ 发现 $has_issues 个乱序）" || echo "")
+
+## 并行事件
+
+EOF
+
+    if [ "$parallel_count" -gt 0 ]; then
+        echo "- [x] CHK006 并行事件时间点已记录（$parallel_count 个）"
+    else
+        echo "- [ ] CHK006 并行事件时间点已记录（无记录）"
+    fi
+
+    cat <<EOF
+
+---
+
+## 后续行动
+
+EOF
+
+    local has_actions=false
+
+    if [ $event_count -eq 0 ]; then
+        echo "- [ ] 开始记录时间事件"
+        has_actions=true
+    fi
+
+    if [ -z "$current_time" ]; then
+        echo "- [ ] 设置当前故事时间"
+        has_actions=true
+    fi
+
+    if [ $has_issues -gt 0 ]; then
+        echo "- [ ] 修复 $has_issues 个事件顺序问题"
+        has_actions=true
+    fi
+
+    if [ "$has_actions" = false ]; then
+        echo "*时间线记录完整，无需特别行动*"
+    fi
+
+    cat <<EOF
+
+---
+
+**检查工具**: check-timeline.sh
+**版本**: 1.1 (支持 checklist 输出)
+EOF
+}
+
 # 主函数
 main() {
+    if [ "$CHECKLIST_MODE" = true ]; then
+        output_checklist
+        exit 0
+    fi
+
     init_timeline
 
     case "$COMMAND" in

@@ -1,0 +1,30 @@
+{
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": ".github/prompts/constitution.prompt.md"
+    },
+    {
+      "file": ".github/prompts/specify.prompt.md"
+    },
+    {
+      "file": ".github/prompts/clarify.prompt.md"
+    },
+    {
+      "file": ".github/prompts/plan.prompt.md"
+    },
+    {
+      "file": ".github/prompts/tasks.prompt.md"
+    },
+    {
+      "file": ".github/prompts/write.prompt.md"
+    },
+    {
+      "file": ".github/prompts/analyze.prompt.md"
+    }
+  ],
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": true
+  }
+}

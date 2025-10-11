@@ -9,6 +9,12 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
+# 检查是否为 checklist 模式
+CHECKLIST_MODE=false
+if [ "$1" = "--checklist" ]; then
+    CHECKLIST_MODE=true
+fi
+
 # Get project root
 PROJECT_ROOT=$(get_project_root)
 cd "$PROJECT_ROOT"
@@ -16,11 +22,6 @@ cd "$PROJECT_ROOT"
 # 获取当前故事
 STORY_NAME=$(get_active_story)
 STORY_DIR="stories/$STORY_NAME"
-
-echo "写作状态检查"
-echo "============"
-echo "当前故事：$STORY_NAME"
-echo ""
 
 # 检查方法论文档
 check_methodology_docs() {
@@ -126,8 +127,171 @@ check_completed_content() {
     fi
 }
 
+# 生成 checklist 格式输出
+output_checklist() {
+    local has_constitution=false
+    local has_specification=false
+    local has_plan=false
+    local has_tasks=false
+    local pending=0
+    local in_progress=0
+    local completed=0
+    local chapter_count=0
+    local bad_chapters=0
+    local min_words=2000
+    local max_words=4000
+
+    # 检查文档
+    [ -f "memory/novel-constitution.md" ] && has_constitution=true
+    [ -f "$STORY_DIR/specification.md" ] && has_specification=true
+    [ -f "$STORY_DIR/creative-plan.md" ] && has_plan=true
+    [ -f "$STORY_DIR/tasks.md" ] && has_tasks=true
+
+    # 统计任务
+    if [ "$has_tasks" = true ]; then
+        pending=$(grep -c "^- \[ \]" "$STORY_DIR/tasks.md" 2>/dev/null || echo 0)
+        in_progress=$(grep -c "^- \[~\]" "$STORY_DIR/tasks.md" 2>/dev/null || echo 0)
+        completed=$(grep -c "^- \[x\]" "$STORY_DIR/tasks.md" 2>/dev/null || echo 0)
+    fi
+
+    # 读取验证规则
+    local validation_rules="$STORY_DIR/spec/tracking/validation-rules.json"
+    if [ -f "$validation_rules" ] && command -v jq >/dev/null 2>&1; then
+        min_words=$(jq -r '.rules.chapterMinWords // 2000' "$validation_rules")
+        max_words=$(jq -r '.rules.chapterMaxWords // 4000' "$validation_rules")
+    fi
+
+    # 检查章节内容
+    local content_dir="$STORY_DIR/content"
+    if [ -d "$content_dir" ]; then
+        chapter_count=$(ls "$content_dir"/*.md 2>/dev/null | wc -l | tr -d ' ')
+
+        # 统计不符合字数要求的章节
+        for file in "$content_dir"/*.md 2>/dev/null; do
+            [ -f "$file" ] || continue
+            local words=$(count_chinese_words "$file")
+            if [ "$words" -lt "$min_words" ] || [ "$words" -gt "$max_words" ]; then
+                bad_chapters=$((bad_chapters + 1))
+            fi
+        done
+    fi
+
+    # 计算总任务和完成率
+    local total_tasks=$((pending + in_progress + completed))
+    local completion_rate=0
+    if [ $total_tasks -gt 0 ]; then
+        completion_rate=$((completed * 100 / total_tasks))
+    fi
+
+    # 输出 checklist
+    cat <<EOF
+# 写作状态检查 Checklist
+
+**检查时间**: $(date '+%Y-%m-%d %H:%M:%S')
+**当前故事**: $STORY_NAME
+**字数标准**: ${min_words}-${max_words} 字
+
+---
+
+## 文档完整性
+
+- [$([ "$has_constitution" = true ] && echo "x" || echo " ")] CHK001 novel-constitution.md 存在
+- [$([ "$has_specification" = true ] && echo "x" || echo " ")] CHK002 specification.md 存在
+- [$([ "$has_plan" = true ] && echo "x" || echo " ")] CHK003 creative-plan.md 存在
+- [$([ "$has_tasks" = true ] && echo "x" || echo " ")] CHK004 tasks.md 存在
+
+## 任务进度
+
+EOF
+
+    if [ "$has_tasks" = true ]; then
+        echo "- [$([ $in_progress -gt 0 ] && echo "x" || echo " ")] CHK005 有进行中的任务（$in_progress 个）"
+        echo "- [x] CHK006 待开始任务数量（$pending 个）"
+        echo "- [$([ $completed -gt 0 ] && echo "x" || echo " ")] CHK007 已完成任务进度（$completed/$total_tasks = $completion_rate%）"
+    else
+        echo "- [ ] CHK005 有进行中的任务（tasks.md 不存在）"
+        echo "- [ ] CHK006 待开始任务数量（tasks.md 不存在）"
+        echo "- [ ] CHK007 已完成任务进度（tasks.md 不存在）"
+    fi
+
+    cat <<EOF
+
+## 内容质量
+
+- [$([ $chapter_count -gt 0 ] && echo "x" || echo " ")] CHK008 已完成章节数（$chapter_count 章）
+EOF
+
+    if [ $chapter_count -gt 0 ]; then
+        echo "- [$([ $bad_chapters -eq 0 ] && echo "x" || echo "!")] CHK009 字数符合标准（$([ $bad_chapters -eq 0 ] && echo "全部符合" || echo "$bad_chapters 章不符合")）"
+    else
+        echo "- [ ] CHK009 字数符合标准（尚未开始写作）"
+    fi
+
+    cat <<EOF
+
+---
+
+## 后续行动
+
+EOF
+
+    local has_actions=false
+
+    # 检查缺失文档
+    if [ "$has_constitution" = false ] || [ "$has_specification" = false ] || [ "$has_plan" = false ] || [ "$has_tasks" = false ]; then
+        echo "- [ ] 完成方法论文档（运行对应命令：/constitution, /specify, /plan, /tasks）"
+        has_actions=true
+    fi
+
+    # 检查任务
+    if [ $pending -gt 0 ] || [ $in_progress -gt 0 ]; then
+        if [ $in_progress -gt 0 ]; then
+            echo "- [ ] 继续进行中的任务（$in_progress 个）"
+        else
+            echo "- [ ] 开始下一个待写作任务（共 $pending 个）"
+        fi
+        has_actions=true
+    fi
+
+    # 检查章节质量
+    if [ $bad_chapters -gt 0 ]; then
+        echo "- [ ] 修复字数不符合要求的章节（$bad_chapters 章）"
+        has_actions=true
+    fi
+
+    # 完成建议
+    if [ $pending -eq 0 ] && [ $in_progress -eq 0 ] && [ $completed -gt 0 ]; then
+        echo "- [ ] 运行 /analyze 进行综合验证"
+        has_actions=true
+    fi
+
+    if [ "$has_actions" = false ]; then
+        echo "*写作状态良好，无需特别行动*"
+    fi
+
+    cat <<EOF
+
+---
+
+**检查工具**: check-writing-state.sh
+**版本**: 1.1 (支持 checklist 输出)
+EOF
+}
+
 # 主流程
 main() {
+    # Checklist 模式直接输出并退出
+    if [ "$CHECKLIST_MODE" = true ]; then
+        output_checklist
+        exit 0
+    fi
+
+    # 原有的详细输出模式
+    echo "写作状态检查"
+    echo "============"
+    echo "当前故事：$STORY_NAME"
+    echo ""
+
     if ! check_methodology_docs; then
         exit 1
     fi

@@ -7,6 +7,12 @@ set -e
 SCRIPT_DIR=$(dirname "$0")
 source "$SCRIPT_DIR/common.sh"
 
+# 检查模式
+CHECKLIST_MODE=false
+if [ "$1" = "--checklist" ]; then
+    CHECKLIST_MODE=true
+fi
+
 # 获取当前故事目录
 STORY_DIR=$(get_current_story)
 
@@ -257,9 +263,191 @@ generate_report() {
     fi
 }
 
+# 生成 checklist 格式输出
+output_checklist() {
+    # 静默执行检查逻辑
+    exec 3>&1 4>&2  # 保存原始输出
+    exec 1>/dev/null 2>&1  # 重定向到null
+
+    check_file_integrity
+    check_chapter_consistency
+    check_timeline_consistency
+    check_character_consistency
+    check_foreshadowing_plan
+
+    exec 1>&3 2>&4  # 恢复输出
+
+    # 获取章节号用于检查
+    local progress_chapter=""
+    local plot_chapter=""
+    local char_chapter=""
+    if [ -f "$PROGRESS" ] && [ -f "$PLOT_TRACKER" ]; then
+        progress_chapter=$(jq -r '.statistics.currentChapter // 0' "$PROGRESS" 2>/dev/null || echo "0")
+        plot_chapter=$(jq -r '.currentState.chapter // 0' "$PLOT_TRACKER" 2>/dev/null || echo "0")
+    fi
+    if [ -f "$CHARACTER_STATE" ]; then
+        char_chapter=$(jq -r '.protagonist.currentStatus.chapter // 0' "$CHARACTER_STATE" 2>/dev/null || echo "0")
+    fi
+
+    # 检查伏笔状态
+    local total_foreshadow=0
+    local active_foreshadow=0
+    local overdue_foreshadow=0
+    if [ -f "$PLOT_TRACKER" ]; then
+        total_foreshadow=$(jq '.foreshadowing | length' "$PLOT_TRACKER" 2>/dev/null || echo "0")
+        active_foreshadow=$(jq '[.foreshadowing[] | select(.status == "active")] | length' "$PLOT_TRACKER" 2>/dev/null || echo "0")
+
+        if [ -f "$PROGRESS" ]; then
+            local current_chapter=$(jq -r '.statistics.currentChapter // 0' "$PROGRESS" 2>/dev/null || echo "0")
+            overdue_foreshadow=$(jq --arg current "$current_chapter" '[.foreshadowing[] | select(.status == "active" and .planted.chapter and (($current | tonumber) - .planted.chapter) > 50)] | length' "$PLOT_TRACKER" 2>/dev/null || echo "0")
+        fi
+    fi
+
+    # 输出 checklist 格式
+    cat <<EOF
+# 数据同步一致性检查 Checklist
+
+**检查时间**: $(date '+%Y-%m-%d %H:%M:%S')
+**检查对象**: spec/tracking/ 目录所有JSON文件
+**检查范围**: 文件完整性、章节同步、时间线连续性、角色状态、伏笔管理
+
+---
+
+## 文件完整性
+
+- [$([ -f "$PROGRESS" ] && echo "x" || echo " ")] CHK001 progress.json 存在且格式有效
+- [$([ -f "$PLOT_TRACKER" ] && echo "x" || echo " ")] CHK002 plot-tracker.json 存在且格式有效
+- [$([ -f "$TIMELINE" ] && echo "x" || echo " ")] CHK003 timeline.json 存在且格式有效
+- [$([ -f "$RELATIONSHIPS" ] && echo "x" || echo " ")] CHK004 relationships.json 存在且格式有效
+- [$([ -f "$CHARACTER_STATE" ] && echo "x" || echo " ")] CHK005 character-state.json 存在且格式有效
+
+## 章节号同步
+
+EOF
+
+    if [ "$progress_chapter" = "$plot_chapter" ]; then
+        echo "- [x] CHK006 progress.json 与 plot-tracker.json 章节号一致（第 $progress_chapter 章）"
+    else
+        echo "- [!] CHK006 progress.json(${progress_chapter}) 与 plot-tracker.json(${plot_chapter}) 章节号不一致"
+    fi
+
+    if [ -n "$char_chapter" ]; then
+        if [ "$progress_chapter" = "$char_chapter" ]; then
+            echo "- [x] CHK007 progress.json 与 character-state.json 章节号一致"
+        else
+            echo "- [!] CHK007 progress.json(${progress_chapter}) 与 character-state.json(${char_chapter}) 章节号不一致"
+        fi
+    else
+        echo "- [ ] CHK007 character-state.json 章节号检查（文件不存在或缺少数据）"
+    fi
+
+    cat <<EOF
+
+## 时间线连续性
+
+- [$([ -f "$TIMELINE" ] && echo "x" || echo " ")] CHK008 时间线事件按章节有序排列
+- [$([ -f "$TIMELINE" ] && echo "x" || echo " ")] CHK009 当前故事时间已设置
+
+## 角色状态
+
+EOF
+
+    if [ -f "$CHARACTER_STATE" ] && [ -f "$RELATIONSHIPS" ]; then
+        local protag_name=$(jq -r '.protagonist.name // ""' "$CHARACTER_STATE" 2>/dev/null)
+        if [ -n "$protag_name" ]; then
+            echo "- [x] CHK010 主角信息完整（$protag_name）"
+            local has_relations=$(jq --arg name "$protag_name" 'has($name)' "$RELATIONSHIPS" 2>/dev/null || echo "false")
+            if [ "$has_relations" = "true" ]; then
+                echo "- [x] CHK011 主角在 relationships.json 中有关系记录"
+            else
+                echo "- [!] CHK011 主角'$protag_name'在 relationships.json 中无关系记录"
+            fi
+        else
+            echo "- [ ] CHK010 主角信息完整（缺少数据）"
+            echo "- [ ] CHK011 主角关系记录（缺少数据）"
+        fi
+
+        local last_location=$(jq -r '.protagonist.currentStatus.location // ""' "$CHARACTER_STATE" 2>/dev/null)
+        if [ -n "$last_location" ]; then
+            echo "- [x] CHK012 主角当前位置已记录（$last_location）"
+        else
+            echo "- [!] CHK012 主角当前位置未记录"
+        fi
+    else
+        echo "- [ ] CHK010 主角信息完整（文件不存在）"
+        echo "- [ ] CHK011 主角关系记录（文件不存在）"
+        echo "- [ ] CHK012 主角当前位置已记录（文件不存在）"
+    fi
+
+    cat <<EOF
+
+## 伏笔管理
+
+EOF
+
+    if [ "$total_foreshadow" -gt 0 ]; then
+        echo "- [x] CHK013 伏笔记录存在（总计 $total_foreshadow 个，活跃 $active_foreshadow 个）"
+
+        if [ "$overdue_foreshadow" -eq 0 ]; then
+            echo "- [x] CHK014 伏笔回收及时（无超期未回收）"
+        else
+            echo "- [!] CHK014 伏笔回收及时（有 $overdue_foreshadow 个超过50章未回收）"
+        fi
+
+        if [ "$active_foreshadow" -le 10 ]; then
+            echo "- [x] CHK015 活跃伏笔数量合理（$active_foreshadow ≤ 10）"
+        else
+            echo "- [!] CHK015 活跃伏笔数量过多（$active_foreshadow > 10，可能造成读者困惑）"
+        fi
+    else
+        echo "- [ ] CHK013 伏笔记录存在（未找到伏笔记录）"
+        echo "- [ ] CHK014 伏笔回收及时（无数据）"
+        echo "- [ ] CHK015 活跃伏笔数量合理（无数据）"
+    fi
+
+    cat <<EOF
+
+---
+
+## 检查统计
+
+- **总检查项**: ${TOTAL_CHECKS}
+- **已通过**: ${PASSED_CHECKS}
+- **警告**: ${WARNINGS}
+- **错误**: ${ERRORS}
+
+---
+
+## 后续行动
+
+EOF
+
+    if [ "$ERRORS" -gt 0 ]; then
+        echo "- [ ] 修复上述标记为 [!] 的不一致问题"
+    fi
+    if [ "$WARNINGS" -gt 0 ]; then
+        echo "- [ ] 关注警告项，考虑是否需要改进"
+    fi
+    if [ "$ERRORS" -eq 0 ] && [ "$WARNINGS" -eq 0 ]; then
+        echo "*所有检查通过，无需行动*"
+    fi
+
+    cat <<EOF
+
+---
+
+**检查工具**: check-consistency.sh
+**版本**: 1.1 (支持 checklist 输出)
+EOF
+}
+
 # 主函数
 main() {
-    generate_report
+    if [ "$CHECKLIST_MODE" = true ]; then
+        output_checklist
+    else
+        generate_report
+    fi
 
     # 根据结果返回适当的退出码
     if [ "$ERRORS" -gt 0 ]; then
