@@ -2,6 +2,9 @@
   <!-- Title -->
   <text x="400" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">SDD完整循环流程</text>
 
+  <!-- Namespace note -->
+  <text x="400" y="50" text-anchor="middle" font-size="11" fill="#666">命令格式: Claude用/novel.命令 | Gemini用/novel/命令 | 其他用/命令</text>
+
   <!-- Constitution -->
   <rect x="300" y="60" width="200" height="50" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
   <text x="400" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#7b1fa2">1. /constitution</text>

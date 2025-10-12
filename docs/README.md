@@ -18,6 +18,12 @@ docs/
 ├── best-practices.md     # 最佳实践指南 ⭐新增
 ├── upgrade-guide.md      # 升级指南
 ├── word-count-guide.md   # 字数统计指南
+├── tech/                 # 技术文档 ⭐新增
+│   ├── README.md         # 技术文档索引
+│   ├── architecture.md   # 技术架构文档
+│   └── images/           # 架构图等
+├── writing/              # 实战指南
+│   └── practical-guide.md
 └── _site/                # 生成的文档（git忽略）
 ```
 
@@ -79,6 +85,7 @@ docs/
 2. **installation.md** - 详细的安装步骤
 3. **quickstart.md** - 5分钟快速开始
 4. **workflow.md** - 完整的创作流程
+5. **temperature-guide.md** - AI 温度控制与创作强化方案 ⭐新增
 
 #### 参考文档（⭐新增）
 5. **commands.md** - 所有斜杠命令的详细说明、参数和最佳实践
@@ -88,6 +95,19 @@ docs/
 #### 进阶文档
 8. **upgrade-guide.md** - 版本升级说明和迁移指南
 9. **word-count-guide.md** - 中文字数统计最佳实践
+10. **writing/practical-guide.md** - SDD 实战指南（基于《重返1984》案例）
+
+#### 技术文档（⭐新增）
+11. **tech/README.md** - 技术文档索引
+12. **tech/architecture.md** - 完整技术架构文档
+    - 架构图（可视化系统设计）
+    - 核心组件（CLI、AI 集成、插件系统）
+    - 七步方法论实现机制
+    - 验证追踪系统（Checklist、Track 等）
+    - 技术栈和依赖
+    - 扩展性设计（多平台、插件）
+    - 版本演进历史
+    - 设计哲学
 
 ### 添加新文档
 

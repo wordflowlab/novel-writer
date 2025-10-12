@@ -15,6 +15,8 @@
   items:
     - name: 创作流程
       href: workflow.md
+    - name: AI 温度控制指南
+      href: temperature-guide.md
     - name: Gemini 命令指南
       href: gemini-command-guide.md
 

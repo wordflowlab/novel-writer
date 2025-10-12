@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000">
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">Novel Writer - AI 驱动的小说创作系统</text>
+  <text x="700" y="55" text-anchor="middle" font-size="12" fill="#666">(基于规格驱动开发 SDD)</text>
+
+  <!-- Legend -->
+  <g transform="translate(1150, 100)">
+    <text x="0" y="0" font-size="14" font-weight="bold" fill="#333">图例</text>
+    <rect x="0" y="10" width="80" height="30" fill="#5a9fd4" stroke="#4a7fa4" stroke-width="2" rx="5"/>
+    <text x="90" y="28" font-size="12" fill="#333">人类角色</text>
+    <rect x="0" y="50" width="80" height="30" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="90" y="68" font-size="12" fill="#333">数据/文档</text>
+    <rect x="0" y="90" width="80" height="30" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="90" y="108" font-size="12" fill="#333">AI 工具</text>
+    <rect x="0" y="130" width="80" height="30" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="5,5" rx="5"/>
+    <text x="90" y="148" font-size="12" fill="#333">系统/平台</text>
+  </g>
+
+  <!-- Users / Writers -->
+  <g id="users">
+    <rect x="50" y="120" width="130" height="50" fill="#5a9fd4" stroke="#4a7fa4" stroke-width="2" rx="5"/>
+    <circle cx="90" cy="145" r="15" fill="#fff" opacity="0.7"/>
+    <text x="115" y="150" font-size="14" font-weight="bold" fill="#fff">作者/用户</text>
+  </g>
+
+  <!-- Feedback Aggregation -->
+  <g id="feedback">
+    <rect x="50" y="200" width="130" height="60" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="115" y="225" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">需求收集</text>
+    <text x="115" y="243" text-anchor="middle" font-size="11" fill="#fff">&amp; 反馈聚合</text>
+    <text x="115" y="256" text-anchor="middle" font-size="10" fill="#fff" opacity="0.8">(AI 辅助)</text>
+  </g>
+
+  <!-- PM & Architect -->
+  <g id="pm">
+    <rect x="50" y="300" width="130" height="60" fill="#5a9fd4" stroke="#4a7fa4" stroke-width="2" rx="5"/>
+    <circle cx="80" cy="330" r="12" fill="#fff" opacity="0.7"/>
+    <text x="115" y="326" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">规划者</text>
+    <text x="115" y="344" text-anchor="middle" font-size="11" fill="#fff">(作者角色)</text>
+  </g>
+
+  <!-- Planning AI -->
+  <g id="planning-ai">
+    <rect x="220" y="300" width="150" height="80" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="295" y="325" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">规划架构 AI</text>
+    <text x="295" y="345" text-anchor="middle" font-size="10" fill="#fff">Constitution</text>
+    <text x="295" y="360" text-anchor="middle" font-size="10" fill="#fff">Specify</text>
+    <text x="295" y="375" text-anchor="middle" font-size="10" fill="#fff">Clarify</text>
+  </g>
+
+  <!-- SW Engineer (Writer) -->
+  <g id="writer">
+    <rect x="450" y="150" width="140" height="50" fill="#5a9fd4" stroke="#4a7fa4" stroke-width="2" rx="5"/>
+    <circle cx="485" cy="175" r="12" fill="#fff" opacity="0.7"/>
+    <text x="520" y="180" font-size="13" font-weight="bold" fill="#fff">创作工程师</text>
+  </g>
+
+  <!-- IDE / AI Assistants -->
+  <g id="ide">
+    <rect x="450" y="220" width="140" height="65" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="520" y="240" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">AI 写作助手</text>
+    <text x="520" y="257" text-anchor="middle" font-size="10" fill="#fff">Claude/Cursor</text>
+    <text x="520" y="272" text-anchor="middle" font-size="10" fill="#fff">Gemini/Windsurf</text>
+  </g>
+
+  <!-- QA Engineer -->
+  <g id="qa">
+    <rect x="750" y="250" width="140" height="50" fill="#5a9fd4" stroke="#4a7fa4" stroke-width="2" rx="5"/>
+    <circle cx="785" cy="275" r="12" fill="#fff" opacity="0.7"/>
+    <text x="820" y="280" font-size="13" font-weight="bold" fill="#fff">质量检查</text>
+  </g>
+
+  <!-- QA AI Tools -->
+  <g id="qa-tools">
+    <rect x="750" y="320" width="140" height="80" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="820" y="340" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">验证追踪 AI</text>
+    <text x="820" y="357" text-anchor="middle" font-size="9" fill="#fff">Checklist ⭐</text>
+    <text x="820" y="372" text-anchor="middle" font-size="9" fill="#fff">Track</text>
+    <text x="820" y="387" text-anchor="middle" font-size="9" fill="#fff">Plot/Timeline</text>
+  </g>
+
+  <!-- Doc Editor -->
+  <g id="doc-editor">
+    <rect x="950" y="350" width="130" height="50" fill="#5a9fd4" stroke="#4a7fa4" stroke-width="2" rx="5"/>
+    <circle cx="980" cy="375" r="12" fill="#fff" opacity="0.7"/>
+    <text x="1015" y="380" font-size="13" font-weight="bold" fill="#fff">文档编辑</text>
+  </g>
+
+  <!-- Systems Layer (Dashed Box) -->
+  <rect x="230" y="430" width="850" height="220" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="8,4" rx="10"/>
+  <text x="245" y="450" font-size="12" font-weight="bold" fill="#666">系统和存储层</text>
+
+  <!-- High Level Spec -->
+  <g id="high-spec">
+    <rect x="250" y="470" width="150" height="60" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="325" y="490" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">高层规格</text>
+    <text x="325" y="507" text-anchor="middle" font-size="9" fill="#555">constitution.md</text>
+    <text x="325" y="521" text-anchor="middle" font-size="9" fill="#555">.specify/memory/</text>
+  </g>
+
+  <!-- Detailed Spec -->
+  <g id="detail-spec">
+    <rect x="420" y="470" width="150" height="80" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="495" y="490" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">详细规格</text>
+    <text x="495" y="507" text-anchor="middle" font-size="9" fill="#555">specification.md</text>
+    <text x="495" y="521" text-anchor="middle" font-size="9" fill="#555">creative-plan.md</text>
+    <text x="495" y="535" text-anchor="middle" font-size="9" fill="#555">tasks.md</text>
+  </g>
+
+  <!-- GitHub -->
+  <g id="github">
+    <rect x="590" y="470" width="130" height="60" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="655" y="495" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">GitHub</text>
+    <text x="655" y="512" text-anchor="middle" font-size="9" fill="#555">版本控制</text>
+    <text x="655" y="525" text-anchor="middle" font-size="9" fill="#555">协作存储</text>
+  </g>
+
+  <!-- Code/Content -->
+  <g id="code">
+    <rect x="250" y="560" width="150" height="70" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="325" y="585" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">章节内容</text>
+    <text x="325" y="602" text-anchor="middle" font-size="9" fill="#555">stories/*/content/</text>
+    <text x="325" y="618" text-anchor="middle" font-size="9" fill="#555">*.md 文件</text>
+  </g>
+
+  <!-- Tests/Tracking -->
+  <g id="tests">
+    <rect x="420" y="570" width="150" height="70" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="495" y="595" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">追踪数据</text>
+    <text x="495" y="612" text-anchor="middle" font-size="9" fill="#555">spec/tracking/</text>
+    <text x="495" y="628" text-anchor="middle" font-size="9" fill="#555">plot/timeline/relations</text>
+  </g>
+
+  <!-- Knowledge Base -->
+  <g id="knowledge">
+    <rect x="590" y="560" width="130" height="70" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="655" y="585" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">知识库</text>
+    <text x="655" y="602" text-anchor="middle" font-size="9" fill="#555">spec/knowledge/</text>
+    <text x="655" y="618" text-anchor="middle" font-size="9" fill="#555">角色/世界观</text>
+  </g>
+
+  <!-- Output Docs Layer (Dashed Box) -->
+  <rect x="750" y="430" width="320" height="220" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="8,4" rx="10"/>
+  <text x="765" y="450" font-size="12" font-weight="bold" fill="#666">输出文档层</text>
+
+  <!-- AI Generated Docs -->
+  <g id="ai-doc">
+    <rect x="770" y="470" width="130" height="50" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="835" y="490" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">AI 文档生成</text>
+    <text x="835" y="507" text-anchor="middle" font-size="9" fill="#fff">分析报告</text>
+  </g>
+
+  <!-- User Docs -->
+  <g id="user-docs">
+    <rect x="920" y="470" width="130" height="50" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="985" y="490" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">用户文档</text>
+    <text x="985" y="507" text-anchor="middle" font-size="9" fill="#555">完整小说</text>
+  </g>
+
+  <!-- Compliance Docs -->
+  <g id="compliance">
+    <rect x="770" y="540" width="130" height="60" fill="#c7705b" stroke="#a7503b" stroke-width="2" rx="5"/>
+    <text x="835" y="560" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">质量合规</text>
+    <text x="835" y="577" text-anchor="middle" font-size="9" fill="#fff">Checklist 检查</text>
+    <text x="835" y="591" text-anchor="middle" font-size="9" fill="#fff">追踪报告</text>
+  </g>
+
+  <!-- Quality Reports -->
+  <g id="reports">
+    <rect x="920" y="540" width="130" height="60" fill="#c9b899" stroke="#a99879" stroke-width="2" rx="5"/>
+    <text x="985" y="560" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">质量报告</text>
+    <text x="985" y="577" text-anchor="middle" font-size="9" fill="#555">一致性验证</text>
+    <text x="985" y="591" text-anchor="middle" font-size="9" fill="#555">进度统计</text>
+  </g>
+
+  <!-- Arrows and Flow -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- User to Feedback -->
+  <path d="M 115 170 L 115 200" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Feedback to PM -->
+  <path d="M 115 260 L 115 300" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="125" y="285" font-size="10" fill="#666">需求反馈</text>
+
+  <!-- PM to Planning AI -->
+  <path d="M 180 330 L 220 330" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Planning AI to High Spec -->
+  <path d="M 295 380 L 295 470" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="305" y="420" font-size="10" fill="#666">生成规格</text>
+
+  <!-- High Spec to Detail Spec -->
+  <path d="M 400 500 L 420 500" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Detail Spec to Writer -->
+  <path d="M 495 470 L 520 285" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="510" y="370" font-size="10" fill="#666">规格指导</text>
+
+  <!-- Writer to IDE -->
+  <path d="M 520 200 L 520 220" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- IDE to Code -->
+  <path d="M 450 252 L 325 560" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="380" y="400" font-size="10" fill="#666">生成内容</text>
+
+  <!-- Code to GitHub -->
+  <path d="M 400 595 L 590 500" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Code to Tests -->
+  <path d="M 400 595 L 420 605" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Tests to QA Tools -->
+  <path d="M 570 605 L 750 360" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="650" y="470" font-size="10" fill="#666">验证追踪</text>
+
+  <!-- QA Tools to Compliance -->
+  <path d="M 820 400 L 820 540" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- QA Tools to AI Doc -->
+  <path d="M 835 320 L 835 470" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- AI Doc to User Docs -->
+  <path d="M 900 495 L 920 495" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Doc Editor Reviews -->
+  <path d="M 950 375 L 835 400" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="900" y="360" font-size="10" fill="#666">审核反馈</text>
+
+  <!-- Compliance to Reports -->
+  <path d="M 900 570 L 920 570" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Feedback Loop -->
+  <path d="M 850 250 Q 100 750 115 300" stroke="#e91e63" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="60" y="550" font-size="11" fill="#e91e63" font-weight="bold">质量反馈</text>
+  <text x="60" y="565" font-size="11" fill="#e91e63" font-weight="bold">循环优化</text>
+
+  <!-- Watermark -->
+  <text x="1300" y="980" font-size="12" fill="#999" text-anchor="end">Novel Writer v0.16.3</text>
+
+  <!-- Seven Steps Annotation -->
+  <g id="seven-steps" transform="translate(50, 750)">
+    <text x="0" y="0" font-size="14" font-weight="bold" fill="#333">七步方法论流程</text>
+    <text x="0" y="20" font-size="11" fill="#666">1. Constitution (创作宪法) → 2. Specify (故事规格) → 3. Clarify (澄清决策)</text>
+    <text x="0" y="38" font-size="11" fill="#666">4. Plan (创作计划) → 5. Tasks (任务分解) → 6. Write (章节写作) → 7. Analyze (综合验证)</text>
+    <text x="0" y="58" font-size="10" fill="#999">✨ v0.16.0 新增 Checklist 质量检查系统 | 支持 13 个 AI 平台</text>
+  </g>
+</svg>
