@@ -181,6 +181,12 @@ copy_support_files() {
     done
     echo "    📁 复制 templates/ → .specify/templates/"
   fi
+
+  # 复制 experts 目录（如果存在）
+  if [[ -d "$PROJECT_ROOT/experts" ]]; then
+    cp -r "$PROJECT_ROOT/experts" "$spec_dir/"
+    echo "    📁 复制 experts/ → .specify/experts/"
+  fi
 }
 
 # 构建特定平台的变体

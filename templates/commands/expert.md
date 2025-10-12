@@ -1,7 +1,7 @@
 ---
 description: 专家模式 - 获取专业写作指导
 argument-hint: [plot | character | world | style]
-allowed-tools: Read(//experts/core/**), Read(experts/core/**), Read(//plugins/**/experts/**), Read(plugins/**/experts/**), Bash(find:*), Bash(ls:*), Bash(*)
+allowed-tools: Read(//.specify/experts/**), Read(.specify/experts/**), Read(//plugins/**/experts/**), Read(plugins/**/experts/**), Bash(find:*), Bash(ls:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: echo ""
@@ -46,7 +46,7 @@ scripts:
 
 ### 执行步骤：
 1. **确认专家类型**
-   - 核心专家：读取 `experts/core/<type>.md`
+   - 核心专家：读取 `.specify/experts/core/<type>.md`
    - 插件专家：读取对应插件的专家文件
 
 2. **加载专家配置**
@@ -102,5 +102,5 @@ scripts:
 - 如果专家文件读取失败：
   ```
   专家配置加载失败，请检查文件是否存在：
-  experts/core/<type>.md
+  .specify/experts/core/<type>.md
   ```
