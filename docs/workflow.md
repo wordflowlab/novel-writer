@@ -17,19 +17,26 @@
 
 ```mermaid
 graph TD
-    A[/constitution - 创作宪法] --> B[/specify - 故事规格]
-    B --> C[/clarify - 澄清决策]
-    C --> D[/plan - 创作计划]
-    D --> E[/tasks - 任务分解]
-    E --> F[/write - 章节写作]
-    F --> G[/analyze - 综合验证]
+    A[/constitution - 创作宪法/] --> B[/specify - 故事规格/]
+    B --> C[/clarify - 澄清决策/]
+    C --> H[/checklist - 规格质量核查/]
+    H --> D[/plan - 创作计划/]
+    D --> I[/checklist - 大纲质量核查/]
+    I --> E[/tasks - 任务分解/]
+    E --> F[/write - 章节写作/]
+    F --> J[/checklist - 内容验证/]
+    J --> G[/analyze - 综合验证/]
     G --> F
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style B fill:#bbf,stroke:#333,stroke-width:2px
     style C fill:#bfb,stroke:#333,stroke-width:2px
+    style H fill:#cfc,stroke:#333,stroke-width:2px
     style D fill:#fbf,stroke:#333,stroke-width:2px
+    style I fill:#cfc,stroke:#333,stroke-width:2px
     style E fill:#ffb,stroke:#333,stroke-width:2px
+    style F fill:#ffd,stroke:#333,stroke-width:2px
+    style J fill:#cfc,stroke:#333,stroke-width:2px
 ```
 
 ## 阶段一：准备工作
@@ -181,7 +188,17 @@ AI: 我发现了以下需要澄清的关键点：
 ...
 ```
 
-### 2.4 制定创作计划（/plan）
+### 2.4 规格质量检查（/checklist）
+
+完成规格澄清后，使用 `/checklist 规格完整性` 确认文档质量：
+
+1. **运行命令**：`/checklist 规格完整性`，检查 `spec/specification.md` 的完整性、可追踪性与一致性
+2. **定位问题**：Checklist 会输出未覆盖的章节、模糊描述和冲突点，并保存在 `spec/checklists/` 目录
+3. **修复再检**：根据问题清单迭代规格文档，直至 checklist 全部通过
+
+这一步确保后续规划和写作基于可靠的规格文档。
+
+### 2.5 制定创作计划（/plan）
 
 基于澄清后的规格制定技术实现方案：
 
@@ -230,7 +247,7 @@ AI: 我发现了以下需要澄清的关键点：
 - 第30章：第一卷高潮，等级突破
 ```
 
-### 2.5 任务分解（/tasks）
+### 2.6 任务分解（/tasks）
 
 将章节规划转化为可执行的任务：
 
@@ -309,7 +326,17 @@ AI: 我发现了以下需要澄清的关键点：
 - 保持主角低调的人设
 ```
 
-### 3.2 质量验证（/analyze）
+### 3.2 阶段性质量检查（/checklist）
+
+结合写作节奏，定期运行 `/checklist` 命令，保持内容质量：
+
+1. **写作中段**：每完成 5-10 章，执行如 `/checklist 人物一致性 1-10`、`/checklist 情节逻辑 1-20` 检查角色、剧情、时间线
+2. **针对性检查**：根据发现的问题选择 `/checklist 世界观一致性`、`/checklist 对话风格` 等专项清单
+3. **问题追踪**：Checklist 输出保存在 `spec/checklists/`，根据结果修复章节后再次执行命令
+
+Checklist 阶段性把控可在正式分析前就捕捉结构和设定上的偏差。
+
+### 3.3 质量验证（/analyze）
 
 每5章进行一次综合验证：
 
@@ -325,7 +352,7 @@ AI: 我发现了以下需要澄清的关键点：
 7. 可行性 - 进度评估
 ```
 
-### 3.3 角色管理
+### 3.4 角色管理
 
 #### 角色卡片
 为每个重要角色创建详细卡片：
@@ -373,7 +400,7 @@ graph LR
     G --> H[龙霸天/反派头目]
 ```
 
-### 3.3 世界观构建
+### 3.5 世界观构建
 
 #### 设定文档
 创建详细的世界观文档：
