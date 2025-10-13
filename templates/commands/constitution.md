@@ -16,9 +16,17 @@ scripts:
 
 ## 执行步骤
 
-### 1. 检查现有宪法
+### 1. 检查现有文档
 
-首先使用 Bash 检查宪法文件是否存在：
+**首先检查是否存在风格参考文档**（来自 `/book-internalize`）：
+```bash
+test -f memory/style-reference.md && echo "exists" || echo "not-found"
+```
+
+- 如果存在，使用 Read 工具读取 `memory/style-reference.md`
+- 然后告诉用户："检测到您已完成对标作品分析，我将参考该风格帮您起草宪法。"
+
+**然后检查现有宪法**：
 ```bash
 test -f memory/novel-constitution.md && echo "exists" || echo "not-found"
 ```

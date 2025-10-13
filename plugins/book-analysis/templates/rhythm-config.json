@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "reference_work": "《书名》",
+    "analysis_date": "YYYY-MM-DD",
+    "generated_by": "book-internalize"
+  },
+  "pacing": {
+    "average_chapter_words": 3200,
+    "climax_interval_chapters": 5,
+    "major_climax_interval_chapters": 30,
+    "rhythm_style": "fast"
+  },
+  "content_ratio": {
+    "dialogue": 0.35,
+    "action": 0.40,
+    "description": 0.15,
+    "psychology": 0.10
+  },
+  "opening": {
+    "style": "dynamic",
+    "first_conflict_chapter": 1,
+    "golden_finger_reveal_chapter": 2
+  },
+  "notes": "此配置基于对标作品分析生成，供参考使用"
+}

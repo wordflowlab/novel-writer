@@ -14,18 +14,40 @@ scripts:
 ## 前置检查
 
 1. 运行脚本 `{SCRIPT}` 检查创作状态
-2. 加载方法论基准文档：
-   - **创作宪法**：`memory/novel-constitution.md`
-   - **故事规格**：`stories/*/specification.md`
-   - **创作计划**：`stories/*/creative-plan.md`
-   - **任务清单**：`stories/*/tasks.md`
-   - **前文内容**：`stories/*/content/` (如有)
-   - **角色验证规则**：`spec/tracking/validation-rules.json` (如有)
-   - **角色状态**：`spec/tracking/character-state.json`
-   - **关系规则**：`spec/tracking/relationships.json`
-   - **个人语料**：`memory/personal-voice.md`
-   - **自然化表达**：`spec/knowledge/natural-expression.md`
-   - **反AI检测**：`spec/presets/anti-ai-detection.md`
+
+### 查询协议（必读顺序）
+
+⚠️ **重要**：请严格按照以下顺序查询文档，确保上下文完整且优先级正确。
+
+**查询顺序**：
+1. **先查（最高优先级）**：
+   - `memory/novel-constitution.md`（创作宪法 - 最高原则）
+   - `memory/style-reference.md`（风格参考 - 如果通过 `/book-internalize` 生成）
+
+2. **再查（规格和计划）**：
+   - `stories/*/specification.md`（故事规格）
+   - `stories/*/creative-plan.md`（创作计划）
+   - `stories/*/tasks.md`（当前任务）
+
+3. **再查（状态和数据）**：
+   - `spec/tracking/character-state.json`（角色状态）
+   - `spec/tracking/relationships.json`（关系网络）
+   - `spec/tracking/plot-tracker.json`（情节追踪 - 如有）
+   - `spec/tracking/validation-rules.json`（验证规则 - 如有）
+
+4. **再查（知识库）**：
+   - `spec/knowledge/` 相关文件（世界观、角色档案等）
+   - `stories/*/content/`（前文内容 - 了解前情）
+
+5. **再查（写作规范）**：
+   - `memory/personal-voice.md`（个人语料 - 如有）
+   - `spec/knowledge/natural-expression.md`（自然化表达 - 如有）
+   - `spec/presets/anti-ai-detection.md`（反AI检测规范）
+
+6. **条件查询（前三章专用）**：
+   - **如果章节编号 ≤ 3 或总字数 < 10000字**，额外查询：
+     - `spec/presets/golden-opening.md`（黄金开篇法则）
+     - 并严格遵循其中的五大法则
 
 ## 写作执行流程
 
@@ -143,13 +165,42 @@ scripts:
 | 他心中暗想 | 他想 / 删除 |
 | 话音未落 | 他话没说完 / 删除 |
 
-### 4. 根据计划创作内容：
+### 4. 实时辅助模式（可选）
+
+**如果用户在写作过程中遇到困难**，比如说：
+- "帮我想一下主角该怎么办"
+- "接下来如何发展情节？"
+- "给我几个选项"
+
+**你可以主动提供 2-3 个行动选项**，例如：
+
+> **情节发展建议**：
+>
+> **选项A（主动型）**：主角直接出手，利用金手指碾压对手
+> - 优点：爽点直接，读者满足感强
+> - 风险：可能显得主角过于强大
+>
+> **选项B（策略型）**：主角隐藏实力，智取对手
+> - 优点：展现主角智慧，增加悬念
+> - 风险：节奏可能稍慢
+>
+> **选项C（意外型）**：引入新的变数，打断当前冲突
+> - 优点：增加复杂度，引出新线索
+> - 风险：可能让读者感觉被打断
+
+**然后根据用户选择**，继续创作内容。
+
+⚠️ **注意**：这是辅助模式，不要主动提供选项，除非用户明确请求帮助。
+
+---
+
+### 5. 根据计划创作内容：
    - **开场**：吸引读者，承接前文
    - **发展**：推进情节，深化人物
    - **转折**：制造冲突或悬念
    - **收尾**：适当收束，引出下文
 
-### 5. 质量自检
+### 6. 质量自检
 **宪法合规检查**：
 - 是否符合核心价值观
 - 是否达到质量标准
@@ -170,7 +221,7 @@ scripts:
 - ✅ 场景转换使用两个空行（一个空白行）
 - ✅ 保持段落间距自然流畅
 
-### 6. 保存和更新
+### 7. 保存和更新
 - 将章节内容保存到 `stories/*/content/`
 - 更新任务状态为 `completed`
 - 记录完成时间和字数
@@ -185,7 +236,7 @@ scripts:
 
 ## 完成后行动
 
-### 7. 验证字数和更新进度
+### 8. 验证字数和更新进度
 
 **字数统计说明**：
 - 使用准确的中文字数统计方法
@@ -212,7 +263,7 @@ count_chinese_words "stories/*/content/第X章.md"
 - 任务状态：已更新
 ```
 
-### 8. 建议下一步
+### 9. 建议下一步
 - 继续下一个写作任务
 - 每5章运行 `/analyze` 进行质量检查
 - 发现问题及时调整计划

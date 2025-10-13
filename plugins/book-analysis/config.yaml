@@ -21,6 +21,9 @@ commands:
   - id: book-formula
     file: commands/book-formula.md
     description: 提取爆文公式
+  - id: book-internalize
+    file: commands/book-internalize.md
+    description: 🆕 风格内化 - 将分析结果转化为项目配置
 experts:
   - id: book-analyst
     file: experts/book-analyst.md
@@ -36,14 +39,16 @@ installation:
     1. 准备小说文件（TXT/MD格式）
     2. 使用 /book-analyze 加载文件
     3. 选择具体分析命令执行深度拆解
+    4. 🆕 使用 /book-internalize 将风格内化为项目配置
 
     可用命令（均以 /book- 开头）：
-    - /book-analyze    - 加载并初步分析
-    - /book-skeleton   - 故事结构分析
-    - /book-rhythm     - 节奏钩子分析
-    - /book-characters - 人物塑造分析
-    - /book-style     - 文笔技法分析
-    - /book-formula   - 爆文公式提取
+    - /book-analyze      - 加载并初步分析
+    - /book-skeleton     - 故事结构分析
+    - /book-rhythm       - 节奏钩子分析
+    - /book-characters   - 人物塑造分析
+    - /book-style        - 文笔技法分析
+    - /book-formula      - 爆文公式提取
+    - /book-internalize  - 🆕 风格内化（转化为项目配置）
 
     专家模式：
     - 使用 /expert book-analyst 激活拆书专家
@@ -52,3 +57,4 @@ installation:
     - 请确保提供 TXT 或 MD 格式的小说文件
     - 文件过大时会自动分段处理
     - 分析结果会保存到项目目录
+    - 🆕 使用 /book-internalize 可将风格自动应用到创作
