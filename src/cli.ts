@@ -323,19 +323,22 @@ program
         }
       }
 
-      // 复制spec目录结构（包括预设）
+      // 复制 spec 目录结构（包括预设和反AI检测规范）
+      // 注意：构建产物已包含 spec/presets 等，此处作为后备确保完整性
       const specDir = path.join(packageRoot, 'spec');
       if (await fs.pathExists(specDir)) {
         const userSpecDir = path.join(projectPath, 'spec');
-        // 复制整个spec目录，但不覆盖已存在的tracking和knowledge
-        const specSubDirs = await fs.readdir(specDir);
-        for (const subDir of specSubDirs) {
-          if (subDir === 'presets' || subDir === 'config.json') {
-            await fs.copy(
-              path.join(specDir, subDir),
-              path.join(userSpecDir, subDir),
-              { overwrite: false }
-            );
+
+        // 遍历并复制所有 spec 子目录
+        const specItems = await fs.readdir(specDir);
+        for (const item of specItems) {
+          const sourcePath = path.join(specDir, item);
+          const targetPath = path.join(userSpecDir, item);
+
+          // presets、checklists、config.json 等直接复制（不覆盖已存在的）
+          // tracking 和 knowledge 已在前面从 templates 复制，跳过
+          if (item !== 'tracking' && item !== 'knowledge') {
+            await fs.copy(sourcePath, targetPath, { overwrite: false });
           }
         }
       }
@@ -780,6 +783,8 @@ interface UpdateContent {
   scripts: boolean;
   templates: boolean;
   memory: boolean;
+  spec: boolean;
+  experts: boolean;
 }
 
 interface UpgradeStats {
@@ -787,6 +792,8 @@ interface UpgradeStats {
   scripts: number;
   templates: number;
   memory: number;
+  spec: number;
+  experts: number;
   platforms: string[];
 }
 
@@ -804,6 +811,8 @@ async function selectUpdateContentInteractive(): Promise<UpdateContent> {
       choices: [
         { name: '命令文件 (Commands)', value: 'commands', checked: true },
         { name: '脚本文件 (Scripts)', value: 'scripts', checked: true },
+        { name: '写作规范和预设 (Spec/Presets)', value: 'spec', checked: true },
+        { name: '专家模式文件 (Experts)', value: 'experts', checked: false },
         { name: '模板文件 (Templates)', value: 'templates', checked: false },
         { name: '记忆文件 (Memory)', value: 'memory', checked: false }
       ]
@@ -814,7 +823,9 @@ async function selectUpdateContentInteractive(): Promise<UpdateContent> {
     commands: answers.content.includes('commands'),
     scripts: answers.content.includes('scripts'),
     templates: answers.content.includes('templates'),
-    memory: answers.content.includes('memory')
+    memory: answers.content.includes('memory'),
+    spec: answers.content.includes('spec'),
+    experts: answers.content.includes('experts')
   };
 }
 
@@ -997,6 +1008,113 @@ async function updateMemory(
 }
 
 /**
+ * 更新 spec 目录（包括 presets、反AI检测规范等）
+ */
+async function updateSpec(
+  projectPath: string,
+  packageRoot: string,
+  dryRun: boolean
+): Promise<number> {
+  const specSource = path.join(packageRoot, 'spec');
+  const specDest = path.join(projectPath, 'spec');
+
+  if (!await fs.pathExists(specSource)) {
+    console.log(chalk.yellow('  ⚠ Spec 源文件未找到'));
+    return 0;
+  }
+
+  let count = 0;
+
+  if (!dryRun) {
+    // 遍历 spec 目录，只更新 presets、checklists、config.json 等
+    // 不覆盖 tracking 和 knowledge（用户数据）
+    const specItems = await fs.readdir(specSource);
+    for (const item of specItems) {
+      if (item !== 'tracking' && item !== 'knowledge') {
+        const sourcePath = path.join(specSource, item);
+        const targetPath = path.join(specDest, item);
+        await fs.copy(sourcePath, targetPath, { overwrite: true });
+
+        // 统计文件数
+        if (await fs.stat(sourcePath).then(s => s.isDirectory())) {
+          const files = await fs.readdir(sourcePath);
+          count += files.filter(f => f.endsWith('.md') || f.endsWith('.json')).length;
+        } else {
+          count += 1;
+        }
+      }
+    }
+  } else {
+    // dry run - 只统计
+    const specItems = await fs.readdir(specSource);
+    for (const item of specItems) {
+      if (item !== 'tracking' && item !== 'knowledge') {
+        const sourcePath = path.join(specSource, item);
+        if (await fs.stat(sourcePath).then(s => s.isDirectory())) {
+          const files = await fs.readdir(sourcePath);
+          count += files.filter(f => f.endsWith('.md') || f.endsWith('.json')).length;
+        } else {
+          count += 1;
+        }
+      }
+    }
+  }
+
+  console.log(chalk.gray(`  ✓ 更新 spec/ (presets 等 ${count} 个文件)`));
+
+  return count;
+}
+
+/**
+ * 更新专家模式文件
+ */
+async function updateExperts(
+  projectPath: string,
+  packageRoot: string,
+  dryRun: boolean
+): Promise<number> {
+  const expertsSource = path.join(packageRoot, 'experts');
+  const expertsDest = path.join(projectPath, '.specify', 'experts');
+
+  // 检查项目是否安装了专家模式
+  if (!await fs.pathExists(expertsDest)) {
+    console.log(chalk.gray('  ⓘ 项目未安装专家模式，跳过'));
+    return 0;
+  }
+
+  if (!await fs.pathExists(expertsSource)) {
+    console.log(chalk.yellow('  ⚠ 专家源文件未找到'));
+    return 0;
+  }
+
+  if (!dryRun) {
+    await fs.copy(expertsSource, expertsDest, { overwrite: true });
+  }
+
+  // 统计专家文件
+  const countFiles = async (dir: string): Promise<number> => {
+    let count = 0;
+    const items = await fs.readdir(dir);
+    for (const item of items) {
+      const itemPath = path.join(dir, item);
+      const stat = await fs.stat(itemPath);
+      if (stat.isDirectory()) {
+        count += await countFiles(itemPath);
+      } else if (item.endsWith('.md')) {
+        count += 1;
+      }
+    }
+    return count;
+  };
+
+  const expertsCount = await countFiles(expertsSource);
+
+  console.log(chalk.gray(`  ✓ 更新 ${expertsCount} 个专家文件`));
+
+  return expertsCount;
+}
+
+/**
  * 创建选择性备份
  */
 async function createBackup(
@@ -1092,6 +1210,12 @@ function displayUpgradeReport(
   if (updateContent.scripts && stats.scripts > 0) {
     console.log(`  • 脚本文件: ${stats.scripts} 个`);
   }
+  if (updateContent.spec && stats.spec > 0) {
+    console.log(`  • 写作规范和预设: ${stats.spec} 个`);
+  }
+  if (updateContent.experts && stats.experts > 0) {
+    console.log(`  • 专家模式文件: ${stats.experts} 个`);
+  }
   if (updateContent.templates && stats.templates > 0) {
     console.log(`  • 模板文件: ${stats.templates} 个`);
   }
@@ -1104,10 +1228,11 @@ function displayUpgradeReport(
     console.log(chalk.gray('   如需回滚，删除当前文件并从备份恢复'));
   }
 
-  console.log(chalk.cyan('\n✨ 新功能提示:'));
-  console.log('  • AI 温度控制: write.md 命令新增创作强化指令');
+  console.log(chalk.cyan('\n✨ 本次升级包含:'));
+  console.log('  • 反AI检测规范: 基于朱雀实测的0% AI浓度写作指南');
+  console.log('  • 专家模式增强: 核心专家系统（角色、剧情、风格、世界观）');
+  console.log('  • AI 温度控制: write 命令新增创作强化指令');
   console.log('  • 多平台支持: 所有 13 个 AI 平台的命令已更新');
-  console.log('  • 智能分析: /analyze 命令增强的质量验证');
 
   console.log(chalk.gray('\n📚 查看详细升级指南: docs/upgrade-guide.md'));
   console.log(chalk.gray('   或访问: https://github.com/wordflowlab/novel-writer/blob/main/docs/upgrade-guide.md'));
@@ -1121,6 +1246,8 @@ program
   .option('-i, --interactive', '交互式选择要更新的内容')
   .option('--commands', '仅更新命令文件')
   .option('--scripts', '仅更新脚本文件')
+  .option('--spec', '仅更新写作规范和预设')
+  .option('--experts', '仅更新专家模式文件')
   .option('--templates', '仅更新模板文件')
   .option('--memory', '仅更新记忆文件')
   .option('-y, --yes', '跳过确认提示')
@@ -1196,11 +1323,13 @@ program
         updateContent = await selectUpdateContentInteractive();
       } else {
         // 根据选项确定更新内容
-        const hasSpecificOption = options.commands || options.scripts || options.templates || options.memory;
+        const hasSpecificOption = options.commands || options.scripts || options.spec || options.experts || options.templates || options.memory;
 
         updateContent = {
           commands: hasSpecificOption ? !!options.commands : true,
           scripts: hasSpecificOption ? !!options.scripts : true,
+          spec: hasSpecificOption ? !!options.spec : true,
+          experts: hasSpecificOption ? !!options.experts : false,
           templates: hasSpecificOption ? !!options.templates : false,
           memory: hasSpecificOption ? !!options.memory : false
         };
@@ -1210,6 +1339,8 @@ program
       const updateList: string[] = [];
       if (updateContent.commands) updateList.push('命令文件');
       if (updateContent.scripts) updateList.push('脚本文件');
+      if (updateContent.spec) updateList.push('写作规范和预设');
+      if (updateContent.experts) updateList.push('专家模式');
       if (updateContent.templates) updateList.push('模板文件');
       if (updateContent.memory) updateList.push('记忆文件');
 
@@ -1249,6 +1380,8 @@ program
         scripts: 0,
         templates: 0,
         memory: 0,
+        spec: 0,
+        experts: 0,
         platforms: targetDisplayNames
       };
 
@@ -1262,6 +1395,16 @@ program
       if (updateContent.scripts) {
         console.log(chalk.cyan('\n🔧 更新脚本文件...'));
         stats.scripts = await updateScripts(projectPath, packageRoot, dryRun);
+      }
+
+      if (updateContent.spec) {
+        console.log(chalk.cyan('\n📋 更新写作规范和预设...'));
+        stats.spec = await updateSpec(projectPath, packageRoot, dryRun);
+      }
+
+      if (updateContent.experts) {
+        console.log(chalk.cyan('\n🎓 更新专家模式文件...'));
+        stats.experts = await updateExperts(projectPath, packageRoot, dryRun);
       }
 
       if (updateContent.templates) {

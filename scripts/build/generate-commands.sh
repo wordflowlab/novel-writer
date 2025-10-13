@@ -187,6 +187,27 @@ copy_support_files() {
     cp -r "$PROJECT_ROOT/experts" "$spec_dir/"
     echo "    📁 复制 experts/ → .specify/experts/"
   fi
+
+  # 复制 spec 目录（包括 presets、反AI检测规范等）
+  if [[ -d "$PROJECT_ROOT/spec" ]]; then
+    local target_spec_dir="$base_dir/spec"
+    mkdir -p "$target_spec_dir"
+
+    # 复制 spec 目录下的所有内容（但排除 tracking 和 knowledge 的具体内容，保留目录结构）
+    for item in "$PROJECT_ROOT/spec"/*; do
+      if [[ -e "$item" ]]; then
+        item_name=$(basename "$item")
+        # 复制 presets、config.json 等到项目根 spec/
+        if [[ "$item_name" != "tracking" && "$item_name" != "knowledge" ]]; then
+          cp -r "$item" "$target_spec_dir/"
+        else
+          # tracking 和 knowledge 只创建空目录（模板在 templates/ 中）
+          mkdir -p "$target_spec_dir/$item_name"
+        fi
+      fi
+    done
+    echo "    📁 复制 spec/ (presets, config.json 等)"
+  fi
 }
 
 # 构建特定平台的变体
