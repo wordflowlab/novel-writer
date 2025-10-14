@@ -1,0 +1,188 @@
+# 对话密集场景预设
+# 适用于谈判、辩论、讨论等对话为主的场景
+
+id: dialogue-heavy
+name: 对话密集场景
+description: 适合谈判、辩论、讨论等对话为主的场景，展现角色性格和关系
+category: scene
+author: Novel Writer Official
+version: 1.0.0
+
+# 预设的默认配置
+defaults:
+  style:
+    pace: medium
+    sentence_length: medium
+    focus: dialogue
+    tone: serious
+
+  wordcount:
+    target: 2800
+    min: 2200
+    max: 3500
+
+  special_requirements: |
+    ## 对话密集场景写作规范
+
+    ### 对话比例
+    - 对话占比：60-80%
+    - 叙述占比：20-30%
+    - 心理描写：10%以内
+    - 环境描写：点到为止
+
+    ### 对话质量
+    - 符合角色性格和背景
+    - 推动剧情发展
+    - 展现人物关系变化
+    - 包含信息和情感
+
+    ### 对话技巧
+    - 一人一段，不混在一起
+    - 对话标签多样化（说、问、答、笑道、冷声道...）
+    - 加入动作描写（边说边做）
+    - 适当打断和插话（更真实）
+    - 使用省略和暗示（不全说出来）
+
+    ### 角色区分
+    - 不同角色的说话风格要有差异
+    - 通过用词、句式、口头禅区分
+    - 性格影响说话方式
+    - 情绪影响对话节奏
+
+    ### 对话节奏
+    - 重要对话慢节奏，详细描写
+    - 次要对话快节奏，一笔带过
+    - 紧张时对话短促
+    - 轻松时对话舒缓
+
+    ### 叙述配合
+    - 对话前：交代场景和情绪
+    - 对话中：穿插动作和表情
+    - 对话后：点明影响和变化
+
+    ### 避免事项
+    - ❌ 对话过于完整流畅（缺少真实感）
+    - ❌ 对话只传递信息（缺少情感）
+    - ❌ 所有角色说话方式相同
+    - ❌ 对话冗长无重点
+    - ❌ 缺少非语言描写（表情、动作、神态）
+
+# 推荐设置
+recommended:
+  plot_types:
+    - relationship_dev    # 关系发展
+    - mystery_suspense    # 悬念铺垫（通过对话揭秘）
+    - plot_twist          # 剧情反转（对话揭露真相）
+    - negotiation         # 谈判场景
+
+  atmosphere:
+    - tense               # 紧张（辩论、争吵）
+    - relaxed             # 轻松（闲聊、调侃）
+    - mysterious          # 神秘（试探、暗示）
+
+# 兼容类型
+compatible_genres:
+  - dushi               # 都市（职场、商战）
+  - xuanhuan            # 玄幻（宗门谈判）
+  - kehuan              # 科幻（外交、协商）
+  - lishi               # 历史（朝堂议事）
+  - tuili               # 推理（审讯、对质）
+
+# 使用提示
+usage_tips:
+  - 适合推进关系、揭露信息的章节
+  - 对话场景后安排动作章节，调节节奏
+  - 重要对话建议单独成章
+  - 多人对话要控制人数（3-4人为宜）
+  - 长篇对话要分段，避免疲劳
+
+# 对话类型示例
+dialogue_types:
+  - type: negotiation
+    name: 商务谈判
+    example: |
+      "李总，这个价格我们实在无法接受。"林晨直视对方。
+
+      李总笑了笑，端起茶杯慢慢喝了一口："林经理，做生意讲究个诚意。"
+
+      "诚意？"林晨冷笑，"那就拿出你们的诚意来。"
+
+  - type: confrontation
+    name: 对质争吵
+    example: |
+      "你为什么要这么做？"苏婉质问道。
+
+      "我..."林晨张了张嘴，却不知如何解释。
+
+      "你什么？"苏婉声音渐高，"你知不知道..."
+
+  - type: casual
+    name: 闲聊调侃
+    example: |
+      "最近怎么样？"李涛拍了拍林晨的肩膀。
+
+      "还行吧。"林晨耸耸肩，"就那样。"
+
+      "哟，口气不小啊。"李涛笑道，"有情况？"
+
+  - type: revelation
+    name: 揭露真相
+    example: |
+      "你想知道真相？"男人转过身，"那我就告诉你。"
+
+      林晨屏住呼吸。
+
+      "其实..."男人停顿了一下，"你父亲当年..."
+
+# 角色说话风格差异化示例
+character_voices:
+  - character: 主角（林晨）
+    traits: 理性、冷静、直接
+    style: 短句为主，少用修饰，逻辑清晰
+    example: "我明白你的意思。但这样不行。"
+
+  - character: 女主（苏婉）
+    traits: 感性、细腻、委婉
+    style: 多用疑问和推测，情感丰富
+    example: "你是不是在担心什么？我总觉得..."
+
+  - character: 反派（影子）
+    traits: 阴险、狡诈、善于挑拨
+    style: 话中有话，多用反问和讽刺
+    example: "哦？你确定？我看未必吧。"
+
+  - character: 配角（李涛）
+    traits: 幽默、洒脱、大大咧咧
+    style: 口语化，多用俚语和玩笑
+    example: "哥们儿，这事儿我看悬。要不咱换个法子？"
+
+# 示例参考
+examples:
+  - chapter: 12
+    title: 摊牌时刻
+    description: 主角与反派首次正面对话，试探彼此底线
+    wordcount: 2800
+
+  - chapter: 30
+    title: 关键谈判
+    description: 多方势力谈判，信息交换，暗藏机锋
+    wordcount: 3200
+
+  - chapter: 55
+    title: 真相揭露
+    description: 通过对话揭露幕后真相，情节反转
+    wordcount: 3000
+
+# 配套资源
+resources:
+  - name: 对话标签库
+    url: /presets/resources/dialogue-tags.md
+    description: 替代"说"的各种表达
+
+  - name: 情绪对话映射
+    url: /presets/resources/emotion-dialogue.md
+    description: 不同情绪下的对话特征
+
+  - name: 身体语言库
+    url: /presets/resources/body-language.md
+    description: 对话中的动作和表情描写

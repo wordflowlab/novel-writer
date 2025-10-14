@@ -1,0 +1,46 @@
+# 基础章节配置示例
+# 这是一个最简配置，包含所有必填字段
+
+chapter: 5
+title: 初露锋芒
+
+# 出场角色（可选）
+characters:
+  - id: protagonist
+    name: 林晨
+    focus: high    # 本章重点角色
+
+  - id: female-lead
+    name: 苏婉
+    focus: medium  # 中等戏份
+
+# 场景配置（可选）
+scene:
+  location_id: office-meeting-room
+  location_name: 办公室-会议室
+  time: 上午10点
+  atmosphere: tense  # 紧张
+
+# 剧情配置（必填）
+plot:
+  type: ability_showcase  # 能力展现
+  summary: 主角在技术会议上解决难题，引起女主注意
+  key_points:
+    - 展现编程能力
+    - 首次引起女主关注
+    - 埋下反派线索
+
+# 写作风格（可选）
+style:
+  pace: fast                # 快节奏
+  sentence_length: short    # 短句
+  focus: dialogue_action    # 对话+动作
+
+# 字数要求（必填）
+wordcount:
+  target: 3000
+  min: 2500
+  max: 3500
+
+# 创建时间（自动生成）
+created_at: 2025-10-14T10:30:00Z

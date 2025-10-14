@@ -1,0 +1,112 @@
+# 激烈动作场景预设
+# 适用于打斗、追逐等高强度动作描写
+
+id: action-intense
+name: 激烈动作场景
+description: 适合打斗、追逐等高强度动作描写，快节奏、短句、密集动作
+category: scene
+author: Novel Writer Official
+version: 1.0.0
+
+# 预设的默认配置
+defaults:
+  style:
+    pace: fast
+    sentence_length: short
+    focus: action
+    tone: serious
+
+  wordcount:
+    target: 3000
+    min: 2500
+    max: 3500
+
+  special_requirements: |
+    ## 动作场景写作规范
+
+    ### 句式要求
+    - 短句为主，单句15-25字
+    - 避免复杂从句和长定语
+    - 多用动词，少用形容词
+    - 句式紧凑，节奏明快
+
+    ### 描写重点
+    - 动作描写密集，突出打击感和节奏感
+    - 快速切换场景和视角
+    - 减少心理活动描写，重点在动作
+    - 环境描写服务于动作，不独立存在
+
+    ### 动作细节
+    - 具体的动作：踢、打、闪、躲、跳...
+    - 力量感：撞击、碎裂、震动...
+    - 速度感：疾驰、急转、猛冲...
+    - 空间感：距离、方向、位置...
+
+    ### 节奏控制
+    - 开篇直入冲突，不拖沓
+    - 高潮段落密集，低潮段落过渡
+    - 适当留白，让读者喘息
+    - 结尾干脆利落
+
+    ### 避免事项
+    - ❌ 冗长的环境描写
+    - ❌ 过多的心理活动
+    - ❌ 复杂的背景说明
+    - ❌ 缓慢的情节推进
+
+# 推荐设置
+recommended:
+  plot_types:
+    - conflict_combat    # 冲突对抗
+    - climax             # 高潮对决
+    - chase              # 追逐场景
+
+  atmosphere:
+    - tense              # 紧张
+    - exciting           # 激昂
+
+# 兼容类型
+compatible_genres:
+  - xuanhuan           # 玄幻
+  - wuxia              # 武侠
+  - dushi              # 都市（异能）
+  - kehuan             # 科幻（机甲战斗）
+
+# 使用提示
+usage_tips:
+  - 适合章节的高潮部分，不宜过多使用
+  - 建议配合短章节（2000-3500字）
+  - 前后需要铺垫和收尾章节
+  - 动作场景后安排过渡章节，调节节奏
+  - 注意角色安全，不要轻易写死
+
+# 示例参考
+examples:
+  - chapter: 8
+    title: 首次交锋
+    description: 主角与反派首次正面对决
+    wordcount: 3200
+
+  - chapter: 25
+    title: 生死一战
+    description: 中期高潮，主角突破极限
+    wordcount: 3800
+
+  - chapter: 98
+    title: 终极对决
+    description: 最终章高潮，决战反派首领
+    wordcount: 4500
+
+# 配套资源
+resources:
+  - name: 动作词汇库
+    url: /presets/resources/action-verbs.md
+    description: 常用动作动词和短语
+
+  - name: 武器装备描写
+    url: /presets/resources/weapons.md
+    description: 各类武器的描写参考
+
+  - name: 伤势描写分级
+    url: /presets/resources/injuries.md
+    description: 不同程度伤势的描写标准

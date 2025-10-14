@@ -1,0 +1,99 @@
+# 情感戏章节配置示例
+# 适用于告白、争吵、和解等情感重点场景
+
+chapter: 15
+title: 心意相通
+
+# 出场角色
+characters:
+  - id: protagonist
+    name: 林晨
+    focus: high
+    state_changes:
+      - 表白成功
+      - 心情激动
+
+  - id: female-lead
+    name: 苏婉
+    focus: high
+    state_changes:
+      - 接受表白
+      - 关系升级：情侣
+
+  - id: support-char-a
+    name: 李涛
+    focus: low    # 配角辅助推动剧情
+    state_changes:
+      - 祝福朋友
+
+# 场景配置
+scene:
+  location_id: seaside-park
+  location_name: 海边公园
+  time: 傍晚
+  weather: 晴朗，夕阳西下
+  atmosphere: relaxed    # 轻松浪漫
+
+# 剧情配置
+plot:
+  type: relationship_dev    # 关系发展
+  summary: 主角终于鼓起勇气向女主表白，在海边公园的夕阳下，两人心意相通
+  key_points:
+    - 主角纠结是否表白
+    - 朋友鼓励和推动
+    - 海边漫步，气氛渐浓
+    - 夕阳下表白，真情流露
+    - 女主接受，两人确立关系
+
+  plotlines:
+    - PL-02    # 支线：情感发展线
+
+  foreshadowing:
+    - id: F-012
+      content: 提及未来的挑战（暗示感情将面临考验）
+
+# 写作风格
+style:
+  pace: slow              # 慢节奏，细腻描写
+  sentence_length: medium # 中等句长
+  focus: dialogue         # 对话和心理描写并重
+  tone: light             # 轻松明亮
+
+# 字数要求
+wordcount:
+  target: 2500
+  min: 2000
+  max: 3000
+
+# 特殊写作要求
+special_requirements: |
+  情感戏写作要求：
+  - 对话自然流畅，符合角色性格
+  - 心理描写细腻，展现情感变化
+  - 环境描写烘托氛围（夕阳、海风、沙滩）
+  - 避免过度煽情，保持真实感
+
+  关键对话场景：
+  1. 主角内心纠结（独白）
+  2. 朋友鼓励（轻松幽默）
+  3. 海边漫步（自然对话，渐入佳境）
+  4. 表白场景（真诚、直接、不矫情）
+  5. 女主回应（惊讶、感动、接受）
+
+  情绪节奏：
+  - 开始：紧张纠结（30%）
+  - 中段：轻松愉快（40%）
+  - 高潮：表白时刻（20%）
+  - 结尾：甜蜜幸福（10%）
+
+  注意事项：
+  - 避免突兀的表白
+  - 女主接受要有合理铺垫
+  - 情感细节描写（眼神、手势、微表情）
+  - 结尾留白，不要过度描写
+
+# 使用的预设
+preset_used: emotional-dialogue
+
+# 时间戳
+created_at: 2025-10-14T16:00:00Z

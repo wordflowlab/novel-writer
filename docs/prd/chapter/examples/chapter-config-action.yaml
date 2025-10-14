@@ -1,0 +1,92 @@
+# 动作场景章节配置示例
+# 适用于打斗、追逐等高强度动作场景
+
+chapter: 8
+title: 首次交锋
+
+# 出场角色
+characters:
+  - id: protagonist
+    name: 林晨
+    focus: high
+    state_changes:
+      - 受伤（轻伤）
+      - 实力提升
+
+  - id: villain-a
+    name: 影子
+    focus: high
+    state_changes:
+      - 显露真实面目
+
+  - id: female-lead
+    name: 苏婉
+    focus: low    # 仅在结尾出现
+    state_changes:
+      - 震惊
+
+# 场景配置
+scene:
+  location_id: abandoned-factory
+  location_name: 废弃工厂
+  time: 深夜2点
+  weather: 大雨
+  atmosphere: tense
+
+# 剧情配置
+plot:
+  type: conflict_combat    # 冲突对抗
+  summary: 主角与反派首次正面交锋，在废弃工厂激战，最终险胜
+  key_points:
+    - 反派突然袭击，身份揭晓
+    - 激烈打斗，主角陷入险境
+    - 突破极限，觉醒新能力
+    - 反派逃脱，埋下后续冲突
+    - 女主赶到，震惊于主角真实身份
+
+  plotlines:
+    - PL-01    # 主线：成长之路
+    - PL-03    # 支线：反派追杀
+
+  foreshadowing:
+    - id: F-008
+      content: 反派提及更强大的组织
+
+# 写作风格
+style:
+  pace: fast
+  sentence_length: short
+  focus: action           # 动作描写为主
+  tone: dark              # 阴暗基调
+
+# 字数要求
+wordcount:
+  target: 3500
+  min: 3000
+  max: 4000
+
+# 特殊写作要求
+special_requirements: |
+  动作场景写作要求：
+  - 短句为主，单句15-25字
+  - 密集动作描写，突出打击感
+  - 快速切换场景和视角
+  - 减少心理活动，重点在动作
+  - 环境描写服务于动作
+
+  打斗细节：
+  - 主角招式：近身格斗 + 异能辅助
+  - 反派招式：暗器 + 诡异身法
+  - 高潮：主角被逼入绝境，觉醒新能力（第二阶段）
+
+  结尾处理：
+  - 反派逃脱（为后续埋伏笔）
+  - 主角受伤但胜利
+  - 女主赶到，见证结局
+
+# 使用的预设
+preset_used: action-intense
+
+# 时间戳
+created_at: 2025-10-14T14:20:00Z
+updated_at: 2025-10-14T15:30:00Z
