@@ -1,5 +1,27 @@
 # 更新日志
 
+## [0.18.2] - 2025-10-15
+
+### 🐛 问题修复
+
+#### 插件命令文件缺失
+- **问题**:genre-knowledge 插件的 `commands/` 目录为空,导致用户无法获取增强提示词
+- **修复**:补全3个增强命令文件:
+  - `commands/clarify-enhance.md` (18行) - clarify 命令的类型知识增强提示词
+  - `commands/plan-enhance.md` (62行) - plan 命令的动态类型知识加载提示词
+  - `commands/write-enhance.md` (15行) - write 命令的类型风格应用提示词
+
+#### 用户体验改进
+- 用户现在可以直接从 `commands/*.md` 文件复制增强提示词
+- 粘贴到核心命令的 `PLUGIN_HOOK` 标记处即可启用插件功能
+- 结构更清晰,符合插件架构设计
+
+### 📝 影响范围
+- `plugins/genre-knowledge/commands/` - 新增3个命令文件
+- 插件系统 - 完善了安装体验
+
+---
+
 ## [0.18.1] - 2025-10-15
 
 ### 🏗️ 架构优化
