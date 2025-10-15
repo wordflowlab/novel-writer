@@ -16,11 +16,18 @@ rm -rf "$PROJECT_ROOT/dist"
 mkdir -p "$PROJECT_ROOT/dist"
 
 # 路径重写函数（将相对路径转换为 .specify/ 路径）
+# 使用临时标记保护已经正确的 .specify/ 路径，避免重复添加前缀
 rewrite_paths() {
   sed -E \
+    -e 's@\.specify/memory/@__SPECIFY_MEMORY__@g' \
+    -e 's@\.specify/scripts/@__SPECIFY_SCRIPTS__@g' \
+    -e 's@\.specify/templates/@__SPECIFY_TEMPLATES__@g' \
     -e 's@(/?)memory/@.specify/memory/@g' \
     -e 's@(/?)scripts/@.specify/scripts/@g' \
-    -e 's@(/?)templates/@.specify/templates/@g'
+    -e 's@(/?)templates/@.specify/templates/@g' \
+    -e 's@__SPECIFY_MEMORY__@.specify/memory/@g' \
+    -e 's@__SPECIFY_SCRIPTS__@.specify/scripts/@g' \
+    -e 's@__SPECIFY_TEMPLATES__@.specify/templates/@g'
 }
 
 # 核心函数：生成命令文件

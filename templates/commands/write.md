@@ -21,7 +21,7 @@ scripts:
 
 **查询顺序**：
 1. **先查（最高优先级）**：
-   - `memory/novel-constitution.md`（创作宪法 - 最高原则）
+   - `memory/constitution.md`（创作宪法 - 最高原则）
    - `memory/style-reference.md`（风格参考 - 如果通过 `/book-internalize` 生成）
 
 2. **再查（规格和计划）**：

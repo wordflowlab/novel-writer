@@ -27,7 +27,7 @@ STORY_DIR="stories/$STORY_NAME"
 check_methodology_docs() {
     local missing=()
 
-    [ ! -f "memory/novel-constitution.md" ] && missing+=("宪法")
+    [ ! -f "memory/constitution.md" ] && missing+=("宪法")
     [ ! -f "$STORY_DIR/specification.md" ] && missing+=("规格")
     [ ! -f "$STORY_DIR/creative-plan.md" ] && missing+=("计划")
     [ ! -f "$STORY_DIR/tasks.md" ] && missing+=("任务")
@@ -142,7 +142,7 @@ output_checklist() {
     local max_words=4000
 
     # 检查文档
-    [ -f "memory/novel-constitution.md" ] && has_constitution=true
+    [ -f "memory/constitution.md" ] && has_constitution=true
     [ -f "$STORY_DIR/specification.md" ] && has_specification=true
     [ -f "$STORY_DIR/creative-plan.md" ] && has_plan=true
     [ -f "$STORY_DIR/tasks.md" ] && has_tasks=true
@@ -195,7 +195,7 @@ output_checklist() {
 
 ## 文档完整性
 
-- [$([ "$has_constitution" = true ] && echo "x" || echo " ")] CHK001 novel-constitution.md 存在
+- [$([ "$has_constitution" = true ] && echo "x" || echo " ")] CHK001 constitution.md 存在
 - [$([ "$has_specification" = true ] && echo "x" || echo " ")] CHK002 specification.md 存在
 - [$([ "$has_plan" = true ] && echo "x" || echo " ")] CHK003 creative-plan.md 存在
 - [$([ "$has_tasks" = true ] && echo "x" || echo " ")] CHK004 tasks.md 存在

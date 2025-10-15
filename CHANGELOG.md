@@ -1,5 +1,40 @@
 # 更新日志
 
+## [0.18.4] - 2025-10-15
+
+### 🐛 问题修复
+
+#### 宪法文件命名统一
+- **问题**: 系统中存在3个不同的宪法文件命名 (novel-constitution.md, writing-constitution.md, constitution.md), 导致用户项目中出现多个宪法文件
+- **修复**: 统一宪法文件命名为 `constitution.md`
+  - 重命名源文件: `memory/writing-constitution.md` → `memory/constitution.md`
+  - 修改所有 Bash 脚本中的文件路径引用 (6个文件)
+  - 修改所有 PowerShell 脚本中的文件路径引用 (5+个文件)
+  - 修改所有命令模板中的文件引用 (constitution.md, specify.md, plan.md, analyze.md, write.md)
+  - 更新 allowed-tools 中的路径权限
+
+#### 脚本路径重复问题
+- **问题**: 构建系统中的 `rewrite_paths()` 函数重复添加 `.specify/` 前缀，导致路径错误 (`.specify.specify/scripts/`)
+- **修复**: 使用临时标记保护已有 `.specify/` 路径
+  - 修改 `scripts/build/generate-commands.sh` 的 `rewrite_paths()` 函数
+  - 先标记已存在的正确路径，然后添加前缀，最后恢复标记
+  - 所有生成的命令文件中的路径现在都正确为 `.specify/scripts/...`
+
+### 📝 影响范围
+- `memory/constitution.md` - 统一的宪法文件命名
+- `scripts/bash/*.sh` - 所有引用宪法文件的脚本已更新
+- `scripts/powershell/*.ps1` - 所有引用宪法文件的脚本已更新
+- `templates/commands/*.md` - 所有命令模板已更新
+- `scripts/build/generate-commands.sh` - 路径重写函数已修复
+- `dist/` - 重新构建所有平台的命令文件
+
+### 🎯 用户体验改进
+- 用户项目的 `.specify/memory/` 目录只会有一个 `constitution.md` 文件
+- 所有脚本命令路径正确，不再出现 `.specify.specify/` 错误
+- 命名更简洁、清晰，易于理解和使用
+
+---
+
 ## [0.18.3] - 2025-10-15
 
 ### ✨ 功能改进

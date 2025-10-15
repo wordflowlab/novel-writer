@@ -1,7 +1,7 @@
 ---
 description: 定义故事规格，明确要创造什么样的作品
 argument-hint: [故事描述]
-allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Write(//stories/**/specification.md), Write(stories/**/specification.md), Read(//memory/novel-constitution.md), Read(memory/novel-constitution.md), Bash(find:*), Bash(*)
+allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Write(//stories/**/specification.md), Write(stories/**/specification.md), Read(//memory/constitution.md), Read(memory/constitution.md), Bash(find:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/specify-story.sh --json
@@ -80,7 +80,7 @@ else:
 
 ### 2. 检查宪法合规性
 
-如果存在 `memory/novel-constitution.md`：
+如果存在 `memory/constitution.md`：
 - 加载宪法原则
 - 确保规格符合宪法价值观
 - 在规格中引用相关原则

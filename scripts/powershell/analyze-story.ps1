@@ -25,7 +25,7 @@ function Test-StoryFiles {
     $missingFiles = @()
 
     # 检查基准文档
-    if (-not (Test-Path "memory\novel-constitution.md")) {
+    if (-not (Test-Path "memory\constitution.md")) {
         $missingFiles += "宪法文件"
     }
     if (-not (Test-Path "$StoryDir\specification.md")) {

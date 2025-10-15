@@ -13,7 +13,7 @@ $ProjectRoot = Get-ProjectRoot
 Set-Location $ProjectRoot
 
 # 定义文件路径
-$ConstitutionFile = "memory\novel-constitution.md"
+$ConstitutionFile = "memory\constitution.md"
 
 switch ($Command) {
     "check" {

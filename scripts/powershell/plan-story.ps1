@@ -30,7 +30,7 @@ Write-Host ""
 # 检查前置文档
 $missing = @()
 
-if (-not (Test-Path "memory\novel-constitution.md")) {
+if (-not (Test-Path "memory\constitution.md")) {
     $missing += "宪法文件"
 }
 
@@ -45,7 +45,7 @@ if ($missing.Count -gt 0) {
     }
     Write-Host ""
     Write-Host "请先完成："
-    if (-not (Test-Path "memory\novel-constitution.md")) {
+    if (-not (Test-Path "memory\constitution.md")) {
         Write-Host "  1. /constitution - 创建创作宪法"
     }
     if (-not (Test-Path $SpecFile)) {

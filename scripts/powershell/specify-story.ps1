@@ -75,7 +75,7 @@ else {
     }
 
     # 检查宪法
-    if (Test-Path "memory\novel-constitution.md") {
+    if (Test-Path "memory\constitution.md") {
         Write-Host ""
         Write-Host "✅ 检测到创作宪法，规格将遵循宪法原则" -ForegroundColor Green
     }

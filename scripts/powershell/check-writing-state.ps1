@@ -21,7 +21,7 @@ Write-Host ""
 function Test-MethodologyDocs {
     $missing = @()
 
-    if (-not (Test-Path "memory\novel-constitution.md")) {
+    if (-not (Test-Path "memory\constitution.md")) {
         $missing += "宪法"
     }
     if (-not (Test-Path "$StoryDir\specification.md")) {

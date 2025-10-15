@@ -72,7 +72,7 @@ scripts:
 
 ### A1. 加载基准文档
 
-- 宪法文件：`.specify/memory/novel-constitution.md`
+- 宪法文件：`.specify/memory/constitution.md`
 - 规格文件：`stories/*/specification.md`
 - 计划文件：`stories/*/creative-plan.md`
 - 任务文件：`stories/*/tasks.md`
@@ -176,7 +176,7 @@ scripts:
 
 ### B1. 加载验证基准
 
-- 宪法文件：`.specify/memory/novel-constitution.md`
+- 宪法文件：`.specify/memory/constitution.md`
 - 规格文件：`stories/*/specification.md`
 - 计划文件：`stories/*/creative-plan.md`
 - 任务列表：`stories/*/tasks.md`

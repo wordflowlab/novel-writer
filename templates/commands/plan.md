@@ -1,7 +1,7 @@
 ---
 description: 基于故事规格制定技术实现方案
 argument-hint: [技术偏好和选择]
-allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Read(//stories/**/creative-plan.md), Read(stories/**/creative-plan.md), Read(//plugins/**), Read(plugins/**), Write(//stories/**/creative-plan.md), Write(stories/**/creative-plan.md), Read(//memory/novel-constitution.md), Read(memory/novel-constitution.md), Bash(find:*), Bash(grep:*), Bash(*)
+allowed-tools: Read(//stories/**/specification.md), Read(stories/**/specification.md), Read(//stories/**/creative-plan.md), Read(stories/**/creative-plan.md), Read(//plugins/**), Read(plugins/**), Write(//stories/**/creative-plan.md), Write(stories/**/creative-plan.md), Read(//memory/constitution.md), Read(memory/constitution.md), Bash(find:*), Bash(grep:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/plan-story.sh
@@ -19,7 +19,7 @@ scripts:
 ### 1. 加载前置文档
 
 运行 `{SCRIPT}` 检查并加载：
-- 宪法文件：`memory/novel-constitution.md`
+- 宪法文件：`memory/constitution.md`
 - 规格文件：`stories/*/specification.md`
 - 澄清记录（如果已运行 `/clarify`）
 
