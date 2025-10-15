@@ -1,0 +1,53 @@
+name: novel-genre-knowledge
+version: 1.0.0
+description: 类型知识库插件 - 商业网文创作的类型化写作知识支持
+type: knowledge
+dependencies:
+  core: ">=0.18.0"
+installation:
+  message: |
+    ✅ 类型知识库插件安装成功！
+
+    📚 插件内容：
+    - 7个类型知识文件（爽文/玄幻/科幻/言情/悬疑等）
+    - 2个通用方法论文件（五大法则/MRU场景结构）
+    - 3个增强提示词文件（用于增强核心命令）
+
+    🔧 使用步骤：
+
+    **步骤1：插件已复制**
+    插件文件已复制到项目的 plugins/genre-knowledge/ 目录
+
+    **步骤2：手动增强核心命令**
+    要启用插件功能，需要手动将增强提示词粘贴到核心命令中：
+
+    1. 增强 /clarify 命令：
+       - 打开: templates/commands/clarify.md
+       - 找到: <!-- PLUGIN_HOOK: genre-knowledge-clarify -->
+       - 复制: plugins/genre-knowledge/commands/clarify-enhance.md 的内容
+       - 粘贴到标记下方
+
+    2. 增强 /plan 命令：
+       - 打开: templates/commands/plan.md
+       - 找到: <!-- PLUGIN_HOOK: genre-knowledge-plan -->
+       - 复制: plugins/genre-knowledge/commands/plan-enhance.md 的内容
+       - 粘贴到标记下方
+
+    3. 增强 /write 命令（可选）：
+       - 打开: templates/commands/write.md
+       - 找到: <!-- PLUGIN_HOOK: genre-knowledge-write -->
+       - 复制: plugins/genre-knowledge/commands/write-enhance.md 的内容
+       - 粘贴到标记下方
+
+    **步骤3：验证**
+    查看 templates/commands/plan.md 是否包含类型知识相关内容
+
+    💡 提示：
+    - 可以只增强部分命令，按需使用
+    - 增强后 AI 会自动搜索并应用类型知识
+    - 详细说明请查看 plugins/genre-knowledge/README.md
+
+    ⚠️ 重要：
+    - 本插件适合商业类型小说创作
+    - 知识库基于成功网文经验提炼
+    - 如写严肃文学可跳过此插件

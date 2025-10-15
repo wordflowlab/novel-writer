@@ -615,7 +615,7 @@ program
       if (plugins.length === 0) {
         console.log(chalk.yellow('暂无插件'));
         console.log(chalk.gray('\n使用 "novel plugins:add <name>" 安装插件'));
-        console.log(chalk.gray('可用插件: translate, authentic-voice, book-analysis\n'));
+        console.log(chalk.gray('可用插件: translate, authentic-voice, book-analysis, genre-knowledge\n'));
         return;
       }
 
@@ -672,6 +672,7 @@ program
         console.log(chalk.gray('  - translate (翻译出海插件)'));
         console.log(chalk.gray('  - authentic-voice (真实人声插件)'));
         console.log(chalk.gray('  - book-analysis (拆书分析插件)'));
+        console.log(chalk.gray('  - genre-knowledge (类型知识库插件)'));
         process.exit(1);
       }
 
