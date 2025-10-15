@@ -51,6 +51,12 @@ scripts:
      - `spec/presets/golden-opening.md`（黄金开篇法则）
      - 并严格遵循其中的五大法则
 
+<!-- PLUGIN_HOOK: genre-knowledge-write -->
+<!-- 插件增强区：风格应用
+     如果你安装了 genre-knowledge 插件，请在此处插入风格应用增强提示词
+     参考：plugins/genre-knowledge/README.md 的"2.3 增强 /write 命令"章节
+-->
+
 ## 写作执行流程
 
 ### 1. 选择写作任务

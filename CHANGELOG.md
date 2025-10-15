@@ -1,5 +1,42 @@
 # 更新日志
 
+## [0.18.1] - 2025-10-15
+
+### 🏗️ 架构优化
+
+#### 类型知识插件化
+- **迁移类型知识文件**：将 `spec/knowledge/genres/` 的5个类型知识文件迁移到 `plugins/genre-knowledge/knowledge/genres/`
+  - `fantasy.md` (669行) - 奇幻/玄幻类型指导
+  - `scifi.md` (530行) - 科幻类型指导
+  - `romance.md` (378行) - 言情类型指导
+  - `mystery.md` (353行) - 悬疑推理类型指导
+  - `shuangwen.md` (236行) - 爽文类型指导
+
+#### 真正的可选插件架构
+- **核心命令优化**：
+  - 移除核心命令对插件的硬编码依赖
+  - 添加 `plugins/**` 通配符权限，支持所有插件
+  - 保留 `<!-- PLUGIN_HOOK -->` 标记供用户手动启用插件
+- **用户体验改进**：
+  - 用户安装插件后只需复制粘贴增强提示词到 PLUGIN_HOOK 标记处
+  - 无需修改 allowed-tools（已有 plugins/** 权限）
+  - 插件功能完全可选，不影响核心功能
+
+#### 设计理念
+- ✅ **清晰职责**：`spec/knowledge/` 专注于用户创建的项目知识，插件专注于系统提供的可选功能
+- ✅ **可选安装**：不需要类型知识的用户无需加载插件
+- ✅ **单一数据源**：类型知识只存在于插件中，避免重复和混乱
+- ✅ **架构简洁**：无技术债务，无向后兼容代码
+
+### 📝 影响范围
+- `spec/knowledge/genres/` - 已删除
+- `plugins/genre-knowledge/` - 包含7个知识文件
+- `templates/commands/clarify.md` - 移除插件硬编码，添加 plugins/** 权限
+- `templates/commands/plan.md` - 移除插件硬编码，添加 plugins/** 权限
+- `templates/commands/analyze.md` - 移除插件硬编码，添加 plugins/** 权限
+
+---
+
 ## [0.15.0] - 2025-10-11
 
 ### ✨ 重大改进：多平台命令格式优化

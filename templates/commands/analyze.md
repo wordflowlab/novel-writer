@@ -1,7 +1,7 @@
 ---
 description: 智能分析：自动选择框架分析（write前）或内容分析（write后），支持 --type 手动指定
 argument-hint: [--type=framework|content]
-allowed-tools: Bash(find:*), Bash(wc:*), Bash(grep:*), Read(//**), Read(//spec/knowledge/genres/**), Read(spec/knowledge/genres/**), Write(//stories/**/analysis-report.md), Bash(*)
+allowed-tools: Bash(find:*), Bash(wc:*), Bash(grep:*), Read(//**), Read(//plugins/**), Read(plugins/**), Write(//stories/**/analysis-report.md), Bash(*)
 model: claude-sonnet-4-5-20250929
 scripts:
   sh: .specify/scripts/bash/check-analyze-stage.sh --json
@@ -274,11 +274,6 @@ scripts:
 
 深入分析作品质量：
 
-**类型专项检查**：
-- 从 specification.md 读取故事主类型
-- 加载 `spec/knowledge/genres/[类型].md` 中的质量检查标准
-- 执行类型特定的专项验证（如爽文的爽点密度、悬疑的线索完整性等）
-
 ```markdown
 ## 内容质量分析
 
@@ -423,21 +418,6 @@ scripts:
 - **大高潮**：第[X]章
   - 位置合理性：⚠️ 建议第30章，实际第25章（提前）
 
-### 节奏曲线评估
-```
-强度
- 10|           .
-  9|          / \
-  8|         /   \
-  7|   .    /     \
-  6|  / \  /       \
-  5| /   \/         \.
-  4|/                 \
-  3|                   \
-  2|                    \.
-  1|______________________\_____
-    1  5  10  15  20  25  30 章节
-```
 
 **节奏评价**：
 - ✅ 整体起伏合理

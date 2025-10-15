@@ -1,7 +1,7 @@
 ---
 description: 通过针对性问答澄清故事大纲中的模糊点，确保创作方向明确，支持焦点参数
 argument-hint: [关键词或焦点领域]
-allowed-tools: Read(//stories/**), Read(stories/**), Read(//spec/knowledge/genres/**), Read(spec/knowledge/genres/**), Write(//stories/*/story.md), Write(stories/*/story.md), Bash(ls:*), Bash(find:*), Bash(*)
+allowed-tools: Read(//stories/**), Read(stories/**), Read(//plugins/**), Read(plugins/**), Write(//stories/*/story.md), Write(stories/*/story.md), Bash(ls:*), Bash(find:*), Bash(*)
 model: claude-sonnet-4-5-20250929
 disable-model-invocation: false
 scripts:
@@ -27,15 +27,13 @@ scripts:
 - 如果没有找到故事文件，提示用户先运行 `/story` 创建故事大纲
 - 加载故事文件内容进行分析
 
-### 2. 加载类型知识（如果已定义）
+<!-- PLUGIN_HOOK: genre-knowledge-clarify -->
+<!-- 插件增强区：类型识别
+     如果你安装了 genre-knowledge 插件，请在此处插入类型识别增强提示词
+     参考：plugins/genre-knowledge/README.md 的"2.1 增强 /clarify 命令"章节
+-->
 
-如果故事大纲中已定义类型（如"爽文"、"悬疑"等）：
-- 尝试加载对应的类型知识文件 `spec/knowledge/genres/[类型].md`
-- 如 `spec/knowledge/genres/shuangwen.md`（爽文指导）
-- 基于类型知识，提供更针对性的澄清问题
-- 如果类型知识文件不存在，使用通用问题模板
-
-### 3. 结构化歧义扫描
+### 2. 结构化歧义扫描
 
 对故事大纲进行全面扫描，评估每个类别的清晰度（清晰/部分清晰/缺失）：
 
