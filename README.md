@@ -241,6 +241,49 @@ novel check                       # 检查项目配置和状态
 
 MIT License
 
+## 🌐 项目矩阵
+
+WordFlowLab 围绕 AI 辅助小说创作展开多维度探索，采用不同方法论和技术栈的开源项目组合：
+
+### 方法论探索系列
+
+| 项目 | 方法论 | 技术特点 | 适用场景 |
+|------|--------|----------|----------|
+| **[Novel-Writer](https://github.com/wordflowlab/novel-writer)** ⭐ | Spec-Kit | 寄生在 AI 编程工具上的斜杠命令系统，七步方法论 | 适合多平台用户，跨 13 个 AI 工具 |
+| **[Novel-Writer-OpenSpec](https://github.com/wordflowlab/novel-writer-openspec)** | OpenSpec | 规格分离管理（specs/ + changes/），严格验证机制 | 适合需要规格化管理的团队创作 |
+| **[Novel-Writer-Skills](https://github.com/wordflowlab/novel-writer-skills)** | Spec-Kit + Skills | 深度集成 Claude Code 的 Agent Skills | 专为 Claude Code 优化 |
+
+### 工具实现系列
+
+| 项目 | 类型 | 技术基础 | 说明 |
+|------|------|----------|------|
+| **[WriteFlow](https://github.com/wordflowlab/writeflow)** | CLI 工具 | 模仿 Claude Code 架构 | 独立 CLI，为技术型作家设计 |
+| **[NovelWeave](https://github.com/wordflowlab/novelweave)** | VSCode 扩展 | Fork: Cline → Roo Code → Kilo Code → NovelWeave | 可视化小说编辑器，星尘织梦 |
+
+### 技术演进路径
+
+```
+Spec-Kit 方法论分支:
+  Novel-Writer (主线) ──┬─→ Novel-Writer-Skills (Claude Code 专版)
+                       └─→ WriteFlow (CLI 独立版)
+
+OpenSpec 方法论分支:
+  Novel-Writer-OpenSpec (探索版)
+
+VSCode 扩展分支:
+  Cline → Roo Code → Kilo Code → NovelWeave (小说定制版)
+```
+
+### 选择建议
+
+- **多平台需求** → Novel-Writer（支持 13 个 AI 工具）
+- **Claude Code 深度用户** → Novel-Writer-Skills（最佳集成体验）
+- **规格化管理** → Novel-Writer-OpenSpec（适合团队协作）
+- **CLI 偏好** → WriteFlow（独立命令行工具）
+- **VSCode 用户** → NovelWeave（可视化编辑器）
+
+> 💡 **多矩阵、多方法论组合开源**：探索 AI 写作的不同可能性，欢迎根据需求选择合适的工具！
+
 ## 🙏 致谢
 
 本项目基于 [Spec Kit](https://github.com/sublayerapp/spec-kit) 架构设计，特此感谢！
