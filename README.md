@@ -276,11 +276,21 @@ VSCode 扩展分支:
 
 ### 选择建议
 
-- **多平台需求** → Novel-Writer（支持 13 个 AI 工具）
-- **Claude Code 深度用户** → Novel-Writer-Skills（最佳集成体验）
-- **规格化管理** → Novel-Writer-OpenSpec（适合团队协作）
-- **CLI 偏好** → WriteFlow（独立命令行工具）
-- **VSCode 用户** → NovelWeave（可视化编辑器）
+根据您的经验背景选择合适的工具：
+
+| 用户类型 | 推荐项目 | 理由 |
+|---------|---------|------|
+| 🌟 **新手入门** | [NovelWeave](https://github.com/wordflowlab/novelweave) | 可视化编辑器，VSCode 扩展，最易上手 |
+| 💻 **有编程基础<br>无小说经验** | [Novel-Writer](https://github.com/wordflowlab/novel-writer) <br> [Novel-Writer-Skills](https://github.com/wordflowlab/novel-writer-skills) | 七步方法论引导创作流程<br>Skills 版适合 Claude Code 用户 |
+| 📚 **有编程基础<br>有小说经验** | [Novel-Writer-OpenSpec](https://github.com/wordflowlab/novel-writer-openspec) | OpenSpec 规格化管理<br>适合系统化创作和团队协作 |
+| 🚀 **技术探索者<br>可贡献 PR** | [WriteFlow](https://github.com/wordflowlab/writeflow) | CLI 工具开发探索<br>欢迎贡献代码和想法 |
+
+**快速决策**：
+- **完全新手** → NovelWeave（可视化最友好）
+- **用 Claude Code** → Novel-Writer-Skills（深度集成 Agent Skills）
+- **跨多个 AI 工具** → Novel-Writer（支持 13 个平台）
+- **追求规格化** → Novel-Writer-OpenSpec（OpenSpec 方法论）
+- **喜欢命令行** → WriteFlow（纯 CLI 体验）
 
 > 💡 **多矩阵、多方法论组合开源**：探索 AI 写作的不同可能性，欢迎根据需求选择合适的工具！
 
