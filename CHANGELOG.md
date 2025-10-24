@@ -1,5 +1,35 @@
 # 更新日志
 
+## [0.18.5] - 2025-10-24
+
+### 🐛 问题修复
+
+#### Gemini 宪法保存路径错误 (#6)
+- **问题**: 在 Gemini 中运行 `/constitution` 命令后，宪法文件被错误保存到 `memory/constitution.md`（项目根目录），而非正确的 `.specify/memory/constitution.md` 路径
+- **原因**: 源模板文件 `templates/commands/constitution.md` 及其他命令文件中存在路径引用不一致，部分使用了不带 `.specify/` 前缀的路径
+- **修复**: 统一所有命令模板文件中的路径引用，全部使用完整路径 `.specify/memory/constitution.md`
+  - 修改 `templates/commands/constitution.md` 中 3 处路径引用
+  - 修改 `templates/commands/specify.md` 中 1 处路径引用
+  - 修改 `templates/commands/plan.md` 中 1 处路径引用
+  - 修改 `templates/commands/write.md` 中 3 处路径引用
+  - 重新构建所有平台的命令文件
+- **影响**: Gemini、Qwen 等使用 TOML 格式的平台，现在会正确保存宪法文件到 `.specify/memory/constitution.md`
+
+### 📝 影响范围
+- `templates/commands/constitution.md` - 路径引用已统一
+- `templates/commands/specify.md` - 路径引用已统一
+- `templates/commands/plan.md` - 路径引用已统一
+- `templates/commands/write.md` - 路径引用已统一
+- `dist/gemini/.gemini/commands/novel/*.toml` - 所有 TOML 文件已重新生成
+- 所有平台的构建产物已更新
+
+### 🎯 用户体验改进
+- Gemini 用户运行 `/constitution` 命令后，文件会正确保存到 `.specify/memory/constitution.md`
+- 路径统一避免了 AI 在不同命令间的路径混淆
+- 项目根目录不再出现错误的 `memory/` 目录
+
+---
+
 ## [0.18.4] - 2025-10-15
 
 ### 🐛 问题修复

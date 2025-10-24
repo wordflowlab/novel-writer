@@ -21,8 +21,8 @@ scripts:
 
 **查询顺序**：
 1. **先查（最高优先级）**：
-   - `memory/constitution.md`（创作宪法 - 最高原则）
-   - `memory/style-reference.md`（风格参考 - 如果通过 `/book-internalize` 生成）
+   - `.specify/memory/constitution.md`（创作宪法 - 最高原则）
+   - `.specify/memory/style-reference.md`（风格参考 - 如果通过 `/book-internalize` 生成）
 
 2. **再查（规格和计划）**：
    - `stories/*/specification.md`（故事规格）
@@ -40,7 +40,7 @@ scripts:
    - `stories/*/content/`（前文内容 - 了解前情）
 
 5. **再查（写作规范）**：
-   - `memory/personal-voice.md`（个人语料 - 如有）
+   - `.specify/memory/personal-voice.md`（个人语料 - 如有）
    - `spec/knowledge/natural-expression.md`（自然化表达 - 如有）
    - `spec/knowledge/punctuation-personality.md`（标点个性化 - 如有）
    - `spec/knowledge/detail-formulas.md`（具象化公式 - 如有）
