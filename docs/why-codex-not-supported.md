@@ -1,14 +1,33 @@
-# 为什么 Novel Writer 不支持 OpenAI Codex
+# Novel Writer 的 Codex CLI 支持
 
-## TL;DR
+## 🎉 最新更新 (2025-10-25)
 
-Novel Writer 目前**不支持** OpenAI Codex CLI，主要原因是：
+**好消息**: Novel Writer **即将支持** OpenAI Codex CLI！
+
+### 变化说明
+
+经过调研 [Spec-Kit](https://github.com/github/spec-kit) 项目的 Codex 实现（v0.0.11+），我们发现 **Codex CLI 完全可以支持 Novel Writer 的命令系统**，只需使用纯 Markdown 格式（无 YAML frontmatter）。
+
+**实现进度**:
+- ✅ 技术方案已确认
+- 🚧 **正在实现中** (预计 v0.19.0)
+- ⏳ 即将发布
+
+**推荐方案**：
+- 现在使用 [Claude Code](https://claude.ai)、[Cursor](https://cursor.sh) 或 [Gemini CLI](https://ai.google.dev/gemini-api/docs/cli)
+- 等待 v0.19.0 发布后升级以使用 Codex CLI
+
+---
+
+## ⚠️ 历史原因 (v0.18.x 及更早版本)
+
+以下内容保留用于记录设计决策历史：
+
+Novel Writer v0.18.x 及更早版本**不支持** OpenAI Codex CLI，主要原因是：
 
 1. **Codex Custom Prompts 功能受限** - 仅支持纯文本提示，无法执行脚本和文件操作
 2. **Novel Writer 命令复杂度高** - 93% 的命令（13/14）依赖脚本进行状态管理和自动化验证
 3. **等待官方 Slash Commands** - 一旦 Codex 支持完整的 slash commands 功能，我们会立即适配
-
-**推荐替代方案**：使用 [Claude Code](https://claude.ai)、[Cursor](https://cursor.sh) 或 [Google Gemini CLI](https://ai.google.dev/gemini-api/docs/cli)，它们完全支持 Novel Writer 的所有功能。
 
 ---
 

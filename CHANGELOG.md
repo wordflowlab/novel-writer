@@ -1,5 +1,89 @@
 # 更新日志
 
+## [0.19.0] - 2025-10-25
+
+### ✨ 新功能
+
+#### 🎉 Codex CLI 支持
+- **新增平台**: 完整支持 OpenAI Codex CLI
+  - 命令格式: `/novel-命令名` (例如: `/novel-write`)
+  - 命令目录: `.codex/prompts/`
+  - 使用 `novel-` 前缀避免命名冲突
+  - 纯 Markdown 格式(无 YAML frontmatter)
+  - 13 个核心命令全部支持
+- **安装方式**: `novel init my-novel --ai codex`
+- **技术实现**: 借鉴 [Spec-Kit](https://github.com/github/spec-kit) v0.0.11+ 的实现方案
+
+#### 📚 AI 平台命令对照文档
+- **新增文档**: `docs/ai-platform-commands.md` - 13 个 AI 平台的完整命令对照指南
+  - 快速对照表：一目了然的命令格式差异
+  - 命名空间规则：详细解释为什么使用不同前缀
+  - 平台详细说明：Gemini、Claude、Codex 等的完整命令列表
+  - 使用示例：三个主要平台的完整工作流演示
+  - 常见问题：命令不生效、格式差异等问题的解决方案
+
+### 📝 文档更新
+
+#### Codex CLI 支持说明
+- 更新 `docs/why-codex-not-supported.md`:
+  - 标题改为"Novel Writer 的 Codex CLI 支持"
+  - 添加"即将支持"改为"v0.19.0 已支持"
+  - 保留历史原因作为设计决策记录
+
+#### README 更新
+- 核心特性中提及 Codex CLI
+- 初始化示例中添加 `--ai codex` 选项
+- 命令格式示例中添加 `/novel-constitution` (Codex 格式)
+- 命名空间说明表格中添加 Codex CLI
+
+#### GEMINI.md 模板更新
+- 明确说明 Gemini CLI 使用 `novel:` 命名空间
+- 添加命名空间原因说明
+- 更新所有示例命令添加正确的 `novel:` 前缀
+- 添加文档交叉引用链接
+
+### 🔧 构建系统改进
+
+#### 命名空间支持
+- 修改 `scripts/build/generate-commands.sh`:
+  - Codex CLI 使用 `novel-` 前缀
+  - 生成纯 Markdown 格式（无 frontmatter）
+  - 命令文件位于 `.codex/prompts/` 目录
+
+### 📊 支持的 AI 平台
+
+现在支持 **13 个 AI 平台**：
+
+| 平台 | 命令格式 | 命名空间 |
+|------|---------|----------|
+| Claude Code | `/novel.命令名` | `novel.` |
+| Gemini CLI | `/novel:命令名` | `novel:` |
+| **Codex CLI** ⭐ | **`/novel-命令名`** | **`novel-`** |
+| Cursor | `/命令名` | 无 |
+| Windsurf | `/命令名` | 无 |
+| Roo Code | `/命令名` | 无 |
+| GitHub Copilot | `/命令名` | 无 |
+| Qwen Code | `/命令名` | 无 |
+| OpenCode | `/命令名` | 无 |
+| Kilo Code | `/命令名` | 无 |
+| Auggie CLI | `/命令名` | 无 |
+| CodeBuddy | `/命令名` | 无 |
+| Amazon Q | `/命令名` | 无 |
+
+### 🎯 用户体验改进
+
+- 用户可以根据自己使用的 AI 平台，轻松查阅对应的命令格式
+- 详细的文档说明避免了命令不生效的困惑
+- Codex CLI 用户现在可以使用完整的 Novel Writer 功能
+
+### 📖 相关文档
+
+- [AI 平台命令使用指南](docs/ai-platform-commands.md) ⭐ 必读
+- [Codex CLI 支持说明](docs/why-codex-not-supported.md)
+- [Gemini 命令开发指南](docs/gemini-command-guide.md)
+
+---
+
 ## [0.18.5] - 2025-10-24
 
 ### 🐛 问题修复

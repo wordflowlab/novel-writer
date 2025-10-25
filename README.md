@@ -9,7 +9,7 @@
 
 ## ✨ 核心特性
 
-- 📚 **斜杠命令** - 在 Claude、Cursor、Gemini、Windsurf、Roo Code 等 AI 助手中直接使用
+- 📚 **斜杠命令** - 在 Claude、Gemini、Codex、Cursor、Windsurf、Roo Code 等 AI 助手中直接使用
 - 🎯 **七步方法论** - 基于规格驱动开发（SDD）的系统化创作流程
 - 🤖 **智能辅助** - AI 理解上下文，提供针对性创作建议
 - 📝 **中文优化** - 专为中文小说创作设计，支持字数统计、多线索管理
@@ -39,6 +39,7 @@ novel init my-novel --plugins authentic-voice
 # 指定 AI 平台
 novel init my-novel --ai claude    # Claude Code
 novel init my-novel --ai gemini    # Gemini CLI
+novel init my-novel --ai codex     # Codex CLI
 novel init my-novel --ai cursor    # Cursor
 ```
 
@@ -48,7 +49,8 @@ novel init my-novel --ai cursor    # Cursor
 
 ```
 /novel.constitution    # Claude Code 格式
-/novel/constitution    # Gemini CLI 格式
+/novel:constitution    # Gemini CLI 格式
+/novel-constitution    # Codex CLI 格式
 /constitution          # 其他平台格式
 ```
 
@@ -58,6 +60,7 @@ novel init my-novel --ai cursor    # Cursor
 
 > 📚 **详细安装说明**：[docs/installation.md](docs/installation.md)
 > 📖 **完整工作流程**：[docs/workflow.md](docs/workflow.md)
+> 🎯 **AI 平台命令对照**：[docs/ai-platform-commands.md](docs/ai-platform-commands.md) ⭐ **必读**
 
 ## 📦 升级现有项目
 
@@ -80,10 +83,12 @@ novel upgrade --ai claude
 | AI 平台 | 命令格式 | 示例 |
 |---------|----------|------|
 | **Claude Code** | `/novel.命令名` | `/novel.write` |
-| **Gemini CLI** | `/novel/命令名` | `/novel/write` |
+| **Gemini CLI** | `/novel:命令名` | `/novel:write` |
+| **Codex CLI** | `/novel-命令名` | `/novel-write` |
 | **其他平台** | `/命令名` | `/write` |
 
 > 💡 下表使用通用格式，实际使用时请根据您的 AI 平台添加相应前缀
+> 📖 **详细命令对照**：[docs/ai-platform-commands.md](docs/ai-platform-commands.md)
 
 ### 七步方法论
 

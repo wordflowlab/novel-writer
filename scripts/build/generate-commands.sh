@@ -268,7 +268,7 @@ build_variant() {
       ;;
     codex)
       mkdir -p "$base_dir/.codex/prompts"
-      generate_commands codex md "\$ARGUMENTS" "$base_dir/.codex/prompts" "$script" "" "none"
+      generate_commands codex md "\$ARGUMENTS" "$base_dir/.codex/prompts" "$script" "novel-" "none"
       ;;
     kilocode)
       mkdir -p "$base_dir/.kilocode/workflows"
