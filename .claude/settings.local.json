@@ -22,7 +22,8 @@
       "Read(//Users/coso/.nvm/versions/node/v22.20.0/lib/node_modules/**)",
       "Bash(npm unlink:*)",
       "Bash(novel check:*)",
-      "Bash(npm view:*)"
+      "Bash(npm view:*)",
+      "mcp__playwright__browser_navigate"
     ],
     "deny": [],
     "ask": []
