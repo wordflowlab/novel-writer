@@ -10,6 +10,15 @@ import { fileURLToPath } from 'url';
 import { getVersion, getVersionInfo } from './version.js';
 import { PluginManager } from './plugins/manager.js';
 import { ensureProjectRoot, getProjectInfo } from './utils/project.js';
+import {
+  displayProjectBanner,
+  selectAIAssistant,
+  selectWritingMethod,
+  selectScriptType,
+  confirmExpertMode,
+  displayStep,
+  isInteractive
+} from './utils/interactive.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -97,14 +106,65 @@ program
   .command('init')
   .argument('[name]', '小说项目名称')
   .option('--here', '在当前目录初始化')
-  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode | copilot | qwen | opencode | codex | kilocode | auggie | codebuddy | q', 'claude')
+  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode | copilot | qwen | opencode | codex | kilocode | auggie | codebuddy | q')
   .option('--all', '为所有支持的 AI 助手生成配置')
-  .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar | snowflake', 'three-act')
+  .option('--method <type>', '选择写作方法: three-act | hero-journey | story-circle | seven-point | pixar | snowflake')
   .option('--no-git', '跳过 Git 初始化')
   .option('--with-experts', '包含专家模式')
   .option('--plugins <names>', '预装插件，逗号分隔')
   .description('初始化一个新的小说项目')
   .action(async (name, options) => {
+    // 如果是交互式终端且没有明确指定参数，显示交互选择
+    const shouldShowInteractive = isInteractive() && !options.all;
+    const needsAISelection = shouldShowInteractive && !options.ai;
+    const needsMethodSelection = shouldShowInteractive && !options.method;
+    const needsExpertConfirm = shouldShowInteractive && !options.withExperts;
+
+    if (needsAISelection || needsMethodSelection || needsExpertConfirm) {
+      // 显示项目横幅
+      displayProjectBanner();
+
+      let stepCount = 0;
+      const totalSteps = 4;
+
+      // 交互式选择 AI 助手
+      if (needsAISelection) {
+        stepCount++;
+        displayStep(stepCount, totalSteps, '选择 AI 助手');
+        options.ai = await selectAIAssistant(AI_CONFIGS);
+        console.log('');
+      }
+
+      // 交互式选择写作方法
+      if (needsMethodSelection) {
+        stepCount++;
+        displayStep(stepCount, totalSteps, '选择写作方法');
+        options.method = await selectWritingMethod();
+        console.log('');
+      }
+
+      // 交互式选择脚本类型
+      stepCount++;
+      displayStep(stepCount, totalSteps, '选择脚本类型');
+      const selectedScriptType = await selectScriptType();
+      console.log('');
+
+      // 交互式确认专家模式
+      if (needsExpertConfirm) {
+        stepCount++;
+        displayStep(stepCount, totalSteps, '专家模式');
+        const enableExperts = await confirmExpertMode();
+        if (enableExperts) {
+          options.withExperts = true;
+        }
+        console.log('');
+      }
+    }
+
+    // 设置默认值（如果没有通过交互或参数指定）
+    if (!options.ai) options.ai = 'claude';
+    if (!options.method) options.method = 'three-act';
+
     const spinner = ora('正在初始化小说项目...').start();
 
     try {
