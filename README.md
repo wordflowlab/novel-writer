@@ -255,6 +255,7 @@ WordFlowLab 围绕 AI 辅助小说创作展开多维度探索，采用不同方�
 | 项目 | 方法论 | 技术特点 | 适用场景 |
 |------|--------|----------|----------|
 | **[Novel-Writer](https://github.com/wordflowlab/novel-writer)** ⭐ | Spec-Kit | 寄生斜杠命令，七步方法论 | 适合多平台用户，跨 13 个 AI 工具 |
+| **[Article-Writer](https://github.com/wordflowlab/article-writer)** 🆕 | Spec-Kit | 九步写作流程，工作区管理 | 公众号/自媒体文章创作，降低 AI 味 |
 | **[Novel-Writer-OpenSpec](https://github.com/wordflowlab/novel-writer-openspec)** | OpenSpec | 寄生斜杠命令，规格分离管理（specs/ + changes/） | 适合需要 OpenSpec 规格化管理 |
 | **[Novel-Writer-Skills](https://github.com/wordflowlab/novel-writer-skills)** | Spec-Kit + Agent Skills | 寄生斜杠命令，支持 Claude Code Agent Skills | 专为 Claude Code 优化 |
 
