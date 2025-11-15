@@ -56,8 +56,9 @@ novel init my-novel --ai cursor    # Cursor
 
 **七步方法论流程**：
 
-1. `/constitution` → 2. `/specify` → 3. `/clarify` →
-2. `/plan` → 5. `/tasks` → 6. `/write` → 7. `/analyze`
+```
+1. /constitution → 2. /specify → 3. /clarify → 4. /plan → 5. /tasks → 6. /write → 7. /analyze
+```
 
 > 📚 **详细安装说明**：[docs/installation.md](docs/installation.md)
 > 📖 **完整工作流程**：[docs/workflow.md](docs/workflow.md)
